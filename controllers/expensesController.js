@@ -1,27 +1,41 @@
-// const db = require("../models");
-const multer = require("multer")
-const upload = multer({
-    storage: multer.memoryStorage(),
-    // file size limitation in bytes
-    limits: { fileSize: 52428800 },
-  });
+const Tesseract = require('tesseract.js')
 // Defining methods for the expensesController
 module.exports = {
 
-    uploadExpense: function(req, res) {
-        if (!req.file) {
-            console.log("No file received");
-            return res.send({
-              success: false
-            });
-        
-          } else {
-            console.log('file received');
-            return res.send({
-              success: true
-            })
+    uploadExpense: function(req, res, next) {
+        console.log(req.file)
+        let file = `${req.file.path}`
+    
+        Tesseract.create({ langPath: "eng.traineddata" }).recognize(file, 'eng')
+        .progress(function  (p) { console.log('progress', p)  })
+        .catch(err => console.error(err))
+        .then(function (result) {
+          console.log(result.blocks[0].text)
+          let newResult= result.blocks[0].text
+          if (newResult.includes("\n")) {
+            console.log("Includes line break")
+            let newLines = newResult.split("\n")
+            let newArray = [];
+            for (i=0; i<newLines.length; i++) {
+              if (newLines[i] == "" || '') {
+                console.log('space');
+              } else {
+      
+                let newElement = newLines[i] + "+++"
+                newArray.push(newElement)
+              }
+            }
+            console.log(newArray)
+            console.log("hello world")
+            res.json(newArray)
           }
-    }
+      
+          process.exit(0)
+        })
+    
+    
+      }
+    
 
     // All the other back-end callbacks need to go here. 
     // I left the book examples here in case you need them. 
