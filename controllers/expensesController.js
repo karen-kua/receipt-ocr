@@ -1,10 +1,25 @@
 // const db = require("../models");
-
+const upload = multer({
+    storage: multer.memoryStorage(),
+    // file size limitation in bytes
+    limits: { fileSize: 52428800 },
+  });
 // Defining methods for the expensesController
 module.exports = {
 
     uploadExpense: function(req, res) {
-        // insert tesseract code here 
+        if (!req.file) {
+            console.log("No file received");
+            return res.send({
+              success: false
+            });
+        
+          } else {
+            console.log('file received');
+            return res.send({
+              success: true
+            })
+          }
     }
 
     // All the other back-end callbacks need to go here. 
