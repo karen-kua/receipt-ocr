@@ -1,0 +1,28 @@
+{
+  "name": "mern",
+  "version": "0.1.0",
+  "private": true,
+  "secure": false,
+  "proxy": "http://localhost:3001/",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.18.3",
+    "crypto": "^1.0.1",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-dropzone": "^6.2.4",
+    "react-router-dom": "^4.1.2",
+    "react-scripts": "1.0.14",
+    "superagent": "^4.0.0-beta.5",
+    "tesseract.js": "^1.0.10"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
