@@ -1,4 +1,5 @@
 // const db = require("../models");
+const multer = require("multer")
 const upload = multer({
     storage: multer.memoryStorage(),
     // file size limitation in bytes

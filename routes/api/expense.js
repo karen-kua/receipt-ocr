@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const expenseController = require("../../controllers/expenseController");
-import multer from "multer"
-let upload = multer({ dest: './client/pictures'});
+const expenseController = require("../../controllers/expensesController");
+const multer = require("multer")
+let upload = multer({ dest: 'client/pictures'});
 // const upload = multer({
 //   storage: multer.memoryStorage(),
 //   // file size limitation in bytes
@@ -12,18 +12,8 @@ router.route("/upload")
 // This is for uploading expense through Tesseract OCR
   // .post(upload.single('avatar'), expenseController.uploadExpense);
   .post(upload.single('photo'), (req, res, next) => {
-    // if (!req.file) {
-    //   console.log("No file received");
-    //   return res.send({
-    //     success: false
-    //   });
-  
-    // } else {
-    //   console.log('file received');
-    //   return res.send({
-    //     success: true
-    //   })
-    // }
+    console.log(req.file.originalname)
+    
     console.log("hello world")
     res.json(req.file)
   });

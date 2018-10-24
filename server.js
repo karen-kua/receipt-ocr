@@ -1,9 +1,9 @@
-import express from "express"
-import bodyParser from "body-parser"
-import morgan from "morgan"
-import mongoose from "mongoose"
-import routes from "./routes"
-import multer from "multer";
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const routes = require("./routes");
+const morgan = require("morgan");
+const multer = require("multer");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
