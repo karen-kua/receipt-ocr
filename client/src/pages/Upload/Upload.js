@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 // import { render } from "react-dom";
-import API from "../../utils/API";
+// import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
-import request from "superagent";
+import axios from "axios"
 // import DeleteBtn from "../../components/DeleteBtn";
 // import Jumbotron from "../../components/Jumbotron";
 // import { Link } from "react-router-dom";
@@ -12,7 +12,8 @@ import request from "superagent";
 
 class Upload extends Component {
   state = {
-    file: []
+    file: [],
+    response = []
   };
 
   componentDidMount() {
@@ -27,13 +28,14 @@ class Upload extends Component {
     // POST to a test endpoint for demo purposes
     let photo = new FormData();
     photo.append('photo', file[0]);
-  
-    request.post('/api/expense/upload')
-      .send(photo)
-      .end(function(err, res) {
-        if (err) { console.error(err); }
-        console.log(res)
+    axios.post('/api/expense/upload', photo)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          response: res.data
+        })
       })
+      .catch(err => console.log(err))
     this.setState({
       file: this.state.file.concat(file),
     });
