@@ -15,8 +15,11 @@ class Upload extends Component {
     file: [],
     response: [],
     date: "",
-    store: "hell",
-    address: "",
+    store: "",
+    street: "",
+    city: "",
+    province: "",
+    postalCode: "",
     allPurchases: []
   };
 
@@ -67,24 +70,6 @@ class Upload extends Component {
     // this.handleItems(purchaseArr)
   }
 
-  // handleItems = data => {
-    // const purchaseArr = []
-    // data.forEach(element => {
-    //   const item = element.slice(0, element.indexOf("$"))
-    //   const cost = element.slice(element.indexOf("$"), 100)
-    //   console.log(item, cost)
-    //   const purchaseObj = {
-    //     item: item,
-    //     cost: cost
-    //   }
-    //   purchaseArr.push(purchaseObj)
-    // })
-    // this.setState({
-    //   allPurchases: purchaseArr
-    // })
-    // console.log(this.state.allPurchases)
-  // }
-
   onPreviewDrop = (file) => {
     this.setState({
       file: this.state.file.concat(file),
@@ -99,7 +84,7 @@ class Upload extends Component {
     });
   };
 
-  handleItemChange = (index, event) => {
+handleItemChange = (index, event) => {
 console.log("The index: " + index)
   let copyOfPurchases = [...this.state.allPurchases]
   copyOfPurchases[index] = event.target.value
@@ -107,6 +92,7 @@ console.log("The index: " + index)
     this.setState({
       allPurchases: copyOfPurchases
     });
+  console.log(this.state.allPurchases)
   };
 
   render() {
@@ -143,39 +129,64 @@ console.log("The index: " + index)
             ))}
           </Fragment>
         }
-        <h2>Response demo</h2>
-        <div>
+        {/* <h2>Response demo</h2> */}
+        {/* <div>
           {this.state.response}
-        </div>
-
-      
+        </div> */}
 
         <div className="inputForm">
         <form onSubmit={this.onFormSubmit}>
+        <h3>Store:</h3>
           <input
             value={this.state.store}
             onChange={this.handleInputChange}
-            placeholder="Store Name"
+            // placeholder="Store Name"
             name="store"
           />
           <br/>
+          <h3>Street Address:</h3>
           <input
-            value={this.state.address}
+            value={this.state.street}
             onChange={this.handleInputChange}
-            placeholder="Address of Your Purchase"
-            name="address"
+            // placeholder="Street Address of Your Purchase"
+            name="street"
           />
           <br/>
+          <h3>City:</h3>
+          <input
+            value={this.state.city}
+            onChange={this.handleInputChange}
+            // placeholder="City of Your Purchase"
+            name="city"
+          />
+          <br/>
+          <h3>Province:</h3>
+          <input
+            value={this.state.province}
+            onChange={this.handleInputChange}
+            // placeholder="Province of Your Purchase"
+            name="province"
+          />
+          <br/>
+          <h3>Postal Code:</h3>
+          <input
+            value={this.state.postalCode}
+            onChange={this.handleInputChange}
+            // placeholder="Postal Code  of Your Purchase"
+            name="postalCode"
+          />
+          <br/>
+          <h3>Date of the Purchase:</h3>
           <input
             value={this.state.date}
             onChange={this.handleInputChange}
-            placeholder="Date of Your Purchase (YYYY/MM/DD)"
+            // placeholder="Date of Your Purchase (YYYY/MM/DD)"
             name="date"
           />
           <br/>
-
+          <h3>Items:</h3>
             {this.state.allPurchases.map((purchase, index) => (
-              <div>
+              <div key={index}>
                 <input
               value={purchase}
               onChange={(event) => this.handleItemChange(index, event)}
@@ -183,18 +194,6 @@ console.log("The index: " + index)
               />
              </div>
             ))}
-
-          {/* {this.state.allPurchases.map(purchase => (
-
-            <input
-            // value={this.state.date}
-            // onChange={this.handleInputChange}
-            placeholder="Purchase"
-            name="purchase"
-            />
-          <br/>
-          ))} */}
-
 
           <span className="input-group">
             <button type="submit" className="btn btn-secondary">
