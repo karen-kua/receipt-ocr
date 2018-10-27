@@ -20,10 +20,9 @@ class Upload extends Component {
     city: "",
     province: "",
     postalCode: "",
-    allPurchases: [],
+    allItems: [],
+    allCosts: [],
     allCategories: [],
-    category: "",
-    categoriesEx: ["food", "scarf", "eggs", "hats", "toys", "cheese", "yellow"]
   };
 
   componentDidMount() {
@@ -55,21 +54,29 @@ class Upload extends Component {
 
   getStoreAndItems = data => {
     let purchaseArr = [];
+    let itemsArr = [];
+    let costArr = []
     data.forEach(element => {
       if (element.includes("$")) {
         element = element.replace(",", "")
         purchaseArr.push(element)
       }
     })
-    console.log(purchaseArr)
-
+   purchaseArr.forEach(element => {
+    let item = element.slice(0, element.indexOf("$"))
+    let cost = element.slice(element.indexOf("$"), 100)
+    itemsArr.push(item)
+    costArr.push(cost)
+   })
     this.setState({
       store: data[0].replace(",", ""),
-      allPurchases: purchaseArr
+      allItems: itemsArr,
+      allCosts: costArr
     })
     console.log(`The store name is: ${this.state.store}`)
-    console.log(this.state.allPurchases)
-    this.makeAllCategoriesState(this.state.allPurchases)
+    console.log(this.state.allItems)
+    console.log(this.state.allCosts)
+    this.makeAllCategoriesState(this.state.allItems)
   }
 
   // onPreviewDrop = (file) => {
@@ -88,13 +95,22 @@ class Upload extends Component {
 
   handleItemChange = (index, event) => {
     console.log("The index: " + index)
-    let copyOfPurchases = [...this.state.allPurchases]
-    copyOfPurchases[index] = event.target.value
-    console.log(copyOfPurchases[index])
+    let copyOfItems = [...this.state.allItems]
+    copyOfItems[index] = event.target.value
+    console.log(copyOfItems[index])
     this.setState({
-      allPurchases: copyOfPurchases
-    });
-    console.log(this.state.allPurchases)
+      allItems: copyOfItems
+    }, () => console.log(this.state.allItems));
+  };
+
+  handleCostChange = (index, event) => {
+    console.log("The index: " + index)
+    let copyOfCosts = [...this.state.allCosts]
+    copyOfCosts[index] = event.target.value
+    console.log(copyOfCosts[index])
+    this.setState({
+      allCosts: copyOfCosts
+    }, () => console.log(this.state.allCosts));
   };
 
   handleDropDown = (event) => {
@@ -107,16 +123,20 @@ class Upload extends Component {
 
   deleteItem = (index, event) => {
     event.preventDefault();
-    let copyOfPurchases = [...this.state.allPurchases]
+    let copyOfItems = [...this.state.allItems]
     let copyOfCategories = [...this.state.allCategories]
+    let copyOfCosts = [...this.state.allCosts]
     copyOfCategories.splice(index,1)
-    copyOfPurchases.splice(index,1)
+    copyOfItems.splice(index,1)
+    copyOfCosts.splice(index,1)
     this.setState({
-      allPurchases: copyOfPurchases,
-      allCategories: copyOfCategories
+      allItems: copyOfItems,
+      allCategories: copyOfCategories,
+      allCosts: copyOfCosts
     }, () => {
-      console.log(this.state.allPurchases)
+      console.log(this.state.allItems)
       console.log(this.state.allCategories)
+      console.log(this.state.allCosts)
     })
   }
 
@@ -248,30 +268,38 @@ class Upload extends Component {
             />
             <br />
             <h3>Items:</h3>
-            {this.state.allPurchases.map((purchase, index) => (
+            {this.state.allItems.map((item, index) => (
               <div key={index}>
                 <input
-                  value={purchase}
+                  value={item}
                   onChange={(event) => this.handleItemChange(index, event)}
-                  name="allPurchases"
+                  name="allItems"
                 />
                 <span>
+                <input
+                value={this.state.allCosts[index]}
+                onChange={(event) => this.handleCostChange(index, event)}
+                name="allCosts"
+                />
+                <select name="category" value={this.state.allCategories[index]} onChange={(event) => this.handleCategories(index, event)}>
+                  <option value="None">Category</option>
+                  <option value="Food">Food</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Clothing">Clothing</option>
+                </select>
+                
+
+
                   <button type="submit" onClick={(event) => this.deleteItem(index, event)}>
                   Delete
                   </button>
                   </span>
               </div>
             ))}
-            {this.state.allCategories.map((category, index) =>(
+            {/* {this.state.allCategories.map((category, index) =>(
               <div>
-                <select name="category" value={category} onChange={(event) => this.handleCategories(index, event)}>
-                  <option value="None">Category</option>
-                  <option value="Food">Food</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Clothing">Clothing</option>
-                </select>
                 </div>
-            ))}
+            ))} */}
 
             <span className="input-group">
               <button type="submit" className="btn btn-secondary">
