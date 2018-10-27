@@ -16,7 +16,8 @@ class Upload extends Component {
     response: [],
     date: "",
     store: "hell",
-    address: ""
+    address: "",
+    allPurchases: []
   };
 
   componentDidMount() {
@@ -27,22 +28,58 @@ class Upload extends Component {
     console.log("Upload Component has mounted!")
   };
 
+  
   onDrop = (file) => {
     // POST to a test endpoint for demo purposes
     let photo = new FormData();
     photo.append('photo', file[0]);
     axios.post('/api/expense/upload', photo)
-      .then(res => {
-        console.log(res);
-        this.setState({
-          response: res.data
-        })
+    .then(res => {
+      console.log(res);
+      this.setState({
+        response: res.data
       })
-      .catch(err => console.log(err))
+      this.getStoreAndItems(this.state.response)
+    })
+    .catch(err => console.log(err))
     this.setState({
       file: this.state.file.concat(file),
     });
     // req.end();
+  }
+  
+  getStoreAndItems = data => {
+    let purchaseArr = [];
+    data.forEach(element => {
+      if (element.includes("$")) {
+        purchaseArr.push(element)
+      }
+    })
+    console.log(purchaseArr)
+
+    this.setState({
+      store: data[0].replace(",", "")
+    })
+    console.log(`The store name is: ${this.state.store}`)
+    this.handleItems(purchaseArr)
+  }
+
+  handleItems = data => {
+    const purchaseArr = []
+    data.forEach(element => {
+      const item = element.slice(0, element.indexOf("$"))
+      const cost = element.slice(element.indexOf("$"), 100)
+      console.log(item, cost)
+      const purchaseObj = {
+        item: item,
+        cost: cost
+      }
+      purchaseArr.push(purchaseObj)
+    })
+    this.setState({
+      allPurchases: purchaseArr
+    })
+    console.log(this.state.allPurchases)
   }
 
   onPreviewDrop = (file) => {
