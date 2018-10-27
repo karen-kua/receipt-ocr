@@ -21,8 +21,9 @@ class Upload extends Component {
     province: "",
     postalCode: "",
     allPurchases: [],
-    allCategories: ["Food", "Food", "Food", "Food", "Food", "Food", "Food"],
-    category: ""
+    allCategories: [],
+    category: "",
+    categoriesEx: ["food", "scarf", "eggs", "hats", "toys", "cheese", "yellow"]
   };
 
   componentDidMount() {
@@ -64,18 +65,17 @@ class Upload extends Component {
     this.setState({
       store: data[0].replace(",", ""),
       allPurchases: purchaseArr
-
     })
     console.log(`The store name is: ${this.state.store}`)
     console.log(this.state.allPurchases)
-    // this.handleItems(purchaseArr)
+    this.makeAllCategoriesState(this.state.allPurchases)
   }
 
-  onPreviewDrop = (file) => {
-    this.setState({
-      file: this.state.file.concat(file),
-    });
-  }
+  // onPreviewDrop = (file) => {
+  //   this.setState({
+  //     file: this.state.file.concat(file),
+  //   });
+  // }
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -111,9 +111,18 @@ class Upload extends Component {
     copyOfCategories[index] = event.target.value
     this.setState({
       allCategories: copyOfCategories
-    }, () => console.log(this.state.allCategories)
-  );
-  
+    }, () => console.log(this.state.allCategories))
+  }
+
+  makeAllCategoriesState = data => {
+    const copyOfCategories = [];
+    for (let i =0; i<data.length; i++) {
+      const element = "Category"
+      copyOfCategories.push(element)
+    }
+    this.setState({
+      allCategories: copyOfCategories
+    }, () => console.log(this.state.allCategories))
   }
 
   // saveReceiptData = data => {
@@ -134,12 +143,15 @@ class Upload extends Component {
   //   }
 
   render() {
-
     const previewStyle = {
       display: 'inline',
       width: 100,
       height: 100,
     };
+
+    const makeAllCategories = () => {
+      console.log("Hiii")
+    }
 
     return (
 
@@ -167,10 +179,7 @@ class Upload extends Component {
             ))}
           </Fragment>
         }
-        {/* <h2>Response demo</h2> */}
-        {/* <div>
-          {this.state.response}
-        </div> */}
+ 
 
         <div className="inputForm">
           <form onSubmit={this.onFormSubmit}>
@@ -230,15 +239,17 @@ class Upload extends Component {
                   onChange={(event) => this.handleItemChange(index, event)}
                   name="allPurchases"
                 />
-
-                <select name="category" value={this.state.allCategories} onChange={(event) => this.handleCategories(index, event)}>
-                  <option value="Clothing">Clothing</option>
+              </div>
+            ))}
+            {this.state.allCategories.map((category, index) =>(
+              <div>
+                <select name="category" value={category} onChange={(event) => this.handleCategories(index, event)}>
+                  <option value="None">Category</option>
                   <option value="Food">Food</option>
                   <option value="Electronics">Electronics</option>
+                  <option value="Clothing">Clothing</option>
                 </select>
-
-
-              </div>
+                </div>
             ))}
 
             <span className="input-group">
