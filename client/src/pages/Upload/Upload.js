@@ -58,29 +58,32 @@ class Upload extends Component {
     console.log(purchaseArr)
 
     this.setState({
-      store: data[0].replace(",", "")
+      store: data[0].replace(",", ""),
+      allPurchases: purchaseArr
+
     })
     console.log(`The store name is: ${this.state.store}`)
-    this.handleItems(purchaseArr)
+    console.log(this.state.allPurchases)
+    // this.handleItems(purchaseArr)
   }
 
-  handleItems = data => {
-    const purchaseArr = []
-    data.forEach(element => {
-      const item = element.slice(0, element.indexOf("$"))
-      const cost = element.slice(element.indexOf("$"), 100)
-      console.log(item, cost)
-      const purchaseObj = {
-        item: item,
-        cost: cost
-      }
-      purchaseArr.push(purchaseObj)
-    })
-    this.setState({
-      allPurchases: purchaseArr
-    })
-    console.log(this.state.allPurchases)
-  }
+  // handleItems = data => {
+    // const purchaseArr = []
+    // data.forEach(element => {
+    //   const item = element.slice(0, element.indexOf("$"))
+    //   const cost = element.slice(element.indexOf("$"), 100)
+    //   console.log(item, cost)
+    //   const purchaseObj = {
+    //     item: item,
+    //     cost: cost
+    //   }
+    //   purchaseArr.push(purchaseObj)
+    // })
+    // this.setState({
+    //   allPurchases: purchaseArr
+    // })
+    // console.log(this.state.allPurchases)
+  // }
 
   onPreviewDrop = (file) => {
     this.setState({
@@ -93,6 +96,16 @@ class Upload extends Component {
     console.log({ name, value })
     this.setState({
       [name]: value
+    });
+  };
+
+  handleItemChange = (index, event) => {
+console.log("The index: " + index)
+  let copyOfPurchases = [...this.state.allPurchases]
+  copyOfPurchases[index] = event.target.value
+  console.log(copyOfPurchases[index])
+    this.setState({
+      allPurchases: copyOfPurchases
     });
   };
 
@@ -160,12 +173,27 @@ class Upload extends Component {
             name="date"
           />
           <br/>
-          <input
+
+            {this.state.allPurchases.map((purchase, index) => (
+              <div>
+                <input
+              value={purchase}
+              onChange={(event) => this.handleItemChange(index, event)}
+              name="allPurchases"
+              />
+             </div>
+            ))}
+
+          {/* {this.state.allPurchases.map(purchase => (
+
+            <input
             // value={this.state.date}
             // onChange={this.handleInputChange}
             placeholder="Purchase"
             name="purchase"
-          />
+            />
+          <br/>
+          ))} */}
 
 
           <span className="input-group">
