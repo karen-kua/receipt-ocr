@@ -161,6 +161,24 @@ class Upload extends Component {
     }, () => console.log(this.state.allCategories))
   }
 
+  formSubmit = event => {
+    event.preventDefault();
+    
+    for (let i=0; i<this.state.allItems.length; i++) {
+      let requestObj = {
+        store: this.state.store,
+        street: this.state.street,
+        city: this.state.city,
+        province: this.state.province,
+        postalCode: this.state.postalCode,
+        data: this.state.data,
+        item: this.state.allItems[i],
+        cost: this.state.allCosts[i],
+        category: this.state.allCategories[i]
+      }
+      console.log(requestObj)
+    }
+  }
   // saveReceiptData = data => {
   //     API.saveExpense({
   //       store: this.state.store,
@@ -184,14 +202,7 @@ class Upload extends Component {
       width: 100,
       height: 100,
     };
-
-    const makeAllCategories = () => {
-      console.log("Hiii")
-    }
-
     return (
-
-
       <div className="app">
 
         <h1>Receipt Upload</h1>
@@ -218,7 +229,7 @@ class Upload extends Component {
  
 
         <div className="inputForm">
-          <form onSubmit={this.onFormSubmit}>
+          <form>
             <h3>Store:</h3>
             <input
               value={this.state.store}
@@ -296,13 +307,8 @@ class Upload extends Component {
                   </span>
               </div>
             ))}
-            {/* {this.state.allCategories.map((category, index) =>(
-              <div>
-                </div>
-            ))} */}
-
             <span className="input-group">
-              <button type="submit" className="btn btn-secondary">
+              <button type="submit" onClick={this.formSubmit} className="btn btn-secondary">
                 Submit
               </button>
             </span>
