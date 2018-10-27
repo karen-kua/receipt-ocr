@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 // import { render } from "react-dom";
-// import API from "../../utils/API";
+import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
 import axios from "axios"
 // import DeleteBtn from "../../components/DeleteBtn";
@@ -20,7 +20,9 @@ class Upload extends Component {
     city: "",
     province: "",
     postalCode: "",
-    allPurchases: []
+    allPurchases: [],
+    allCategories: ["Food", "Food", "Food", "Food", "Food", "Food", "Food"],
+    category: ""
   };
 
   componentDidMount() {
@@ -31,26 +33,25 @@ class Upload extends Component {
     console.log("Upload Component has mounted!")
   };
 
-  
+
   onDrop = (file) => {
     // POST to a test endpoint for demo purposes
     let photo = new FormData();
     photo.append('photo', file[0]);
     axios.post('/api/expense/upload', photo)
-    .then(res => {
-      console.log(res);
-      this.setState({
-        response: res.data
+      .then(res => {
+        console.log(res);
+        this.setState({
+          response: res.data
+        })
+        this.getStoreAndItems(this.state.response)
       })
-      this.getStoreAndItems(this.state.response)
-    })
-    .catch(err => console.log(err))
+      .catch(err => console.log(err))
     this.setState({
       file: this.state.file.concat(file),
     });
-    // req.end();
   }
-  
+
   getStoreAndItems = data => {
     let purchaseArr = [];
     data.forEach(element => {
@@ -84,16 +85,53 @@ class Upload extends Component {
     });
   };
 
-handleItemChange = (index, event) => {
-console.log("The index: " + index)
-  let copyOfPurchases = [...this.state.allPurchases]
-  copyOfPurchases[index] = event.target.value
-  console.log(copyOfPurchases[index])
+  handleItemChange = (index, event) => {
+    console.log("The index: " + index)
+    let copyOfPurchases = [...this.state.allPurchases]
+    copyOfPurchases[index] = event.target.value
+    console.log(copyOfPurchases[index])
     this.setState({
       allPurchases: copyOfPurchases
     });
-  console.log(this.state.allPurchases)
+    console.log(this.state.allPurchases)
   };
+
+  handleDropDown = (event) => {
+    this.setState({
+      category: event.target.value
+    }, () => console.log(this.state.category)
+  );
+    console.log("This is the event value: " + event.target.value)
+  }
+
+  handleCategories = (index, event) => {
+    console.log("The category index is: " + index)
+    console.log("This is the event value: " + event.target.value)
+    let copyOfCategories = [...this.state.allCategories]
+    copyOfCategories[index] = event.target.value
+    this.setState({
+      allCategories: copyOfCategories
+    }, () => console.log(this.state.allCategories)
+  );
+  
+  }
+
+  // saveReceiptData = data => {
+  //     API.saveExpense({
+  //       store: this.state.store,
+  //       street: this.state.street,
+  //       city: this.state.city,
+  //       province: this.state.province,
+  //       postalCode: this.state.postalCode,
+  //       date: this.state.data,
+  //       item: /// 
+  //       cost: ///
+  //     })
+  //       .then(res => {
+
+  //       })
+  //       .catch(err => console.log(err))
+  //   }
 
   render() {
 
@@ -135,75 +173,90 @@ console.log("The index: " + index)
         </div> */}
 
         <div className="inputForm">
-        <form onSubmit={this.onFormSubmit}>
-        <h3>Store:</h3>
-          <input
-            value={this.state.store}
-            onChange={this.handleInputChange}
-            // placeholder="Store Name"
-            name="store"
-          />
-          <br/>
-          <h3>Street Address:</h3>
-          <input
-            value={this.state.street}
-            onChange={this.handleInputChange}
-            // placeholder="Street Address of Your Purchase"
-            name="street"
-          />
-          <br/>
-          <h3>City:</h3>
-          <input
-            value={this.state.city}
-            onChange={this.handleInputChange}
-            // placeholder="City of Your Purchase"
-            name="city"
-          />
-          <br/>
-          <h3>Province:</h3>
-          <input
-            value={this.state.province}
-            onChange={this.handleInputChange}
-            // placeholder="Province of Your Purchase"
-            name="province"
-          />
-          <br/>
-          <h3>Postal Code:</h3>
-          <input
-            value={this.state.postalCode}
-            onChange={this.handleInputChange}
-            // placeholder="Postal Code  of Your Purchase"
-            name="postalCode"
-          />
-          <br/>
-          <h3>Date of the Purchase:</h3>
-          <input
-            value={this.state.date}
-            onChange={this.handleInputChange}
-            // placeholder="Date of Your Purchase (YYYY/MM/DD)"
-            name="date"
-          />
-          <br/>
-          <h3>Items:</h3>
+          <form onSubmit={this.onFormSubmit}>
+            <h3>Store:</h3>
+            <input
+              value={this.state.store}
+              onChange={this.handleInputChange}
+              // placeholder="Store Name"
+              name="store"
+            />
+            <br />
+            <h3>Street Address:</h3>
+            <input
+              value={this.state.street}
+              onChange={this.handleInputChange}
+              // placeholder="Street Address of Your Purchase"
+              name="street"
+            />
+            <br />
+            <h3>City:</h3>
+            <input
+              value={this.state.city}
+              onChange={this.handleInputChange}
+              // placeholder="City of Your Purchase"
+              name="city"
+            />
+            <br />
+            <h3>Province:</h3>
+            <input
+              value={this.state.province}
+              onChange={this.handleInputChange}
+              // placeholder="Province of Your Purchase"
+              name="province"
+            />
+            <br />
+            <h3>Postal Code:</h3>
+            <input
+              value={this.state.postalCode}
+              onChange={this.handleInputChange}
+              // placeholder="Postal Code  of Your Purchase"
+              name="postalCode"
+            />
+            <br />
+            <h3>Date of the Purchase:</h3>
+            <input
+              value={this.state.date}
+              onChange={this.handleInputChange}
+              // placeholder="Date of Your Purchase (YYYY/MM/DD)"
+              name="date"
+            />
+            <br />
+            <h3>Items:</h3>
             {this.state.allPurchases.map((purchase, index) => (
               <div key={index}>
                 <input
-              value={purchase}
-              onChange={(event) => this.handleItemChange(index, event)}
-              name="allPurchases"
-              />
-             </div>
+                  value={purchase}
+                  onChange={(event) => this.handleItemChange(index, event)}
+                  name="allPurchases"
+                />
+
+                <select name="category" value={this.state.allCategories} onChange={(event) => this.handleCategories(index, event)}>
+                  <option value="Clothing">Clothing</option>
+                  <option value="Food">Food</option>
+                  <option value="Electronics">Electronics</option>
+                </select>
+
+
+              </div>
             ))}
 
-          <span className="input-group">
-            <button type="submit" className="btn btn-secondary">
-              Submit
+            <span className="input-group">
+              <button type="submit" className="btn btn-secondary">
+                Submit
               </button>
-          </span>
-        </form>
-</div>
-
+            </span>
+          </form>
         </div>
+
+
+        <select name="category" value={this.state.category} onChange={this.handleDropDown}>
+          <option value="Clothing">Clothing</option>
+          <option value="Food">Food</option>
+          <option value="Electronics">Electronics</option>
+        </select>
+
+      </div>
     );
   }
 }

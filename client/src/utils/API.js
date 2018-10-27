@@ -16,6 +16,6 @@ export default {
 
   // Saves an expense to the database
   saveExpense: function(expenseData) {
-    return axios.post("/api/expense/upload", expenseData);
+    return axios.post("/api/expense/save", expenseData);
   }
 };
