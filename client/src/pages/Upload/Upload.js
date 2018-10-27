@@ -13,7 +13,10 @@ import axios from "axios"
 class Upload extends Component {
   state = {
     file: [],
-    response = []
+    response: [],
+    date: "",
+    store: "hell",
+    address: ""
   };
 
   componentDidMount() {
@@ -48,6 +51,14 @@ class Upload extends Component {
     });
   }
 
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    console.log({ name, value })
+    this.setState({
+      [name]: value
+    });
+  };
+
   render() {
 
     const previewStyle = {
@@ -58,28 +69,20 @@ class Upload extends Component {
 
     return (
 
-    
+
       <div className="app">
-        <h1>react-dropzone Demo</h1>
 
-        <h2>Basic Example</h2>
-        <ReactDropzone
-          onDrop={this.onDrop}
-        >
-          Drop your best gator GIFs here!!
-        </ReactDropzone>
-
-        <h2>Image Previews</h2>
+        <h1>Receipt Upload</h1>
         <ReactDropzone
           accept="image/*"
           // onDrop={this.onPreviewDrop}
           onDrop={this.onDrop}
         >
-          Drop an image, get a preview!
+          Drag and drop your receipt here!
         </ReactDropzone>
         {this.state.file.length > 0 &&
           <Fragment>
-            <h3>Previews</h3>
+            <h2>Previews</h2>
             {this.state.file.map((file) => (
               <img
                 alt="Preview"
@@ -90,8 +93,53 @@ class Upload extends Component {
             ))}
           </Fragment>
         }
+        <h2>Response demo</h2>
+        <div>
+          {this.state.response}
+        </div>
 
-      </div>
+      
+
+        <div className="inputForm">
+        <form onSubmit={this.onFormSubmit}>
+          <input
+            value={this.state.store}
+            onChange={this.handleInputChange}
+            placeholder="Store Name"
+            name="store"
+          />
+          <br/>
+          <input
+            value={this.state.address}
+            onChange={this.handleInputChange}
+            placeholder="Address of Your Purchase"
+            name="address"
+          />
+          <br/>
+          <input
+            value={this.state.date}
+            onChange={this.handleInputChange}
+            placeholder="Date of Your Purchase (YYYY/MM/DD)"
+            name="date"
+          />
+          <br/>
+          <input
+            // value={this.state.date}
+            // onChange={this.handleInputChange}
+            placeholder="Purchase"
+            name="purchase"
+          />
+
+
+          <span className="input-group">
+            <button type="submit" className="btn btn-secondary">
+              Submit
+              </button>
+          </span>
+        </form>
+</div>
+
+        </div>
     );
   }
 }

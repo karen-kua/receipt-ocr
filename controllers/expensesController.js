@@ -21,7 +21,7 @@ module.exports = {
                 console.log('space');
               } else {
       
-                let newElement = newLines[i] + "+++"
+                let newElement = newLines[i] + ","
                 newArray.push(newElement)
               }
             }
