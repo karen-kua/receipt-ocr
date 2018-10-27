@@ -57,6 +57,7 @@ class Upload extends Component {
     let purchaseArr = [];
     data.forEach(element => {
       if (element.includes("$")) {
+        element = element.replace(",", "")
         purchaseArr.push(element)
       }
     })
@@ -102,6 +103,21 @@ class Upload extends Component {
     }, () => console.log(this.state.category)
   );
     console.log("This is the event value: " + event.target.value)
+  }
+
+  deleteItem = (index, event) => {
+    event.preventDefault();
+    let copyOfPurchases = [...this.state.allPurchases]
+    let copyOfCategories = [...this.state.allCategories]
+    copyOfCategories.splice(index,1)
+    copyOfPurchases.splice(index,1)
+    this.setState({
+      allPurchases: copyOfPurchases,
+      allCategories: copyOfCategories
+    }, () => {
+      console.log(this.state.allPurchases)
+      console.log(this.state.allCategories)
+    })
   }
 
   handleCategories = (index, event) => {
@@ -239,6 +255,11 @@ class Upload extends Component {
                   onChange={(event) => this.handleItemChange(index, event)}
                   name="allPurchases"
                 />
+                <span>
+                  <button type="submit" onClick={(event) => this.deleteItem(index, event)}>
+                  Delete
+                  </button>
+                  </span>
               </div>
             ))}
             {this.state.allCategories.map((category, index) =>(
@@ -259,14 +280,6 @@ class Upload extends Component {
             </span>
           </form>
         </div>
-
-
-        <select name="category" value={this.state.category} onChange={this.handleDropDown}>
-          <option value="Clothing">Clothing</option>
-          <option value="Food">Food</option>
-          <option value="Electronics">Electronics</option>
-        </select>
-
       </div>
     );
   }
