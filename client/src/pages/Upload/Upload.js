@@ -171,12 +171,16 @@ class Upload extends Component {
         city: this.state.city,
         province: this.state.province,
         postalCode: this.state.postalCode,
-        data: this.state.data,
+        date: this.state.date,
         item: this.state.allItems[i],
         cost: this.state.allCosts[i],
         category: this.state.allCategories[i]
       }
       console.log(requestObj)
+      API.saveExpense(requestObj)
+      .then(res => console.log("Saved to database!"))
+      .catch(err => console.log(err));
+
     }
   }
   // saveReceiptData = data => {
