@@ -11,6 +11,7 @@ import ReactDropzone from "react-dropzone";
 
 class Upload extends Component {
   state = {
+    showInput: false,
     file: [],
     response: [],
     date: "",
@@ -42,13 +43,14 @@ class Upload extends Component {
       .then(res => {
         console.log(res);
         this.setState({
-          response: res.data
+          response: res.data,
+          showInput: true
         })
         this.getStoreAndItems(this.state.response)
       })
       .catch(err => console.log(err))
     this.setState({
-      file: this.state.file.concat(file),
+      file: this.state.file.concat(file)
     });
   }
 
@@ -217,6 +219,20 @@ class Upload extends Component {
   }
   }
 
+reUpload = (event) => {
+  event.preventDefault();
+  console.log("I want to restart")
+  this.setState({
+    showInput: false,
+    file: [],
+    store: "",
+    allCategories: [],
+    allCosts: [],
+    allItems: [],
+    response: []
+  })
+}
+
 
   render() {
     const previewStyle = {
@@ -225,12 +241,14 @@ class Upload extends Component {
       height: 100,
     };
     return (
-      <div className="app">
+      <div className="container">
+
+      {!this.state.showInput ? 
+      <div className="uploadArea">
 
         <h1>Receipt Upload</h1>
         <ReactDropzone
           accept="image/*"
-          // onDrop={this.onPreviewDrop}
           onDrop={this.onDrop}
         >
           Drag and drop your receipt here!
@@ -248,9 +266,14 @@ class Upload extends Component {
             ))}
           </Fragment>
         }
+        </div>
+        : null}
  
-
-        <div className="inputForm">
+        {this.state.showInput ? 
+ <div className="inputForm">
+          <button className="btn btn-secondary" onClick={this.reUpload}>
+          Start Over
+          </button>
           <form>
             <h3>Store:</h3>
             <input
@@ -339,6 +362,7 @@ class Upload extends Component {
             {this.state.submitStatus}
             </div>
         </div>
+        : null }
       </div>
     );
   }
