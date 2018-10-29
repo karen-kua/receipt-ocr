@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
-// import axios from "axios"
+import axios from "axios"
 // import DeleteBtn from "../../components/DeleteBtn";
 // import Jumbotron from "../../components/Jumbotron";
 // import { Link } from "react-router-dom";
@@ -11,6 +11,7 @@ import ReactDropzone from "react-dropzone";
 
 class Upload extends Component {
   state = {
+    progress: "0%",
     showInput: false,
     file: [],
     response: [],
@@ -38,8 +39,20 @@ class Upload extends Component {
   onDrop = (file) => {
     let photo = new FormData();
     photo.append('photo', file[0]);
-    API.uploadReceipt(photo)
-    // axios.post('/api/expense/upload', photo)
+    // API.uploadReceipt(photo)
+    axios.post('/api/expense/upload', photo, {
+      onUploadProgress: (progressEvent) => {
+        let percentageCompleted = Math.round((progressEvent.loaded * 100)/
+          progressEvent.total);
+        percentageCompleted = percentageCompleted.toString() + "%";
+        if (percentageCompleted == "100%") {
+          percentageCompleted = percentageCompleted.concat("...Please wait while we analyze the image.")
+          this.setState({progress:percentageCompleted})
+        } else {
+          this.setState({progress: percentageCompleted})
+        }
+      }
+    })
       .then(res => {
         console.log(res);
         this.setState({
@@ -229,7 +242,8 @@ reUpload = (event) => {
     allCategories: [],
     allCosts: [],
     allItems: [],
-    response: []
+    response: [],
+    progress: "0%"
   })
 }
 
@@ -266,6 +280,9 @@ reUpload = (event) => {
             ))}
           </Fragment>
         }
+        <div>
+          File upload progress: {this.state.progress}
+          </div>
         </div>
         : null}
  
