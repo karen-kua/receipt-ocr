@@ -1,13 +1,18 @@
-// const mongoose = require("mongoose");
-// const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-// const expenseSchema = new Schema({
-//   title: { type: String, required: true },
-//   author: { type: String, required: true },
-//   synopsis: String,
-//   date: { type: Date, default: Date.now }
-// });
+const expenseSchema = new Schema({
+  store: { type: String, required: true },
+  street: { type: String, required: true },
+  city: { type: String, required: true },
+  province: { type: String, required: true },
+  postalCode: { type: String, required: true },
+  date: { type: String, required: true },
+  item: { type: String, required: true },
+  cost: { type: Number, required: true },
+  category: { type: String, required: true }
+});
 
-// const Book = mongoose.model("Book", bookSchema);
+const Expense = mongoose.model("Expense", expenseSchema);
 
-// module.exports = Book;
+module.exports = Expense;
