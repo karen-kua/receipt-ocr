@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from "react";
-// import { render } from "react-dom";
 import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
-import axios from "axios"
+// import axios from "axios"
 // import DeleteBtn from "../../components/DeleteBtn";
 // import Jumbotron from "../../components/Jumbotron";
 // import { Link } from "react-router-dom";
@@ -23,6 +22,7 @@ class Upload extends Component {
     allItems: [],
     allCosts: [],
     allCategories: [],
+    submitStatus: ""
   };
 
   componentDidMount() {
@@ -35,10 +35,10 @@ class Upload extends Component {
 
 
   onDrop = (file) => {
-    // POST to a test endpoint for demo purposes
     let photo = new FormData();
     photo.append('photo', file[0]);
-    axios.post('/api/expense/upload', photo)
+    API.uploadReceipt(photo)
+    // axios.post('/api/expense/upload', photo)
       .then(res => {
         console.log(res);
         this.setState({
@@ -163,8 +163,31 @@ class Upload extends Component {
 
   formSubmit = event => {
     event.preventDefault();
+    this.setState({
+      submitStatus: ""
+    })
+   
+    console.log(
+      `Store: ${this.state.store}\n Street: ${this.state.street}\n City: ${this.state.city}\n Province: ${this.state.province}\n
+      PostalCode: ${this.state.postalCode}\n Date: ${this.state.date}`
+    )
+
+    if (this.state.store !== "" &&
+        this.state.street !== "" && 
+        this.state.city !== "" &&
+        this.state.province !== "" &&
+        this.state.postalCode !== "" &&
+        this.state.date !== "" &&
+        this.state.allItems !== [] &&
+        this.state.allCategories !== [] &&
+        this.state.allCosts !== []) {
+
     
+
     for (let i=0; i<this.state.allItems.length; i++) {
+      let costNum = this.state.allCosts[i];
+      costNum = parseFloat(costNum.replace("$", ""));
+      costNum = parseFloat(costNum.toFixed(2))
       let requestObj = {
         store: this.state.store,
         street: this.state.street,
@@ -173,32 +196,27 @@ class Upload extends Component {
         postalCode: this.state.postalCode,
         date: this.state.date,
         item: this.state.allItems[i],
-        cost: this.state.allCosts[i],
+        cost: costNum,
         category: this.state.allCategories[i]
       }
       console.log(requestObj)
       API.saveExpense(requestObj)
-      .then(res => console.log("Saved to database!"))
+        .then(res => {
+          console.log("Saved to database!")
+          this.setState({
+            submitStatus: "Submission successful!"
+          })
+        })
       .catch(err => console.log(err));
-
     }
+  } else {
+    this.setState({
+      submitStatus: "Unsuccessful submission! Please ensure all fields are filed out."
+    })
+    console.log("Missing field")
   }
-  // saveReceiptData = data => {
-  //     API.saveExpense({
-  //       store: this.state.store,
-  //       street: this.state.street,
-  //       city: this.state.city,
-  //       province: this.state.province,
-  //       postalCode: this.state.postalCode,
-  //       date: this.state.data,
-  //       item: /// 
-  //       cost: ///
-  //     })
-  //       .then(res => {
+  }
 
-  //       })
-  //       .catch(err => console.log(err))
-  //   }
 
   render() {
     const previewStyle = {
@@ -317,6 +335,9 @@ class Upload extends Component {
               </button>
             </span>
           </form>
+          <div>
+            {this.state.submitStatus}
+            </div>
         </div>
       </div>
     );

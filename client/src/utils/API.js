@@ -15,6 +15,10 @@ export default {
 //   },
 
   // Saves an expense to the database
+  uploadReceipt: function(photo) {
+    return axios.post('/api/expense/upload', photo)
+  },
+
   saveExpense: function(expenseData) {
     return axios.post("/api/expense/save", expenseData);
   }
