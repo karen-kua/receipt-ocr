@@ -21,5 +21,22 @@ export default {
 
   saveExpense: function(expenseData) {
     return axios.post("/api/expense/save", expenseData);
+  },
+
+  browseD: function(day) {
+    return axios.get("/api/expense/browse-day", day)
   }
+
+  // browseM: function(month) {
+  //   return axios.get("/api/expense/browse-month", month)
+  // },
+
+  // browseY: function(year) {
+  // return axios.get("/api/expense/browse-year", year)
+  // },
+
+  // browseC: function(category) {
+  //   return axios.get("/api/expense/browse-category", category)
+  //   },
+
 };

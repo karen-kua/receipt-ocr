@@ -36,6 +36,14 @@ module.exports = {
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+
+  browseD: function(req, res) {
+    console.log(req)
+    db.Expense
+    .findAll({day: 21})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
   }
     // All the other back-end callbacks need to go here. 
     // I left the book examples here in case you need them. 
