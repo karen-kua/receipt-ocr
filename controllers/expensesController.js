@@ -42,7 +42,7 @@ module.exports = {
     console.log("This is")
     console.log(req.query)
     db.Expense
-    .find({day: parseInt(req.query.day)})
+    .find({day: parseInt(req.query.day)}).sort({fullDate: -1})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
   }
