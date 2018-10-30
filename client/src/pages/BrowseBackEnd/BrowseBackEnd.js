@@ -88,9 +88,17 @@ class BrowseBackEnd extends Component {
         let reqObj;
         switch (switchExp) {
             case "day":
-                console.log("day");
-                API.browseD(this.state.day)
-                .then(res => this.setState({response: res}))
+                console.log(this.state.day);
+                reqObj = {
+                    day: this.state.day
+                }
+                console.log(reqObj)
+                // API.browseD(reqObj)
+                axios.get("/api/expense/browse-day", {params: reqObj})
+                .then(res => {
+                    this.setState({response: res})
+                    console.log(this.state.response)
+                })
                 .catch(err => console.log(err))
                 break;
             // case "month":

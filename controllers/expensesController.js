@@ -39,9 +39,10 @@ module.exports = {
   },
 
   browseD: function(req, res) {
-    console.log(req)
+    console.log("This is")
+    console.log(req.query)
     db.Expense
-    .findAll({day: 21})
+    .find({day: parseInt(req.query.day)})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
   }

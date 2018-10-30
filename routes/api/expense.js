@@ -13,17 +13,17 @@ router.route("/upload")
 router.route("/save")
   .post(expensesController.create)
 
-router.route("/browseday")
+router.route("/browse-day")
   .get(expensesController.browseD)
 
-router.route("/browse-month")
-  .get(expensesController.browseM)
+// router.route("/browse-month")
+//   .get(expensesController.browseM)
 
-router.route("/browse-year")
-  .get(expensesController.browseY)
+// router.route("/browse-year")
+//   .get(expensesController.browseY)
 
-router.route("/browse-category")
-  .get(expensesController.browseC)
+// router.route("/browse-category")
+//   .get(expensesController.browseC)
 // // Matches with "/api/books/:id"
 // router
 //   .route("/:id")
