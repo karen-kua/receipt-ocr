@@ -51,4 +51,12 @@ export default {
     return axios.get("/api/expense/browse-day-category", {params: dayCategory})
   },
 
+  browseMY: function(monthYear) {
+    return axios.get("/api/expense/browse-month-year", {params: monthYear})
+  },
+
+  browseMC: function(monthCategory) {
+    return axios.get("/api/expense/browse-month-category", {params: monthCategory})
+  },
+
 };

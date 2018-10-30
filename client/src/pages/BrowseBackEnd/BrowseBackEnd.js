@@ -26,10 +26,10 @@ class BrowseBackEnd extends Component {
 
     state = {
         response: [],
-        day: 21,
-        month: "",
+        day: "",
+        month: 3,
         year: "",
-        category: "Home",
+        category: "Food",
         searchQuery: ""
     }
 
@@ -77,6 +77,12 @@ class BrowseBackEnd extends Component {
             switchExp = "year&category"
         } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category == "") {
             switchExp = "day&month&year"
+        } else if (this.state.day == "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
+            switchExp = "month&year&category"
+        } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category !== "") {
+            switchExp = "day&year&category"
+        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category !== "") {
+            switchExp = "day&month&category"
         } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
             switchExp = "all 4"
         }
@@ -181,26 +187,34 @@ class BrowseBackEnd extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            // case "month&year":
-            //     console.log("month&year");
-            //      reqObj = {
-            //         month: this.state.month,
-            //         year: this.state.year
-            //     }
-            //     API.browseMY(reqObj)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
-            // case "month&category":
-            //     console.log("month&category");
-            //      reqObj = {
-            //         month: this.state.month,
-            //         category: this.state.category
-            //     }
-            //     API.browseMC(reqObj)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
+            case "month&year":
+                console.log("month&year");
+                reqObj = {
+                    month: this.state.month,
+                    year: this.state.year
+                }
+                console.log(reqObj)
+                API.browseMY(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
+            case "month&category":
+                console.log("month&category");
+                reqObj = {
+                    month: this.state.month,
+                    category: this.state.category
+                }
+                console.log(reqObj)
+                API.browseMC(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
             // case "year&category":
             //     console.log("year&category");
             //      reqObj = {
@@ -222,6 +236,16 @@ class BrowseBackEnd extends Component {
             //     .then(res => this.setState({response: res}))
             //     .catch(err => console.log(err))
             //     break;
+            // case "month&year&category":
+            //     console.log("month&year&category");
+            //     break;
+            // case "day&year&category":
+            //     console.log("day&year&category");
+            //     break;
+            // case "day&month&category":
+            //     console.log("day&month&category");
+            //     break;
+
             // case "all 4":
             //     console.log("all 4");
             //      reqObj = {
