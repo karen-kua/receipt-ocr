@@ -59,4 +59,27 @@ export default {
     return axios.get("/api/expense/browse-month-category", {params: monthCategory})
   },
 
+  browseYC: function(yearCategory) {
+    return axios.get("/api/expense/browse-year-category", {params: yearCategory})
+  },
+
+  browseDMY: function(dayMonthYear) {
+    return axios.get("/api/expense/browse-day-month-year", {params: dayMonthYear})
+  },
+
+  browseMYC: function(monthYearCategory) {
+    return axios.get("/api/expense/browse-month-year-category", {params: monthYearCategory})
+  },
+
+  browseDYC: function(dayYearCategory) {
+    return axios.get("/api/expense/browse-day-year-category", {params: dayYearCategory})
+  },
+
+  browseDMC: function(dayMonthCategory) {
+    return axios.get("/api/expense/browse-day-month-category", {params: dayMonthCategory})
+  },
+
+  browseDMYC: function(allFour) {
+    return axios.get("/api/expense/browse-day-month-year-category", {params: allFour})
+  },
 };

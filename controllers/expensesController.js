@@ -126,7 +126,91 @@ module.exports = {
     .sort({fullDate: -1})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
-  }
+  },
+
+  browseYC: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({year: parseInt(req.query.year), category: req.query.category})
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseDMY: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({
+      day: parseInt(req.query.day), 
+      month: parseInt(req.query.month), 
+      year: parseInt(req.query.year)
+    })
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseMYC: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({
+      month: parseInt(req.query.month), 
+      year: parseInt(req.query.year),
+      category: req.query.category, 
+    })
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseDYC: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({
+      day: parseInt(req.query.day), 
+      year: parseInt(req.query.year),
+      category: req.query.category, 
+    })
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseDMC: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({
+      day: parseInt(req.query.day), 
+      month: parseInt(req.query.month),
+      category: req.query.category, 
+    })
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseDMYC: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({
+      day: parseInt(req.query.day), 
+      month: parseInt(req.query.month),
+      year: parseInt(req.query.year),
+      category: req.query.category, 
+    })
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+
+
     // All the other back-end callbacks need to go here. 
     // I left the book examples here in case you need them. 
 

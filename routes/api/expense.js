@@ -40,7 +40,25 @@ router.route("/browse-month-year")
 router.route("/browse-month-category")
   .get(expensesController.browseMC)
 
-// // Matches with "/api/books/:id"
+router.route("/browse-year-category")
+  .get(expensesController.browseYC)
+
+router.route("/browse-day-month-year")
+  .get(expensesController.browseDMY)
+
+router.route("/browse-month-year-category")
+  .get(expensesController.browseMYC)
+
+router.route("/browse-day-year-category")
+  .get(expensesController.browseDYC)
+
+router.route("/browse-day-month-category")
+  .get(expensesController.browseDMC)
+
+router.route("/browse-day-month-year-category")
+  .get(expensesController.browseDMYC)
+
+  // // Matches with "/api/books/:id"
 // router
 //   .route("/:id")
 //   .get(booksController.findById)
