@@ -24,19 +24,19 @@ export default {
   },
 
   browseD: function(day) {
-    return axios.get("/api/expense/browse-day", day)
-  }
+    return axios.get("/api/expense/browse-day", {params: day})
+  },
 
-  // browseM: function(month) {
-  //   return axios.get("/api/expense/browse-month", month)
-  // },
+  browseM: function(month) {
+    return axios.get("/api/expense/browse-month", {params: month})
+  },
 
-  // browseY: function(year) {
-  // return axios.get("/api/expense/browse-year", year)
-  // },
+  browseY: function(year) {
+  return axios.get("/api/expense/browse-year", {params: year})
+  },
 
-  // browseC: function(category) {
-  //   return axios.get("/api/expense/browse-category", category)
-  //   },
+  browseC: function(category) {
+    return axios.get("/api/expense/browse-category", {params: category})
+    },
 
 };

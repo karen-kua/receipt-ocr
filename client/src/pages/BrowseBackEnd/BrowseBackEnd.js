@@ -26,10 +26,10 @@ class BrowseBackEnd extends Component {
 
     state = {
         response: [],
-        day: 21,
+        day: "",
         month: "",
         year: "",
-        category: "",
+        category: "Home",
         searchQuery: ""
     }
 
@@ -39,7 +39,7 @@ class BrowseBackEnd extends Component {
 
     // search by: 
 
-    // -day only
+    // -day only (done) 
     // -month only
     // -year only
     // -category only
@@ -61,11 +61,11 @@ class BrowseBackEnd extends Component {
             switchExp = "month"
         } else if (this.state.day == "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
             switchExp = "year"
-        }  else if (this.state.day == "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
+        } else if (this.state.day == "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
             switchExp = "category"
-        }  else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
+        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
             switchExp = "day&month"
-        }  else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
+        } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
             switchExp = "day&year"
         } else if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
             switchExp = "day&category"
@@ -88,37 +88,54 @@ class BrowseBackEnd extends Component {
         let reqObj;
         switch (switchExp) {
             case "day":
-                console.log(this.state.day);
                 reqObj = {
                     day: this.state.day
                 }
                 console.log(reqObj)
-                // API.browseD(reqObj)
-                axios.get("/api/expense/browse-day", {params: reqObj})
-                .then(res => {
-                    this.setState({response: res})
-                    console.log(this.state.response)
-                })
-                .catch(err => console.log(err))
+                API.browseD(reqObj)
+                    // axios.get("/api/expense/browse-day", {params: reqObj})
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
                 break;
-            // case "month":
-            //     console.log("month")
-            //     API.browseM(this.state.month)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
-            // case "year":
-            //     console.log("year")
-            //     API.browseY(this.state.year)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
-            // case "category":
-            //     console.log("category");
-            //     API.browseC(this.state.category)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
+            case "month":
+                reqObj = {
+                    month: this.state.month
+                }
+                console.log(reqObj)
+                API.browseM(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
+            case "year":
+                reqObj = {
+                    year: this.state.year
+                }
+                console.log(reqObj)
+                API.browseY(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
+            case "category":
+                reqObj = {
+                    category: this.state.category
+                }
+                console.log(reqObj)
+                API.browseC(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
             // case "day&month":
             //     console.log("day&month");
             //      reqObj = {
@@ -208,18 +225,18 @@ class BrowseBackEnd extends Component {
     }
 
 
-        render() {
-            return (
-                <div>
+    render() {
+        return (
+            <div>
 
-                    <button onClick={this.onSubmit}>HELLO WORLD</button>
+                <button onClick={this.onSubmit}>HELLO WORLD</button>
 
 
-                </div>
+            </div>
 
-            )
-        }
-
+        )
     }
 
-    export default BrowseBackEnd;
+}
+
+export default BrowseBackEnd;

@@ -45,6 +45,33 @@ module.exports = {
     .find({day: parseInt(req.query.day)}).sort({fullDate: -1})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
+  },
+
+  browseM: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({month: parseInt(req.query.month)}).sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseY: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({year: parseInt(req.query.year)}).sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseC: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({category: req.query.category}).sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
   }
     // All the other back-end callbacks need to go here. 
     // I left the book examples here in case you need them. 
