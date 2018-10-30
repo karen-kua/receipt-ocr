@@ -24,7 +24,16 @@ router.route("/browse-year")
 
 router.route("/browse-category")
   .get(expensesController.browseC)
-  
+
+router.route("/browse-day-month")
+  .get(expensesController.browseDM)
+
+router.route("/browse-day-year")
+  .get(expensesController.browseDY)
+
+router.route("/browse-day-category")
+  .get(expensesController.browseDC)
+
 // // Matches with "/api/books/:id"
 // router
 //   .route("/:id")

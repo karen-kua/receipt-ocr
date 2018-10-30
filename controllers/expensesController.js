@@ -42,7 +42,8 @@ module.exports = {
     console.log("This is")
     console.log(req.query)
     db.Expense
-    .find({day: parseInt(req.query.day)}).sort({fullDate: -1})
+    .find({day: parseInt(req.query.day)})
+    .sort({fullDate: -1})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
   },
@@ -51,7 +52,8 @@ module.exports = {
     console.log("This is")
     console.log(req.query)
     db.Expense
-    .find({month: parseInt(req.query.month)}).sort({fullDate: -1})
+    .find({month: parseInt(req.query.month)})
+    .sort({fullDate: -1})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
   },
@@ -60,7 +62,8 @@ module.exports = {
     console.log("This is")
     console.log(req.query)
     db.Expense
-    .find({year: parseInt(req.query.year)}).sort({fullDate: -1})
+    .find({year: parseInt(req.query.year)})
+    .sort({fullDate: -1})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
   },
@@ -69,7 +72,38 @@ module.exports = {
     console.log("This is")
     console.log(req.query)
     db.Expense
-    .find({category: req.query.category}).sort({fullDate: -1})
+    .find({category: req.query.category})
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseDM: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({day: parseInt(req.query.day), month: parseInt(req.query.month)})
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseDY: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({day: parseInt(req.query.day), year: parseInt(req.query.year)})
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
+  browseDC: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({day: parseInt(req.query.day), category: req.query.category})
+    .sort({fullDate: -1})
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err));
   }

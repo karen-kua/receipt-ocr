@@ -37,6 +37,18 @@ export default {
 
   browseC: function(category) {
     return axios.get("/api/expense/browse-category", {params: category})
-    },
+  },
+
+  browseDM: function(dayMonth) {
+    return axios.get("/api/expense/browse-day-month", {params: dayMonth})
+  },
+
+  browseDY: function(dayYear) {
+    return axios.get("/api/expense/browse-day-year", {params: dayYear})
+  },
+
+  browseDC: function(dayCategory) {
+    return axios.get("/api/expense/browse-day-category", {params: dayCategory})
+  },
 
 };

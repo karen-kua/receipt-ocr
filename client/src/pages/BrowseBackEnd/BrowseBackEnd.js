@@ -26,7 +26,7 @@ class BrowseBackEnd extends Component {
 
     state = {
         response: [],
-        day: "",
+        day: 21,
         month: "",
         year: "",
         category: "Home",
@@ -88,12 +88,12 @@ class BrowseBackEnd extends Component {
         let reqObj;
         switch (switchExp) {
             case "day":
+            console.log("day");
                 reqObj = {
                     day: this.state.day
                 }
                 console.log(reqObj)
                 API.browseD(reqObj)
-                    // axios.get("/api/expense/browse-day", {params: reqObj})
                     .then(res => {
                         this.setState({ response: res.data })
                         console.log(this.state.response)
@@ -101,6 +101,7 @@ class BrowseBackEnd extends Component {
                     .catch(err => console.log(err))
                 break;
             case "month":
+            console.log("month");
                 reqObj = {
                     month: this.state.month
                 }
@@ -113,6 +114,7 @@ class BrowseBackEnd extends Component {
                     .catch(err => console.log(err))
                 break;
             case "year":
+            console.log("year");
                 reqObj = {
                     year: this.state.year
                 }
@@ -125,6 +127,7 @@ class BrowseBackEnd extends Component {
                     .catch(err => console.log(err))
                 break;
             case "category":
+            console.log("category");
                 reqObj = {
                     category: this.state.category
                 }
@@ -136,36 +139,48 @@ class BrowseBackEnd extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            // case "day&month":
-            //     console.log("day&month");
-            //      reqObj = {
-            //         day: this.state.day,
-            //         month: this.state.month
-            //     }
-            //     API.browseDM(reqObj)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
-            // case "day&year":
-            //     console.log("day&year");
-            //      reqObj = {
-            //         day: this.state.day,
-            //         year: this.state.year
-            //     }
-            //     API.browseDY(reqObj)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
-            // case "day&category":
-            //     console.log("day&category");
-            //      reqObj = {
-            //         day: this.state.day,
-            //         category: this.state.category
-            //     }
-            //     API.browseDC(reqObj)
-            //     .then(res => this.setState({response: res}))
-            //     .catch(err => console.log(err))
-            //     break;
+            case "day&month":
+                console.log("day&month");
+                 reqObj = {
+                    day: this.state.day,
+                    month: this.state.month
+                }
+                console.log(reqObj)
+                API.browseDM(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
+            case "day&year":
+                console.log("day&year");
+                reqObj = {
+                    day: this.state.day,
+                    year: this.state.year
+                }
+                console.log(reqObj)
+                API.browseDY(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
+            case "day&category":
+                console.log("day&category");
+                reqObj = {
+                    day: this.state.day,
+                    category: this.state.category
+                }
+                console.log(reqObj)
+                API.browseDC(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
             // case "month&year":
             //     console.log("month&year");
             //      reqObj = {
