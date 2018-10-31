@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
 import axios from "axios"
+import DatePicker from 'react-date-picker'
+
 // import DeleteBtn from "../../components/DeleteBtn";
 // import Jumbotron from "../../components/Jumbotron";
 // import { Link } from "react-router-dom";
@@ -15,7 +17,11 @@ class Upload extends Component {
     showInput: false,
     file: [],
     response: [],
-    date: "",
+    day: "",
+    month: "",
+    year: "",
+    fullDate: "",
+    datePicker: new Date(),
     store: "",
     street: "",
     city: "",
@@ -247,6 +253,40 @@ reUpload = (event) => {
   })
 }
 
+handleDatePicker = date => {
+  if (date === null ) {
+    console.log("null")
+    this.setState({datePicker: date})
+  } else {
+let keyDate = date.toLocaleString()
+keyDate = keyDate.slice(0, keyDate.indexOf(","))
+console.log(keyDate)
+const keyDateArr = keyDate.split("/")
+let fullDateArr = [];
+fullDateArr.push([keyDateArr[2], keyDateArr[0], keyDateArr[1]])
+fullDateArr = fullDateArr.join("").replace(",", "").replace(",","");
+fullDateArr = fullDateArr.split("")
+if (fullDateArr.length < 8) {
+  fullDateArr.splice(6,0,"0")
+}
+const fullDate = fullDateArr.join("")
+console.log(keyDateArr, fullDate)
+  this.setState({
+    datePicker: date,
+    day: parseInt(keyDateArr[1]),
+    month: parseInt(keyDateArr[0]),
+    year: parseInt(keyDateArr[2]),
+    fullDate: parseInt(fullDate)
+  }, () => {
+    console.log(this.state.datePicker)
+    console.log(
+      `Day: ${this.state.day}\n, 
+      Month: ${this.state.month}\n,
+      Year: ${this.state.year}\n,
+      fullDate: ${this.state.fullDate}`)
+  })
+}
+}
 
   render() {
     const previewStyle = {
@@ -256,6 +296,14 @@ reUpload = (event) => {
     };
     return (
       <div className="container">
+      
+      <div>
+        <DatePicker
+          onChange={this.handleDatePicker}
+          value={this.state.datePicker}
+          />
+      </div> 
+
 
       {!this.state.showInput ? 
       <div className="uploadArea">
@@ -330,15 +378,21 @@ reUpload = (event) => {
               onChange={this.handleInputChange}
               // placeholder="Postal Code  of Your Purchase"
               name="postalCode"
-            />
-            <br />
-            <h3>Date of the Purchase:</h3>
+              />
+              <br />
+            <h3>Date:</h3>
+              <DatePicker
+                onChange={this.handleDatePicker}
+                value={this.state.datePicker}
+              />
+    
+            {/* <h3>Date of the Purchase:</h3>
             <input
               value={this.state.date}
               onChange={this.handleInputChange}
               // placeholder="Date of Your Purchase (YYYY/MM/DD)"
               name="date"
-            />
+            /> */}
             <br />
             <h3>Items:</h3>
             {this.state.allItems.map((item, index) => (
