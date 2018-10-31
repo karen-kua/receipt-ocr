@@ -16,21 +16,21 @@
 
 // */
 
-// import React, { Component } from 'react';
-// import API from '../../utils/API';
+import React, { Component } from 'react';
+import API from '../../utils/API';
 
-// ///* Class and Super *////
-// export default class Browse extends Component {
+///* Class and Super *////
+export default class Browse extends Component {
 
-//     handleDropDown = (event) => {
-//         this.setState({
-//             category: event.target.value
-//         }, () => console.log(this.state.category)
-//         );
-//         console.log("This is the event value: " + event.target.value)
-//     }
+    handleDropDown = (event) => {
+        this.setState({
+            category: event.target.value
+        }, () => console.log(this.state.category)
+        );
+        console.log("This is the event value: " + event.target.value)
+    }
 
-//     // End of Constructor
+    // End of Constructor
 
 //     ///////FUNCTIONS/////////
 
@@ -338,10 +338,7 @@
                 </div>
 
                 <div>
-
                     <button onClick={this.onSubmit}>Submit</button>
-
-
                 </div>
 
 
