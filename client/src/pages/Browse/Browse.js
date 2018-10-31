@@ -1,38 +1,39 @@
-/*
+// /*
 
-Browse receipts by month and by category
+// Browse receipts by month and by category
 
-Categories:
-- Food
-- Electronics
-- Kitchen
-- Office
-- Clothing & Accessories
-- Home
-- Transportation
-- Travel and Events
-- Bills
-- Misc
+// Categories:
+// - Food
+// - Electronics
+// - Kitchen
+// - Office
+// - Clothing & Accessories
+// - Home
+// - Transportation
+// - Travel and Events
+// - Bills
+// - Misc
 
-*/
+// */
 
-import React, { Component } from 'react';
-import API from '../../utils/API';
+// import React, { Component } from 'react';
+// import API from '../../utils/API';
 
-///* Class and Super *////
-export default class Browse extends Component {
+// ///* Class and Super *////
+// export default class Browse extends Component {
 
-    handleDropDown = (event) => {
-        this.setState({
-            category: event.target.value
-        }, () => console.log(this.state.category)
-        );
-        console.log("This is the event value: " + event.target.value)
-    }
+//     handleDropDown = (event) => {
+//         this.setState({
+//             category: event.target.value
+//         }, () => console.log(this.state.category)
+//         );
+//         console.log("This is the event value: " + event.target.value)
+//     }
 
-    // End of Constructor
+//     // End of Constructor
 
-    ///////FUNCTIONS/////////
+//     ///////FUNCTIONS/////////
+
 
     onSubmit = () => {
         let switchExp
@@ -395,4 +396,3 @@ export default class Browse extends Component {
     }
 
 }
-
