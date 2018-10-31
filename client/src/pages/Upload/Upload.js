@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
 import axios from "axios"
+import DatePicker from 'react-date-picker'
+
 // import DeleteBtn from "../../components/DeleteBtn";
 // import Jumbotron from "../../components/Jumbotron";
 // import { Link } from "react-router-dom";
@@ -15,7 +17,11 @@ class Upload extends Component {
     showInput: false,
     file: [],
     response: [],
-    date: "",
+    day: "",
+    month: "",
+    year: "",
+    fullDate: "",
+    datePicker: new Date(),
     store: "",
     street: "",
     city: "",
@@ -176,15 +182,49 @@ class Upload extends Component {
     }, () => console.log(this.state.allCategories))
   }
 
-  formSubmit = event => {
+
+submitData = () => {
+  for (let i=0; i<this.state.allItems.length; i++) {
+    let costNum = this.state.allCosts[i];
+    costNum = parseFloat(costNum.replace("$", ""));
+    costNum = parseFloat(costNum.toFixed(2))
+    let requestObj = {
+      store: this.state.store,
+      street: this.state.street,
+      city: this.state.city,
+      province: this.state.province,
+      postalCode: this.state.postalCode,
+      day: this.state.day,
+      month: this.state.month,
+      year: this.state.year,
+      fullDate: this.state.fullDate,
+      item: this.state.allItems[i],
+      cost: costNum,
+      category: this.state.allCategories[i]
+    }
+    console.log(requestObj)
+    API.saveExpense(requestObj)
+      .then(res => {
+        console.log("Saved to database!")
+        this.setState({
+          submitStatus: "Submission successful!"
+        })
+      })
+    .catch(err => console.log(err));
+  }
+
+}
+
+  onFormSubmit = event => {
     event.preventDefault();
     this.setState({
       submitStatus: ""
     })
    
     console.log(
-      `Store: ${this.state.store}\n Street: ${this.state.street}\n City: ${this.state.city}\n Province: ${this.state.province}\n
-      PostalCode: ${this.state.postalCode}\n Date: ${this.state.date}`
+      `Store: ${this.state.store}\n Street: ${this.state.street}\n City: ${this.state.city}\n 
+      Province: ${this.state.province}\nPostalCode: ${this.state.postalCode}\n Day: ${this.state.day}\n 
+      Month: ${this.state.month}\n Year: ${this.state.year}\n fullDate: ${this.state.fullDate}`
     )
 
     if (this.state.store !== "" &&
@@ -192,38 +232,14 @@ class Upload extends Component {
         this.state.city !== "" &&
         this.state.province !== "" &&
         this.state.postalCode !== "" &&
-        this.state.date !== "" &&
+        this.state.day !== "" &&
+        this.state.month !== "" &&
+        this.state.year !== "" &&
+        this.state.fullDate !== "" &&
         this.state.allItems !== [] &&
         this.state.allCategories !== [] &&
         this.state.allCosts !== []) {
-
-    
-
-    for (let i=0; i<this.state.allItems.length; i++) {
-      let costNum = this.state.allCosts[i];
-      costNum = parseFloat(costNum.replace("$", ""));
-      costNum = parseFloat(costNum.toFixed(2))
-      let requestObj = {
-        store: this.state.store,
-        street: this.state.street,
-        city: this.state.city,
-        province: this.state.province,
-        postalCode: this.state.postalCode,
-        date: this.state.date,
-        item: this.state.allItems[i],
-        cost: costNum,
-        category: this.state.allCategories[i]
-      }
-      console.log(requestObj)
-      API.saveExpense(requestObj)
-        .then(res => {
-          console.log("Saved to database!")
-          this.setState({
-            submitStatus: "Submission successful!"
-          })
-        })
-      .catch(err => console.log(err));
-    }
+          this.submitData();
   } else {
     this.setState({
       submitStatus: "Unsuccessful submission! Please ensure all fields are filed out."
@@ -236,27 +252,83 @@ reUpload = (event) => {
   event.preventDefault();
   console.log("I want to restart")
   this.setState({
+    progress: "0%",
     showInput: false,
     file: [],
-    store: "",
-    allCategories: [],
-    allCosts: [],
-    allItems: [],
     response: [],
-    progress: "0%"
+    day: "",
+    month: "",
+    year: "",
+    fullDate: "",
+    datePicker: new Date(),
+    store: "",
+    street: "",
+    city: "",
+    province: "",
+    postalCode: "",
+    allItems: [],
+    allCosts: [],
+    allCategories: [],
+    submitStatus: ""
   })
 }
 
+handleDatePicker = date => {
+  if (date === null ) {
+    console.log("null")
+    this.setState({datePicker: date})
+  } else {
+let keyDate = date.toLocaleString()
+keyDate = keyDate.slice(0, keyDate.indexOf(","))
+console.log(keyDate)
+const keyDateArr = keyDate.split("/")
+this.getFullDate(keyDateArr, date);
+}
+}
 
-  render() {
-    const previewStyle = {
+
+getFullDate = (keyDateArr, date) => {
+  let fullDateArr = [];
+  let dayLength = keyDateArr[1].split("").length
+  let monthLength = keyDateArr[0].split("").length
+  console.log(dayLength, monthLength)
+  fullDateArr.push([keyDateArr[2], keyDateArr[0], keyDateArr[1]])
+  fullDateArr = fullDateArr.join("").replace(",", "").replace(",","").split("");
+  if (monthLength === 1) {
+    fullDateArr.splice(4,0,"0")
+  }
+  if (dayLength === 1) {
+    fullDateArr.splice(6,0,"0")
+  }
+  const fullDate = fullDateArr.join("")
+  console.log(keyDateArr, fullDate)
+    this.setState({
+      datePicker: date,
+      day: parseInt(keyDateArr[1]),
+      month: parseInt(keyDateArr[0]),
+      year: parseInt(keyDateArr[2]),
+      fullDate: parseInt(fullDate)
+    }, () => {
+      console.log(
+        `Day: ${this.state.day}\n, 
+        Month: ${this.state.month}\n,
+        Year: ${this.state.year}\n,
+        fullDate: ${this.state.fullDate}`)
+    })
+  
+}
+
+// RENDER________________________RENDER
+
+render() {
+  const previewStyle = {
       display: 'inline',
       width: 100,
       height: 100,
     };
     return (
       <div className="container">
-
+  
       {!this.state.showInput ? 
       <div className="uploadArea">
 
@@ -330,15 +402,13 @@ reUpload = (event) => {
               onChange={this.handleInputChange}
               // placeholder="Postal Code  of Your Purchase"
               name="postalCode"
-            />
-            <br />
-            <h3>Date of the Purchase:</h3>
-            <input
-              value={this.state.date}
-              onChange={this.handleInputChange}
-              // placeholder="Date of Your Purchase (YYYY/MM/DD)"
-              name="date"
-            />
+              />
+              <br />
+            <h3>Date:</h3>
+              <DatePicker
+                onChange={this.handleDatePicker}
+                value={this.state.datePicker}
+              />
             <br />
             <h3>Items:</h3>
             {this.state.allItems.map((item, index) => (
@@ -370,7 +440,7 @@ reUpload = (event) => {
               </div>
             ))}
             <span className="input-group">
-              <button type="submit" onClick={this.formSubmit} className="btn btn-secondary">
+              <button type="submit" onClick={this.onFormSubmit} className="btn btn-secondary">
                 Submit
               </button>
             </span>
