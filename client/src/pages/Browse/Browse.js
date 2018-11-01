@@ -330,7 +330,6 @@ export default class Browse extends Component {
 
 
     ////// RENDER /////////
-
     render() {
         return (
 
