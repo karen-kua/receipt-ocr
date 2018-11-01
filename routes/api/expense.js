@@ -58,6 +58,11 @@ router.route("/browse-day-month-category")
 router.route("/browse-day-month-year-category")
   .get(expensesController.browseDMYC)
 
+router.route("/browse-search-item")
+  .get(expensesController.browseByItem)
+
+  
+
   // // Matches with "/api/books/:id"
 // router
 //   .route("/:id")
