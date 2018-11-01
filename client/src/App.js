@@ -4,6 +4,7 @@ import Upload from "./pages/Upload";
 import Browse from "./pages/Browse";
 import BrowseBackEnd from "./pages/BrowseBackEnd";
 // import SignIn from "./pages/SignIn";
+import SignUp from './pages/LogIn/SignUp';
 // import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
@@ -14,6 +15,7 @@ const App = () => (
       <Switch>
         <Route exact path="/upload" component={Upload} />
         <Route exact path="/browse" component={Browse} />
+        <Route exact path="/sign-up" component={SignUp} />
         {/* <Route exact path="/sign-in" component={SignIn} /> */}
         <Route exact path="/test" component={BrowseBackEnd} />
         {/* <Route component={NoMatch} /> */}
