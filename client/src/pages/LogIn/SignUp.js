@@ -28,6 +28,7 @@ class SignupForm extends Component {
 		return (
 			<div className="SignupForm">
 				<h1>Signup form</h1>
+				<div>
 				<label htmlFor="username">Username: </label>
 				<input
 					type="text"
@@ -35,14 +36,18 @@ class SignupForm extends Component {
 					value={this.state.username}
 					onChange={this.handleChange}
 				/>
+				</div>
+				<br/>
+				<div>
 				<label htmlFor="password">Password: </label>
-				<input
-					type="password"
-					name="password"
-					value={this.state.password}
-					onChange={this.handleChange}
-				/>
-				
+								<input
+									type="password"
+									name="password"
+									value={this.state.password}
+									onChange={this.handleChange}
+								/>
+				</div>
+				<br/>
 				<button onClick={this.handleSubmit}>Sign up</button>
 			</div>
 		)
