@@ -209,6 +209,16 @@ module.exports = {
     .catch(err => res.status(422).json(err));
   },
 
+  browseByItem: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+    .find({item: {$regex: req.query.item, $options: "i"}})
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
+
 
 
     // All the other back-end callbacks need to go here. 

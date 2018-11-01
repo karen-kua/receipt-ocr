@@ -82,4 +82,8 @@ export default {
   browseDMYC: function(allFour) {
     return axios.get("/api/expense/browse-day-month-year-category", {params: allFour})
   },
+
+  browseByItem: function(searchQuery) {
+    return axios.get("/api/expense/browse-search-item", {params: searchQuery})
+  },
 };
