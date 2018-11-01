@@ -27,7 +27,7 @@ export default class Browse extends Component {
         month: "",
         year: "",
         category: "Home",
-        searchQuery: ""
+        query:""
     }
 
 
@@ -65,6 +65,14 @@ export default class Browse extends Component {
         }, () => console.log(this.state.year)
     );
     }
+    
+    handleInputChange = () => {
+        this.setState({
+            query: this.search.value
+          }, () => console.log(this.state.query)
+        );
+        }
+    
 
     // End of Constructor
 
@@ -371,9 +379,7 @@ export default class Browse extends Component {
                     </select>
                 </div>
 
-                <div>
-                    <button onClick={this.onSubmit}>Submit</button>
-                </div>
+                
 
 
                 <div className="category-dropdowns">
@@ -396,6 +402,21 @@ export default class Browse extends Component {
                     </select>
                 </div>
 
+                <div>
+                    <button onClick={this.onSubmit}>Submit</button>
+                </div>
+                
+                <form>
+                    <input 
+                        placeholder="Search Expenses..."
+                        ref={input => this.search = input}
+                        onChange={this.handleInputChange}
+                    />
+                </form>
+
+                 <div>
+                    <button onClick={this.onSubmit}>Search</button>
+                </div>
                 {/* <div className="data-table">
                     <thead>
                         <tr>
