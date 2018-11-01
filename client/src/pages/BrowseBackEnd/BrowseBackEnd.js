@@ -29,8 +29,9 @@ class BrowseBackEnd extends Component {
         day: 21,
         month: 12,
         year: 2016,
-        category: "Home",
-        query: "liquid Cooler"
+        category: "",
+        query: "liquid Cooler",
+        switchExp: "",
     }
 
     // End of Constructor
@@ -63,14 +64,18 @@ class BrowseBackEnd extends Component {
             category: this.state.category
         }
         console.log(copyOfState)
-        let switchExp = ""
+        let expression = ""
         for (let key in copyOfState) {
             if (copyOfState[key] !== "") {
-                switchExp += key
+                expression += key
             }
         }
-        console.log(`The switch statement is: ${switchExp}`)
-        this.requestData(switchExp)
+        console.log(`The switch statement is: ${expression}`)
+        this.setState({switchExp: expression}, 
+        () => {
+            console.log(this.state.switchExp)
+            this.requestData(this.state.switchExp)
+        })
 
         // let switchExp
         // if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category == "") {
@@ -113,6 +118,16 @@ class BrowseBackEnd extends Component {
         let switchExp = "searchBar";
         console.log(`The switch statement is: ${switchExp}`)
         this.requestData(switchExp);
+    }
+
+    onDeleteBtnSubmit = (id, event) => {
+        event.preventDefault();
+        console.log(`This is the id: ${id}`)
+        API.deleteExpense(id)
+            .then(res => {
+                console.log("Deleted");
+                this.requestData(this.state.switchExp);
+            })
     }
 
     requestData = switchExp => {
@@ -357,6 +372,14 @@ class BrowseBackEnd extends Component {
                 <button onClick={this.onDropDownBtnSubmit}>Drop down button</button>
                 <br/><br/>
                 <button onClick={this.onSearchBarBtnSubmit}>Search bar button</button>
+                <br/><br/>
+                {this.state.response.map(expense => (
+                <span key={expense._id}>
+                <h4>{expense.item}</h4>
+                <button onClick={(event) => this.onDeleteBtnSubmit(expense._id, event)}>Delete button</button>
+                </span>
+                ))
+            }
 
             </div>
 

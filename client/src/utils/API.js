@@ -11,16 +11,20 @@ export default {
 //   },
 //   // Deletes the book with the given id
 //   deleteBook: function(id) {
-//     return axios.delete("/api/books/" + id);
-//   },
-
+  //     return axios.delete("/api/books/" + id);
+  //   },
+  
   // Saves an expense to the database
   uploadReceipt: function(photo) {
     return axios.post('/api/expense/upload', photo)
   },
-
+  
   saveExpense: function(expenseData) {
     return axios.post("/api/expense/save", expenseData);
+  },
+  
+  deleteExpense: function(id) {
+    return axios.delete("/api/expense/" + id)
   },
 
   browseD: function(day) {
@@ -86,4 +90,5 @@ export default {
   browseByItem: function(searchQuery) {
     return axios.get("/api/expense/browse-search-item", {params: searchQuery})
   },
+
 };
