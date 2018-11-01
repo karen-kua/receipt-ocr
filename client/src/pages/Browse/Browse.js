@@ -21,6 +21,15 @@ import API from '../../utils/API';
 
 ///* Class and Super *////
 export default class Browse extends Component {
+    state = {
+        response: [],
+        day: "",
+        month: "",
+        year: "",
+        category: "Home",
+        searchQuery: ""
+    }
+
 
     handleDropDown = (event) => {
         this.setState({
@@ -28,6 +37,33 @@ export default class Browse extends Component {
         }, () => console.log(this.state.category)
         );
         console.log("This is the event value: " + event.target.value)
+    }
+
+
+    handleDayDropDown = (event) => {
+        // renders it as a number rather than a string 
+        let day = parseInt(event.target.value)
+        this.setState({
+            day: day
+            
+        }, () => console.log(typeof this.state.day)
+    );
+    }
+
+    handleMonthDropDown = (event) => {
+        let month = parseInt(event.target.value)
+        this.setState({
+            month: month
+        }, () => console.log(this.state.month)
+    );
+    }
+
+    handleYearDropDown = (event) => {
+        let year = parseInt(event.target.value)
+        this.setState({
+            year: year
+        }, () => console.log(this.state.year)
+    );
     }
 
     // End of Constructor
@@ -295,7 +331,6 @@ export default class Browse extends Component {
 
     ////// RENDER /////////
 
-    defaultOption = options[0]
     render() {
         return (
 
@@ -303,16 +338,16 @@ export default class Browse extends Component {
             <div>
                 <div>
                     <select name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="">Day</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
+                        <option value="00">Day</option>
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
                         <option value="10">10</option>
                         <option value="11">11</option>
                         <option value="12">12</option>
@@ -362,7 +397,7 @@ export default class Browse extends Component {
                     </select>
                 </div>
 
-                <div className="data-table">
+                {/* <div className="data-table">
                     <thead>
                         <tr>
                             <th>Street</th>
@@ -386,7 +421,7 @@ export default class Browse extends Component {
 
 
                 </div>
-        
+         */}
             </div>
 
         )
