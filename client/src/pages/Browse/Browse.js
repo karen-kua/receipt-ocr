@@ -18,6 +18,7 @@
 
 import React, { Component } from 'react';
 import API from '../../utils/API';
+import '../Browse/Browse.css'
 
 ///* Class and Super *////
 export default class Browse extends Component {
@@ -343,8 +344,9 @@ export default class Browse extends Component {
 
             //   -----This is the dropdown jsx using the regular html dropdowns-----
             <div>
-                <div>
-                    <select name="category" value={this.state.category} onChange={this.handleDropDown}>
+            
+                <div className="category-dropdowns">
+                <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
                         <option value="00">Day</option>
                         <option value="1">01</option>
                         <option value="2">02</option>
@@ -377,47 +379,70 @@ export default class Browse extends Component {
                         <option value="29">29</option>
                         <option value="30">30</option>
                     </select>
-                </div>
-
-                
-
-
-                <div className="category-dropdowns">
-                    <select name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="Clothing">Month</option>
-                        <option value="Food">Food</option>
-                        <option value="Electronics">Electronics</option>
+                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
+                        <option value="placeholder">Month</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                     
                     </select>
 
-                    <select name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="Clothing">Year</option>
-                        <option value="Food">Food</option>
-                        <option value="Electronics">Electronics</option>
+                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
+                        <option value="placeholder">Year</option>
+                        <option value="2006">2006</option>
+                        <option value="2007">2007</option>
+                        <option value="2008">2008</option>
+                        <option value="2009">2009</option>
+                        <option value="2010">2010</option>
+                        <option value="2011">2011</option>
+                        <option value="2012">2012</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
                     </select>
 
-                    <select name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="Clothing">Category</option>
+                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
+                        <option value="placeholder">Category</option>
                         <option value="Food">Food</option>
                         <option value="Electronics">Electronics</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Kitchen">Kitchen</option>
+                        <option value="Office">Office</option>
+                        <option value="Home">Home</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Travel and Events">Travel and Events</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Miscellaneous">Miscellaneous</option>
                     </select>
-                </div>
 
-                <div>
-                    <button onClick={this.onSubmit}>Submit</button>
-                </div>
-                
-                <form>
-                    <input 
+                        <button className="btn btn-danger" onClick={this.onSubmit}>Submit</button>
+
+                         <form className="active-cyan-4 mb-4">
+                    <input  className="form-control"
                         placeholder="Search Expenses..."
                         ref={input => this.search = input}
                         onChange={this.handleInputChange}
                     />
+                     <button className="btn btn-danger" onClick={this.onSubmit}>Search</button>
                 </form>
-
-                 <div>
-                    <button onClick={this.onSubmit}>Search</button>
                 </div>
-                {/* <div className="data-table">
+
+               
+               
+
+                <div className="data-table">
                     <thead>
                         <tr>
                             <th>Street</th>
@@ -431,9 +456,10 @@ export default class Browse extends Component {
                             <th>Item</th>
                             <th>Cost</th>
                             <th>Category</th>
+                            <th>Add/Delete</th>
                         </tr>
-
                     </thead>
+                    <hr />
                     <tbody>
 
                         
@@ -441,7 +467,7 @@ export default class Browse extends Component {
 
 
                 </div>
-         */}
+        
             </div>
 
         )
