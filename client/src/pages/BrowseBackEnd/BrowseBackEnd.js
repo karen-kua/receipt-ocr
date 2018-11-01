@@ -15,11 +15,24 @@ Categories:
 */
 
 
-
+// import Modal from "../../components/Modal";
 import React, { Component } from 'react';
 import API from '../../utils/API';
 import axios from "axios";
 import { O_RDONLY } from 'constants';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
 
 ///* Class and Super *////
 class BrowseBackEnd extends Component {
@@ -32,7 +45,34 @@ class BrowseBackEnd extends Component {
         category: "",
         query: "liquid Cooler",
         switchExp: "",
+
+        // states for editing a purchase
+        editStore: "1",
+        editStreet: "2",
+        editCity: "3",
+        editProvince: "4",
+        editPostalCode: "5",
+        editDate: "",
+        editCategory: "",
+        editItem: "9",
+        editCost: "10",
+        modalIsOpen: false
+
     }
+
+    // "store" : "Home and Depot",
+    // "street" : "1 street",
+    // "city" : "Ottawa",
+    // "province" : "Ontario",
+    // "postalCode" : "M1C 1H9",
+    // "day" : 14,
+    // "month" : 12,
+    // "year" : 2016,
+    // "fullDate" : 20161214,
+    // "item" : "Liquid Cooler",
+    // "cost" : 113.0,
+    // "category" : "Electronics",
+    // "userID" : 1
 
     // End of Constructor
 
@@ -128,6 +168,20 @@ class BrowseBackEnd extends Component {
                 console.log("Deleted");
                 this.requestData(this.state.switchExp);
             })
+    }
+
+    onEditBtnSubmit = (id, event) => {
+        event.preventDefault();
+        console.log("Hi")
+        this.setState({modalIsOpen: true})
+    }
+
+    closeModal = () => {
+        this.setState({modalIsOpen: false});
+    }
+
+    afterOpenModal = () => {
+        this.subtitle.style.color = '#f00';
     }
 
     requestData = switchExp => {
@@ -364,10 +418,16 @@ class BrowseBackEnd extends Component {
     }
 
 
-    
+    handleEdits = event => {
+        const { name, value } = event.target;
+        console.log({ name, value })
+        this.setState({[name]: value})
+      };
+
     render() {
         return (
             <div>
+            
 
                 <button onClick={this.onDropDownBtnSubmit}>Drop down button</button>
                 <br/><br/>
@@ -376,6 +436,83 @@ class BrowseBackEnd extends Component {
                 {this.state.response.map(expense => (
                 <span key={expense._id}>
                 <h4>{expense.item}</h4>
+                <p>{expense.store}</p>
+                <p>{expense.cost}</p>
+                <p>{expense.street}</p>
+                <button onClick={(event) => this.onEditBtnSubmit(expense._id, event)}>Edit button</button>
+                
+                        <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onAfterOpen={this.afterOpenModal}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Edit Purchase Modal"
+                        >
+
+                            <span onClick={this.closeModal}>x</span>
+                            <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
+                            <form>
+                          
+                                    <h3>Store:</h3>
+                                    <input
+                                        value={this.state.editStore}
+                                        onChange={this.handleEdits}
+                                        name="editStore"
+                                    />
+                                    <br />
+                                    <h3>Street Address:</h3>
+                                    <input
+                                        value={this.state.editStreet}
+                                        onChange={this.handleEdits}
+                                        name="editStreet"
+                                    />
+                                    <br />
+                                    <h3>City:</h3>
+                                    <input
+                                        value={this.state.editCity}
+                                        onChange={this.handleEdits}
+                                        name="editCity"
+                                    />
+                                    <br />
+                                    <h3>Province:</h3>
+                                    <input
+                                        value={this.state.editProvince}
+                                        onChange={this.handleEdits}
+                                        name="editProvince"
+                                    />
+                                    <br />
+                                    <h3>Postal Code:</h3>
+                                    <input
+                                        value={this.state.editPostalCode}
+                                        onChange={this.handleEdits}
+                                        name="editPostalCode"
+                                    />
+                                    <br />
+                                    <h3>Date:</h3>
+                                    {/* <DatePicker
+                                        onChange={this.handleDatePicker}
+                                        value={this.state.datePicker}
+                                    /> */}
+                                    <br />
+                                    <h3>Item:</h3>
+                                    <input
+                                        value={this.state.editItem}
+                                        onChange={this.handleEdits}
+                                        name="editItem"
+                                        />
+                                    <h3>Cost (eg. 3.50):</h3>
+                                    <input
+                                        value={this.state.editCost}
+                                        onChange={this.handleEdits}
+                                        name="editCost"
+                                        />
+                                    <h3>Category</h3>
+                                    <button>Update</button>
+                            </form>
+                        </Modal>
+
+
+
                 <button onClick={(event) => this.onDeleteBtnSubmit(expense._id, event)}>Delete button</button>
                 </span>
                 ))
