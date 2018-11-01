@@ -294,8 +294,6 @@ export default class Browse extends Component {
 
 
     ////// RENDER /////////
-
-    defaultOption = options[0]
     render() {
         return (
 
@@ -303,7 +301,7 @@ export default class Browse extends Component {
             <div>
                 <div>
                     <select name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="">Day</option>
+                        <option value="none">Day</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>
