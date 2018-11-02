@@ -18,8 +18,9 @@ Categories:
 // import Modal from "../../components/Modal";
 import React, { Component } from 'react';
 import API from '../../utils/API';
+import DatePicker from 'react-date-picker'
 import axios from "axios";
-import { O_RDONLY } from 'constants';
+// import { O_RDONLY } from 'constants';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -39,14 +40,15 @@ class BrowseBackEnd extends Component {
 
     state = {
         response: [],
-        day: 21,
+        day: "",
         month: 12,
         year: 2016,
         category: "",
-        query: "liquid Cooler",
+        query: "latte",
         switchExp: "",
 
         // states for editing a purchase
+        editId: "",
         editStore: "1",
         editStreet: "2",
         editCity: "3",
@@ -56,23 +58,15 @@ class BrowseBackEnd extends Component {
         editCategory: "",
         editItem: "9",
         editCost: "10",
-        modalIsOpen: false
+        modalIsOpen: false,
+        datePicker: null,
+        editDay: "",
+        editMonth: "",
+        editYear: "",
+        editFullDate: "",
+        editMsg: "",
 
     }
-
-    // "store" : "Home and Depot",
-    // "street" : "1 street",
-    // "city" : "Ottawa",
-    // "province" : "Ontario",
-    // "postalCode" : "M1C 1H9",
-    // "day" : 14,
-    // "month" : 12,
-    // "year" : 2016,
-    // "fullDate" : 20161214,
-    // "item" : "Liquid Cooler",
-    // "cost" : 113.0,
-    // "category" : "Electronics",
-    // "userID" : 1
 
     // End of Constructor
 
@@ -92,7 +86,6 @@ class BrowseBackEnd extends Component {
     // -year and category only 
     // -day and month and year only
     // -day and month and year and category (all)
-
 
 
     onDropDownBtnSubmit = event => {
@@ -116,41 +109,6 @@ class BrowseBackEnd extends Component {
             console.log(this.state.switchExp)
             this.requestData(this.state.switchExp)
         })
-
-        // let switchExp
-        // if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category == "") {
-        //     switchExp = "day"
-        // } else if (this.state.day == "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
-        //     switchExp = "month"
-        // } else if (this.state.day == "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
-        //     switchExp = "year"
-        // } else if (this.state.day == "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
-        //     switchExp = "category"
-        // } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
-        //     switchExp = "day&month"
-        // } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
-        //     switchExp = "day&year"
-        // } else if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
-        //     switchExp = "day&category"
-        // } else if (this.state.day == "" && this.state.month !== "" && this.state.year !== "" & this.state.category == "") {
-        //     switchExp = "month&year"
-        // } else if (this.state.day == "" && this.state.month !== "" && this.state.year == "" & this.state.category !== "") {
-        //     switchExp = "month&category"
-        // } else if (this.state.day == "" && this.state.month == "" && this.state.year !== "" & this.state.category !== "") {
-        //     switchExp = "year&category"
-        // } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category == "") {
-        //     switchExp = "day&month&year"
-        // } else if (this.state.day == "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
-        //     switchExp = "month&year&category"
-        // } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category !== "") {
-        //     switchExp = "day&year&category"
-        // } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category !== "") {
-        //     switchExp = "day&month&category"
-        // } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
-        //     switchExp = "all 4"
-        // }
-        // console.log(`The switch statement is: ${switchExp}`)
-        // this.requestData(switchExp)
     }
 
     onSearchBarBtnSubmit = event => {
@@ -167,13 +125,57 @@ class BrowseBackEnd extends Component {
             .then(res => {
                 console.log("Deleted");
                 this.requestData(this.state.switchExp);
-            })
+            }) .catch(err => console.log(err))
     }
 
     onEditBtnSubmit = (id, event) => {
         event.preventDefault();
         console.log("Hi")
-        this.setState({modalIsOpen: true})
+        API.getOnePurchase(id)
+            .then(res => {
+                console.log(res.data)
+                console.log("Purchase found")
+                this.setState({
+                    editId: res.data._id,
+                    editStore: res.data.store,
+                    editStreet: res.data.street,
+                    editCity: res.data.city,
+                    editProvince: res.data.province,
+                    editPostalCode: res.data.postalCode,
+                    editCategory: res.data.category,
+                    editItem: res.data.item,
+                    editCost: res.data.cost,
+                    // datePicker: null,
+                    modalIsOpen: true})
+            }) .catch(err => console.log(err))
+    }
+
+    updatePurchase = (id, event) => {
+        event.preventDefault();
+        console.log(`The id of the item I want to edit: ${this.state.editId}`);
+        let reqObj = {
+            store: this.state.editStore,
+            street: this.state.editStreet,
+            city: this.state.editCity,
+            province: this.state.editProvince,
+            postalCode: this.state.editPostalCode,
+            day: this.state.editDay,
+            month: this.state.editMonth,
+            year: this.state.editYear,
+            fullDate: this.state.editFullDate,
+            item: this.state.editItem,
+            cost: this.state.editCost,
+            category: this.state.editCategory
+        }
+        console.log(reqObj)
+        API.updatePurchase(id, reqObj)
+            .then(res => {
+                this.setState({editMsg: "Update successful!"})
+                console.log("Purchase updated")
+            }).catch(err => {
+                this.setState({editMsg: "Update failed!"})
+                console.log(err)
+            })
     }
 
     closeModal = () => {
@@ -183,6 +185,53 @@ class BrowseBackEnd extends Component {
     afterOpenModal = () => {
         this.subtitle.style.color = '#f00';
     }
+
+    handleDatePicker = date => {
+        console.log(date)
+        if (date === null ) {
+          console.log("null")
+          this.setState({datePicker: date})
+        } else {
+      let keyDate = date.toLocaleString()
+      keyDate = keyDate.slice(0, keyDate.indexOf(","))
+      console.log(keyDate)
+      const keyDateArr = keyDate.split("/")
+      this.getFullDate(keyDateArr, date);
+      }
+      }
+      
+      getFullDate = (keyDateArr, date) => {
+        let fullDateArr = [];
+        let dayLength = keyDateArr[1].split("").length
+        let monthLength = keyDateArr[0].split("").length
+        console.log(dayLength, monthLength)
+        fullDateArr.push([keyDateArr[2], keyDateArr[0], keyDateArr[1]])
+        fullDateArr = fullDateArr.join("").replace(",", "").replace(",","").split("");
+        if (monthLength === 1) {
+          fullDateArr.splice(4,0,"0")
+        }
+        if (dayLength === 1) {
+          fullDateArr.splice(6,0,"0")
+        }
+        const fullDate = fullDateArr.join("")
+        console.log(keyDateArr, fullDate)
+          this.setState({
+            datePicker: date,
+            editDay: parseInt(keyDateArr[1]),
+            editMonth: parseInt(keyDateArr[0]),
+            editYear: parseInt(keyDateArr[2]),
+            editFullDate: parseInt(fullDate)
+          }, () => {
+            console.log(
+              `Day: ${this.state.editDay}\n, 
+              Month: ${this.state.editMonth}\n,
+              Year: ${this.state.editYear}\n,
+              fullDate: ${this.state.editFullDate}`)
+          })
+        
+      }
+
+
 
     requestData = switchExp => {
         let reqObj;
@@ -450,6 +499,7 @@ class BrowseBackEnd extends Component {
                         >
 
                             <span onClick={this.closeModal}>x</span>
+                            <h3>{this.state.editMsg}</h3>
                             <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
                             <form>
                           
@@ -489,10 +539,10 @@ class BrowseBackEnd extends Component {
                                     />
                                     <br />
                                     <h3>Date:</h3>
-                                    {/* <DatePicker
+                                    <DatePicker
                                         onChange={this.handleDatePicker}
                                         value={this.state.datePicker}
-                                    /> */}
+                                    />
                                     <br />
                                     <h3>Item:</h3>
                                     <input
@@ -507,7 +557,13 @@ class BrowseBackEnd extends Component {
                                         name="editCost"
                                         />
                                     <h3>Category</h3>
-                                    <button>Update</button>
+                                <select name="editCategory" value={this.state.editCategory} onChange={this.handleEdits}>
+                                    <option value="None">Category</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Clothing">Clothing</option>
+                                </select>
+                                    <button onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
                             </form>
                         </Modal>
 

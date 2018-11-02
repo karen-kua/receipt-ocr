@@ -27,6 +27,14 @@ export default {
     return axios.delete("/api/expense/" + id)
   },
 
+  getOnePurchase: function(id) {
+    return axios.get("/api/expense/edit/" + id)
+  },
+
+  updatePurchase: function(id, reqObj) {
+    return axios.put("/api/expense/update/" + id, reqObj)
+  },
+
   browseD: function(day) {
     return axios.get("/api/expense/browse-day", {params: day})
   },
