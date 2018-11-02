@@ -24,101 +24,80 @@ import '../Browse/Browse.css'
 
 
 ///* Class and Super *////
-export default class Browse extends Component {
+class Browse extends Component {
     state = {
         response: [],
         day: "",
-        month: "",
-        year: "",
-        category: "Home",
-        query:""
+        month: 12,
+        year: 2016,
+        category: "",
+        query: "latte",
+        switchExp: "",
+
+        // states for editing a purchase
+        editId: "",
+        editStore: "1",
+        editStreet: "2",
+        editCity: "3",
+        editProvince: "4",
+        editPostalCode: "5",
+        editDate: "",
+        editCategory: "",
+        editItem: "9",
+        editCost: "10",
+        modalIsOpen: false,
+        datePicker: null,
+        editDay: "",
+        editMonth: "",
+        editYear: "",
+        editFullDate: "",
+        editMsg: "",
+
     }
 
 
-    handleDropDown = (event) => {
-        this.setState({
-            category: event.target.value
-        }, () => console.log(this.state.category)
-        );
-        console.log("This is the event value: " + event.target.value)
-    }
-
-
-    handleDayDropDown = (event) => {
-        // renders it as a number rather than a string 
-        let day = parseInt(event.target.value)
-        this.setState({
-            day: day
-            
-        }, () => console.log(typeof this.state.day)
-    );
-    }
-
-    handleMonthDropDown = (event) => {
-        let month = parseInt(event.target.value)
-        this.setState({
-            month: month
-        }, () => console.log(this.state.month)
-    );
-    }
-
-    handleYearDropDown = (event) => {
-        let year = parseInt(event.target.value)
-        this.setState({
-            year: year
-        }, () => console.log(this.state.year)
-    );
-    }
-    
-    handleInputChange = () => {
-        this.setState({
-            query: this.search.value
-          }, () => console.log(this.state.query)
-        );
-        }
     
 
-    // End of Constructor
 
-//     ///////FUNCTIONS/////////
-
-
-    onSubmit = () => {
-        let switchExp
-        if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category == "") {
-            switchExp = "day"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
-            switchExp = "month"
-        } else if (this.state.day == "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "year"
-        } else if (this.state.day == "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
-            switchExp = "day&month"
-        } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "day&year"
-        } else if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "day&category"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "month&year"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "month&category"
-        } else if (this.state.day == "" && this.state.month == "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "year&category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "day&month&year"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "month&year&category"
-        } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "day&year&category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "day&month&category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "all 4"
-        }
-        console.log(`The switch statement is: ${switchExp}`)
-        this.requestData(switchExp)
+    handleDateChange = event => {
+        let { name, value } = event.target;
+        value = parseInt(value)
+        console.log({ name, value })
+        this.setState({[name]: value})
     }
+
+    handleCategoryQueryChange = event => {
+        let { name, value } = event.target;
+        console.log({ name, value })
+        this.setState({[name]: value})
+    }
+    
+
+        // onDropDownBtnSubmit = event => {
+        //     event.preventDefault();
+        //     let copyOfState = {
+        //         day: this.state.day,
+        //         month: this.state.month,
+        //         year: this.state.year,
+        //         category: this.state.category
+        //     }
+        //     console.log(copyOfState)
+        //     let expression = ""
+        //     for (let key in copyOfState) {
+        //         if (copyOfState[key] !== "none") {
+        //             expression += key
+        //         }
+        //     }
+        //     console.log(`The switch statement is: ${expression}`)
+        //     this.setState({switchExp: expression}, 
+        //     () => {
+        //         console.log(this.state.switchExp)
+        //         this.requestData(this.state.switchExp)
+        //     })
+        // }
+
+
+    
 
     requestData = switchExp => {
         let reqObj;
@@ -349,8 +328,8 @@ export default class Browse extends Component {
             <div>
             
                 <div className="category-dropdowns">
-                <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="00">Day</option>
+                <select className="btn btn-danger dropdown-toggle" name="day" value={this.state.day} onChange={this.handleDateChange}>
+                        <option value="none">Day</option>
                         <option value="1">01</option>
                         <option value="2">02</option>
                         <option value="3">03</option>
@@ -381,26 +360,33 @@ export default class Browse extends Component {
                         <option value="28">28</option>
                         <option value="29">29</option>
                         <option value="30">30</option>
-                    </select>
-                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="placeholder">Month</option>
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June</option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="December">December</option>
-                     
+                        <option value="31">31</option>
                     </select>
 
-                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="placeholder">Year</option>
+                    <select className="btn btn-danger dropdown-toggle" name="month" value={this.state.month} onChange={this.handleDateChange}>
+                        <option value="none">Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+
+                    <select className="btn btn-danger dropdown-toggle" name="year" value={this.state.year} onChange={this.handleDateChange}>
+                        <option value="none">Year</option>
+                        <option value="2000">2000</option>
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
                         <option value="2006">2006</option>
                         <option value="2007">2007</option>
                         <option value="2008">2008</option>
@@ -416,8 +402,8 @@ export default class Browse extends Component {
                         <option value="2018">2018</option>
                     </select>
 
-                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="placeholder">Category</option>
+                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleCategoryQueryChange}>
+                        <option value="none">Category</option>
                         <option value="Food">Food</option>
                         <option value="Electronics">Electronics</option>
                         <option value="Clothing">Clothing</option>
@@ -430,13 +416,14 @@ export default class Browse extends Component {
                         <option value="Miscellaneous">Miscellaneous</option>
                     </select>
 
-                        <button className="btn btn-danger" onClick={this.onSubmit}>Submit</button>
+                        <button className="btn btn-danger" onClick={this.onDropDownBtnSubmit}>Search</button>
 
                          <form className="active-cyan-4 mb-4">
                     <input  className="form-control"
-                        placeholder="Search Expenses..."
-                        ref={input => this.search = input}
-                        onChange={this.handleInputChange}
+                        placeholder="Search by Item Name..."
+                        value={this.state.query}
+                        name="query"
+                        onChange={this.handleCategoryQueryChange}
                     />
                      <button className="btn btn-danger" onClick={this.onSubmit}>Search</button>
                 </form>
@@ -460,5 +447,6 @@ export default class Browse extends Component {
 
         )
     }
-
-}
+    
+    }
+    export default Browse;
