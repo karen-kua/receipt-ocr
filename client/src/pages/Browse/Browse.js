@@ -18,7 +18,10 @@
 
 import React, { Component } from 'react';
 import API from '../../utils/API';
+import Table from '../../components/BrowseTable'
+//CSS File - Also governs BrowseTable
 import '../Browse/Browse.css'
+
 
 ///* Class and Super *////
 export default class Browse extends Component {
@@ -439,34 +442,11 @@ export default class Browse extends Component {
                 </form>
                 </div>
 
+            <div>
+                <Table />
+            </div>
                
-               
 
-                <div className="data-table">
-                    <thead>
-                        <tr>
-                            <th>Street</th>
-                            <th>City</th>
-                            <th>Province</th>
-                            <th>Postal Code</th>
-                            <th>Day</th>
-                            <th>Month</th>
-                            <th>Year</th>
-                            <th>Full Date</th>
-                            <th>Item</th>
-                            <th>Cost</th>
-                            <th>Category</th>
-                            <th>Add/Delete</th>
-                        </tr>
-                    </thead>
-                    <hr />
-                    <tbody>
-
-                        
-                    </tbody>
-
-
-                </div>
         
             </div>
 
