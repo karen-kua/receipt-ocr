@@ -1,14 +1,14 @@
 import React from "react";
-import {Component} from 'react';
+import { Component } from 'react';
 import '../../pages/Browse/Browse.css'
 
-class Table extends Component {
-    render() {
-        return (
-            <div className="data-table">
-            <table>
+const Table = props => (
+    <div className="data-table">
+        <table>
             <thead>
                 <tr>
+                    <th>Item</th>
+                    <th>Store</th>
                     <th>Street</th>
                     <th>City</th>
                     <th>Province</th>
@@ -16,47 +16,47 @@ class Table extends Component {
                     <th>Day</th>
                     <th>Month</th>
                     <th>Year</th>
-                    <th>Full Date</th>
-                    <th>Item</th>
                     <th>Cost</th>
                     <th>Category</th>
-                    <th>Add/Delete</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
-      
+
             <tbody>
-            
-                  <tr>
-      <td>Street</td>
-      <td>City</td>
-      <td>Province</td>
-      <td>Postal Code</td>
-      <td>Day</td>
-      <td>Month</td>
-      <td>Year</td>
-      <td>Full Date</td>
-      <td>Item</td>
-      <td>Cost</td>
-      <td>Category</td>
-  
-      <td>
-          <i class="fas fa-plus-square fa-lg"></i>
-    
-          <i class="fas fa-minus-square fa-lg"></i>
-      </td>
-    </tr>
-   
+                {props.response.map(expense => (
+                <tr key={expense._id}>
+                    <td>{expense.item}</td>
+                    <td>{expense.store}</td>
+                    <td>{expense.street}</td>
+                    <td>{expense.city}</td>
+                    <td>{expense.province}</td>
+                    <td>{expense.postalCode}</td>
+                    <td>{expense.day}</td>
+                    <td>{expense.month}</td>
+                    <td>{expense.year}</td>
+                    <td>{expense.cost}</td>
+                    <td>{expense.category}</td>
+                    <td>
+                    <button className="btn btn-danger">Edit</button>
+                    </td>
+                    <td>
+                    <button className="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+
+                ))}
+
             </tbody>
-            </table>
+        </table>
 
-        </div>
-  
-
-        )
-    }
+       
+    </div>
 
 
 
-}
+
+
+)
 
 export default Table; 
