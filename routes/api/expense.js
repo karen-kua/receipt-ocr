@@ -13,6 +13,15 @@ router.route("/upload")
 router.route("/save")
   .post(expensesController.create)
 
+router.route("/:id")
+  .delete(expensesController.remove)
+
+router.route("/edit/:id")
+  .get(expensesController.findOne);
+
+router.route("/update/:id")
+  .put(expensesController.update);
+
 router.route("/browse-day")
   .get(expensesController.browseD)
 
@@ -60,6 +69,7 @@ router.route("/browse-day-month-year-category")
 
 router.route("/browse-search-item")
   .get(expensesController.browseByItem)
+
 
   
 

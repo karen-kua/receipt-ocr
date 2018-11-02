@@ -38,6 +38,31 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
 
+  remove: function(req, res) {
+    console.log("This is")
+    console.log(req.query)
+    db.Expense
+      .findById({ _id: req.params.id })
+      .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+
+  findOne: function(req, res) {
+    db.Expense
+      .findById({ _id: req.params.id})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+
+  update: function(req, res) {
+    console.log(req.body)
+    db.Expense
+      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+
   browseD: function(req, res) {
     console.log("This is")
     console.log(req.query)
