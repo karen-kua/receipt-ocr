@@ -41,6 +41,16 @@ td {
 i {
     margin-right: 10px;
     color: #db6f68;
+}
 
-    
+.sum-box {
+    border-radius: 5%;
+    background-color: #db6f68;
+    color: white; 
+    width: 20%;
+    height: 50px; 
+    display: inline-block; 
+    position: relative;
+    left: 75%; 
+    padding-left: 10px;
 }
