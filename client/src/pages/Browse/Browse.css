@@ -28,6 +28,19 @@ th {
    color: #db6f68;
 }
 
+td {
+    padding: 5px; 
+    position: relative;
+    left: 5%;
+}
+
 .data-table {
     margin-left: -2%;
+}
+
+i {
+    margin-right: 10px;
+    color: #db6f68;
+
+    
 }
