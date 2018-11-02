@@ -24,6 +24,7 @@
     "body-parser": "^1.18.3",
     "crypto": "^1.0.1",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "if-env": "^1.0.4",
     "install": "^0.12.2",
     "mongoose": "^5.3.8",
