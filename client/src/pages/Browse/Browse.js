@@ -445,7 +445,15 @@ export default class Browse extends Component {
             <div>
                 <Table />
             </div>
+            
+           
+                <div class="sum-box">
                
+               <div>
+               <h2>Total Expenses:</h2>
+               </div>
+               </div>
+
 
         
             </div>
