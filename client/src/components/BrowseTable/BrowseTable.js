@@ -41,7 +41,7 @@ const Table = props => (
                     <button className="btn btn-danger">Edit</button>
                     </td>
                     <td>
-                    <button className="btn btn-danger">Delete</button>
+                    <button className="btn btn-danger" onClick={(event) => props.onDeleteBtnSubmit(expense._id, event)}>Delete</button>
                     </td>
                 </tr>
 

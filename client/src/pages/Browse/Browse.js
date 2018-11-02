@@ -10,6 +10,7 @@ import '../Browse/Browse.css'
 ///* Class and Super *////
 class Browse extends Component {
     state = {
+        // states for searching for purchases 
         response: [],
         day: "",
         month: "",
@@ -39,6 +40,7 @@ class Browse extends Component {
 
     }
 
+// Functions for setting the state based on search bar or dropdown inputs
     handleDateChange = event => {
         let { name, value } = event.target;
         value = parseInt(value)
@@ -52,6 +54,7 @@ class Browse extends Component {
         this.setState({ [name]: value })
     }
 
+// Functions triggered when clicking a button
     onDropDownBtnSubmit = event => {
         event.preventDefault();
         let copyOfState = {
@@ -82,11 +85,23 @@ class Browse extends Component {
     onSearchBarBtnSubmit = event => {
         event.preventDefault();
         let switchExp = "searchBar";
+        this.setState({switchExp: switchExp})
         console.log(`The switch statement is: ${switchExp}`)
         this.requestData(switchExp);
     }
 
+    onDeleteBtnSubmit = (id, event) => {
+        event.preventDefault();
+        console.log(`This is the id: ${id}`)
+        API.deleteExpense(id)
+            .then(res => {
+                console.log("Deleted");
+                this.requestData(this.state.switchExp);
+            }) .catch(err => console.log(err))
+    }
 
+
+    // Creating request bodies and doing API calls to get requested purchases
     requestData = switchExp => {
         let reqObj;
         switch (switchExp) {
@@ -433,6 +448,7 @@ class Browse extends Component {
                 <div>
                     <Table 
                     response = {this.state.response}
+                    onDeleteBtnSubmit = {this.onDeleteBtnSubmit}
                     />
                 </div>
 
