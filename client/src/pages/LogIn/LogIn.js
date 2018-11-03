@@ -22,6 +22,10 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 class LoginForm extends Component {
+    updateUser (userObject) {
+        this.setState(userObject)
+      }
+    
     constructor() {
         super()
         this.state = {
@@ -31,6 +35,8 @@ class LoginForm extends Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.updateUser = this.updateUser.bind(this)
+
   
     }
 
@@ -55,7 +61,7 @@ class LoginForm extends Component {
                     // update App.js state
                     this.props.updateUser({
                         loggedIn: true,
-                        username: response.data.username
+                        username: response.config.username
                     })
                     // update the state to redirect to home
                     this.setState({

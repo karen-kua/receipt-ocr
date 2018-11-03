@@ -1,5 +1,7 @@
 // const db = require("../../models");
 
+const passport = require('../../passport');
+
 const router = require("express").Router();
 const usersController = require("../../controllers/usersController");
 
@@ -7,8 +9,17 @@ const usersController = require("../../controllers/usersController");
 router.route("/sign-up")
   .post(usersController.create)
 
+// router.route("/login")
+//   .post(usersController.authenticate)
+
 router.route("/login")
-  .post(usersController.authenticate)
+  .post(passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }))
+
+
+
 
 // function k (req, res) {
 // 	console.log("users.js hi")
