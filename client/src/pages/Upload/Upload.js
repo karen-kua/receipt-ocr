@@ -3,6 +3,7 @@ import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
 import axios from "axios"
 import DatePicker from 'react-date-picker'
+import './Upload.css'
 
 // import DeleteBtn from "../../components/DeleteBtn";
 // import Jumbotron from "../../components/Jumbotron";
@@ -380,11 +381,9 @@ render() {
  
         {this.state.showInput ? 
  <div className="inputForm">
-          <button className="btn btn-secondary" onClick={this.reUpload}>
-          Start Over
-          </button>
+          
           <form>
-            <h3>Store:</h3>
+            <h3>Store</h3>
             <input
               value={this.state.store}
               onChange={this.handleInputChange}
@@ -392,7 +391,7 @@ render() {
               name="store"
             />
             <br />
-            <h3>Street Address:</h3>
+            <h3>Street Address</h3>
             <input
               value={this.state.street}
               onChange={this.handleInputChange}
@@ -400,7 +399,7 @@ render() {
               name="street"
             />
             <br />
-            <h3>City:</h3>
+            <h3>City</h3>
             <input
               value={this.state.city}
               onChange={this.handleInputChange}
@@ -408,7 +407,7 @@ render() {
               name="city"
             />
             <br />
-            <h3>Province:</h3>
+            <h3>Province</h3>
             <input
               value={this.state.province}
               onChange={this.handleInputChange}
@@ -416,7 +415,7 @@ render() {
               name="province"
             />
             <br />
-            <h3>Postal Code:</h3>
+            <h3>Postal Code</h3>
             <input
               value={this.state.postalCode}
               onChange={this.handleInputChange}
@@ -424,13 +423,13 @@ render() {
               name="postalCode"
               />
               <br />
-            <h3>Date:</h3>
+            <h3>Date</h3>
               <DatePicker
                 onChange={this.handleDatePicker}
                 value={this.state.datePicker}
               />
             <br />
-            <h3>Items:</h3>
+            <h3>Items</h3>
             {this.state.allItems.map((item, index) => (
               <div key={index}>
                 <input
@@ -463,6 +462,9 @@ render() {
               <button type="submit" onClick={this.onFormSubmit} className="btn btn-secondary">
                 Submit
               </button>
+              <button className="btn btn-secondary" onClick={this.reUpload}>
+          Start Over
+          </button>
             </span>
           </form>
           <div>
