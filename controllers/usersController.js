@@ -11,12 +11,12 @@ module.exports = {
     },
 
     authenticate: function (req, res) {
-      passport.authenticate('local'),
-          console.log('logged in', req.user);
-          var userInfo = {
-              username: req.user.username
-          };
-          res.send(userInfo);
+      passport.authenticate('local')
+        //   console.log('logged in', req.user);
+        //   var userInfo = {
+            //   username: req.user.username
+        //   };
+        //   res.send(userInfo);
     }
 
 };
