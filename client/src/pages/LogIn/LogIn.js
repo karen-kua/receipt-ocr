@@ -43,7 +43,7 @@ class LoginForm extends Component {
         console.log('handleSubmit')
         console.log(this.state.username)
         console.log(this.state.password)
-        axios.get('/api/users/login',
+        axios.get('/login',
         {params: {
                 username: this.state.username,
                 password: this.state.password

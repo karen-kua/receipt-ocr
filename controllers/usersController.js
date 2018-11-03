@@ -75,6 +75,22 @@ module.exports = {
           },
 
 
+verifyToken: function (req, res) {
+    console.log(req.headers.authorization)
+   jwt.verify(req.headers.authorization, 'secretkey', (err, authData) => {
+    if (err) {
+      res.json({
+        status: '404',
+      });
+    } else {
+      res.json({
+        status: '200',
+      });
+    };
+  });
+},
+
+
     // let user = dbUser.username;
     // jwt.sign({ user }, 'secretkey', { expiresIn: '300s' }, (err, token) => {
     //     console.log("token: " + token);
