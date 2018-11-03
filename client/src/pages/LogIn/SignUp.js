@@ -2,42 +2,39 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 class Signup extends Component {
-	constructor() {
-		super()
-		this.state = {
+	
+	state = {
 			username: '',
 			password: '',
 			confirmPassword: '',
 
 		}
-		this.handleSubmit = this.handleSubmit.bind(this)
-		this.handleChange = this.handleChange.bind(this)
-	}
-	handleChange(event) {
+	
+	handleChange = (event) => {
 		this.setState({
 			[event.target.name]: event.target.value
 		})
 	}
-	handleSubmit(event) {
+	handleSubmit = (event) => {
 		console.log('sign-up handleSubmit, username: ')
 		console.log(this.state.username)
 		event.preventDefault()
 
 		//request to server to add a new username/password
-		axios.post('/api/users/sign-up', {
+		axios.post('/sign-up', {
 			username: this.state.username,
 			password: this.state.password
 		})
 			.then(response => {
 				console.log(response)
-				if (!response.data.errmsg) {
-					console.log('successful signup')
-					this.setState({ //redirect to login page
-						redirectTo: '/login'
-					})
-				} else {
-					console.log('username already taken')
-				}
+				// if (!response.data.errmsg) {
+				// 	console.log('successful signup')
+				// 	this.setState({ //redirect to login page
+				// 		redirectTo: '/login'
+				// 	})
+				// } else {
+				// 	console.log('username already taken')
+				// }
 			}).catch(error => {
 				console.log('signup error: ')
 				console.log(error)

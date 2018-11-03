@@ -35,11 +35,31 @@ class Upload extends Component {
   };
 
   componentDidMount() {
-    this.checkMount();
+    this.verifyToken();
   }
 
-  checkMount = () => {
-    console.log("Upload Component has mounted!")
+  verifyToken = () => {
+      let token = localStorage.getItem('session_token');
+      console.log(token)
+      axios.get('/api/users/auth', { headers: {"Authorization" : `Bearer ${token}`} })
+        .then(res => {
+            console.log(res);
+        });
+      // axios.get('/auth', {
+      //   headers: {
+      //     'Authorization': `Bearer ${token}`
+      //   }
+  //     }).then(response => {
+  //       console.log(response)
+  //       console.log("yay!")
+  //       // if(response.ok) {
+  //       //   response.json().then(data => {
+  //       //     if(data.status != 200) {
+  //       //       this.props.verifyTokenFailed();
+  //       //     }
+  //       //   }).catch(err => console.log(err));
+  //       // }
+  //     }).catch(err => console.log(err));
   };
 
 

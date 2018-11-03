@@ -22,53 +22,44 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 class LoginForm extends Component {
-    updateUser (userObject) {
-        this.setState(userObject)
-      }
-    
-    constructor() {
-        super()
-        this.state = {
+    // updateUser (userObject) {
+    //     this.setState(userObject)
+    //   }
+
+        state = {
             username: '',
             password: '',
             redirectTo: null
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.updateUser = this.updateUser.bind(this)
-
-  
-    }
-
-    handleChange(event) {
+      
+    handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         })
     }
 
-    handleSubmit(event) {
+    handleSubmit = event => {
         event.preventDefault()
         console.log('handleSubmit')
-
-        axios.post('/api/users/login', {
+        console.log(this.state.username)
+        console.log(this.state.password)
+        axios.get('/login',
+        {params: {
                 username: this.state.username,
                 password: this.state.password
-            })
-            .then(response => {
+            }})
+            .then(res => {
                 console.log('login response: ')
-                console.log(response)
-                if (response.status === 200) {
-                    // update App.js state
-                    this.updateUser({
-                    // this.props.updateUser({
-                        loggedIn: true,
-                        username: response.config.username
-                    })
+                console.log(res)
+
+                localStorage.setItem('session_token', res.data.token);
+                localStorage.setItem('user_welcome', res.data.message);
+                localStorage.setItem('user_id', res.data.id);
+                localStorage.setItem('username', res.data.username);
+               
                     // update the state to redirect to home
-                    this.setState({
-                        redirectTo: '/'
-                    })
-                }
+                // this.setState({redirectTo: '/'})
+                
             }).catch(error => {
                 console.log('login error: ')
                 console.log(error);
@@ -89,10 +80,8 @@ class LoginForm extends Component {
                             </div>
                             <div className="col-3 col-mr-auto">
                                 <input className="form-input"
-                                    type="text"
-                                    id="username"
                                     name="username"
-                                    placeholder="Username"
+                                    placeholder="username"
                                     value={this.state.username}
                                     onChange={this.handleChange}
                                 />
@@ -105,7 +94,6 @@ class LoginForm extends Component {
                             <div className="col-3 col-mr-auto">
                                 <input className="form-input"
                                     placeholder="password"
-                                    type="password"
                                     name="password"
                                     value={this.state.password}
                                     onChange={this.handleChange}
