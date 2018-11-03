@@ -41,22 +41,24 @@ class LoginForm extends Component {
     handleSubmit = event => {
         event.preventDefault()
         console.log('handleSubmit')
-
-        axios.get('/api/users/login', {
+        console.log(this.state.username)
+        console.log(this.state.password)
+        axios.get('/api/users/login',
+        {params: {
                 username: this.state.username,
                 password: this.state.password
-            })
+            }})
             .then(res => {
                 console.log('login response: ')
                 console.log(res)
 
-                localStorage.setItem('session_token', res.token);
-                localStorage.setItem('user_welcome', res.message);
-                localStorage.setItem('user_id', res.id);
-                localStorage.setItem('username', res.username);
+                localStorage.setItem('session_token', res.data.token);
+                localStorage.setItem('user_welcome', res.data.message);
+                localStorage.setItem('user_id', res.data.id);
+                localStorage.setItem('username', res.data.username);
                
                     // update the state to redirect to home
-                this.setState({redirectTo: '/'})
+                // this.setState({redirectTo: '/'})
                 
             }).catch(error => {
                 console.log('login error: ')

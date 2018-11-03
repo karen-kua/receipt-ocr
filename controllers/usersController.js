@@ -36,15 +36,15 @@ module.exports = {
     },
 
     login: function (req, res) {
+        console.log(req.query)
         db.Users
-           .find({username: req.body.username, password: req.body.password})
+           .findOne({username: req.query.username, password: req.query.password})
            .then(dbUser => {
+             console.log(dbUser)
              console.log("user found");
-             console.log(dbUser);
              if (dbUser !== null) {
                let user = dbUser.username;
                jwt.sign({ user }, 'secretkey', { expiresIn: '300s' }, (err, token) => {
-                console.log(dbUser)
                    res.json({
                        validate: true,
                        message: 'Welcome ' + dbUser.username,
@@ -53,6 +53,7 @@ module.exports = {
                        username: dbUser.username
                    });
                });
+               console.log("jwt sent")
            } else {
              console.log("Email Not found");
                res.json({
