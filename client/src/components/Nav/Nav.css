@@ -3,7 +3,7 @@
     padding: 5px; 
     text-decoration: none; 
     position: relative;
-    left: 64.5%; 
+    left: 61.5%; 
     border-radius: 5%;
 }
 
@@ -18,17 +18,17 @@ a:hover {
     border-radius: 5%;
     text-decoration: none;
     position: relative;
-    left: 65%
+    left: 62%
 }
 
 .nav-bar-sign-up:hover {
-    background-color: #db6f68;
+    background-color: #F57A00;
     color: #ffffff;
 }
 
 .nav-bar-links:hover {
-    background-color: #ffffff;
-    color:#db6f68 ;
+    background-color: #F57A00;
+    color:#ffffff ;
    
 
 }
