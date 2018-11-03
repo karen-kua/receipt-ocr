@@ -1,5 +1,12 @@
 .inputForm {
     display: block;
-    color: red;
-    background-color:red;
+    color: #db6f68;
+    margin-top: 5%; 
+    text-align: center; 
+}
+
+.input-group {
+    position: relative;
+    margin-left: 42%; 
+
 }

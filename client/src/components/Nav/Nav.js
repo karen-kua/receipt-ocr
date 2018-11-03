@@ -8,6 +8,7 @@ const Nav = () => (
       React Base for Project 3 Expense App
     </a>
     <a className="nav-bar-links" href="/">Home</a>
+    <a className="nav-bar-links" href="/">Upload</a>
     <a className="nav-bar-links" href="/Browse">Browse</a>
     <a className="nav-bar-links" href="/LogIn">Login</a>
     <a className="nav-bar-sign-up" href="/SignUp">Sign Up</a>
