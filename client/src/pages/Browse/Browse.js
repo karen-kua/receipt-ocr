@@ -1,125 +1,264 @@
-// /*
-
-// Browse receipts by month and by category
-
-// Categories:
-// - Food
-// - Electronics
-// - Kitchen
-// - Office
-// - Clothing & Accessories
-// - Home
-// - Transportation
-// - Travel and Events
-// - Bills
-// - Misc
-
-// */
-
 import React, { Component } from 'react';
 import API from '../../utils/API';
 import Table from '../../components/BrowseTable'
+import DatePicker from 'react-date-picker'
+import axios from "axios";
+import Modal from 'react-modal';
 //CSS File - Also governs BrowseTable
 import '../Browse/Browse.css'
 
+// Styling for the modal recommended by the docs of react-modal
+const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
 
 ///* Class and Super *////
-export default class Browse extends Component {
+class Browse extends Component {
     state = {
+        // states for searching for purchases 
         response: [],
         day: "",
         month: "",
         year: "",
-        category: "Home",
-        query:""
+        category: "",
+        query: "",
+        switchExp: "",
+
+        // states for editing a purchase
+        editId: "",
+        editStore: "",
+        editStreet: "",
+        editCity: "",
+        editProvince: "",
+        editPostalCode: "",
+        editDate: "",
+        editCategory: "",
+        editItem: "",
+        editCost: "",
+        modalIsOpen: false,
+        datePicker: "",
+        editDay: "",
+        editMonth: "",
+        editYear: "",
+        editFullDate: "",
+        editMsg: "",
+
     }
 
-
-    handleDropDown = (event) => {
-        this.setState({
-            category: event.target.value
-        }, () => console.log(this.state.category)
-        );
-        console.log("This is the event value: " + event.target.value)
+// Functions for setting the state based on search bar or dropdown inputs
+    handleDateChange = event => {
+        let { name, value } = event.target;
+        value = parseInt(value)
+        console.log({ name, value })
+        this.setState({ [name]: value })
     }
 
-
-    handleDayDropDown = (event) => {
-        // renders it as a number rather than a string 
-        let day = parseInt(event.target.value)
-        this.setState({
-            day: day
-            
-        }, () => console.log(typeof this.state.day)
-    );
+    handleCategoryQueryChange = event => {
+        let { name, value } = event.target;
+        console.log({ name, value })
+        this.setState({ [name]: value })
     }
 
-    handleMonthDropDown = (event) => {
-        let month = parseInt(event.target.value)
-        this.setState({
-            month: month
-        }, () => console.log(this.state.month)
-    );
-    }
-
-    handleYearDropDown = (event) => {
-        let year = parseInt(event.target.value)
-        this.setState({
-            year: year
-        }, () => console.log(this.state.year)
-    );
-    }
-    
-    handleInputChange = () => {
-        this.setState({
-            query: this.search.value
-          }, () => console.log(this.state.query)
-        );
+// Functions triggered when clicking a button
+    onDropDownBtnSubmit = event => {
+        event.preventDefault();
+        let copyOfState = {
+            day: this.state.day,
+            month: this.state.month,
+            year: this.state.year,
+            category: this.state.category
         }
-    
-
-    // End of Constructor
-
-//     ///////FUNCTIONS/////////
-
-
-    onSubmit = () => {
-        let switchExp
-        if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category == "") {
-            switchExp = "day"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
-            switchExp = "month"
-        } else if (this.state.day == "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "year"
-        } else if (this.state.day == "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category == "") {
-            switchExp = "day&month"
-        } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "day&year"
-        } else if (this.state.day !== "" && this.state.month == "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "day&category"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "month&year"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "month&category"
-        } else if (this.state.day == "" && this.state.month == "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "year&category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category == "") {
-            switchExp = "day&month&year"
-        } else if (this.state.day == "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "month&year&category"
-        } else if (this.state.day !== "" && this.state.month == "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "day&year&category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year == "" & this.state.category !== "") {
-            switchExp = "day&month&category"
-        } else if (this.state.day !== "" && this.state.month !== "" && this.state.year !== "" & this.state.category !== "") {
-            switchExp = "all 4"
+        console.log(copyOfState)
+        let expression = ""
+        for (let key in copyOfState) {
+            if (
+                copyOfState[key] !== "0" &&
+                copyOfState[key] !== 0 &&
+                copyOfState[key] !== ""
+            ) {
+                expression += key
+            }
         }
+        console.log(`The switch statement is: ${expression}`)
+        this.setState({ switchExp: expression },
+            () => {
+                console.log(this.state.switchExp)
+                this.requestData(this.state.switchExp)
+            })
+    }
+
+    onSearchBarBtnSubmit = event => {
+        event.preventDefault();
+        let switchExp = "searchBar";
+        this.setState({switchExp: switchExp})
         console.log(`The switch statement is: ${switchExp}`)
-        this.requestData(switchExp)
+        this.requestData(switchExp);
     }
 
+    onDeleteBtnSubmit = (id, event) => {
+        event.preventDefault();
+        console.log(`This is the id: ${id}`)
+        API.deleteExpense(id)
+            .then(res => {
+                console.log("Deleted");
+                this.requestData(this.state.switchExp);
+            }) .catch(err => console.log(err))
+    }
+
+    onEditBtnSubmit = (id, event) => {
+        event.preventDefault();
+        console.log(`The id of the object I want to edit: ${id}`)
+        API.getOnePurchase(id)
+            .then(res => {
+                console.log(res.data)
+                console.log("Purchase found")
+                this.setState({
+                    editId: res.data._id,
+                    editStore: res.data.store,
+                    editStreet: res.data.street,
+                    editCity: res.data.city,
+                    editProvince: res.data.province,
+                    editPostalCode: res.data.postalCode,
+                    editCategory: res.data.category,
+                    editItem: res.data.item,
+                    editCost: res.data.cost,
+                    modalIsOpen: true})
+            }) .catch(err => console.log(err))
+    }
+
+// Functions associated with the modal for editing purchases 
+
+closeModal = () => {
+    this.setState({
+        modalIsOpen: false,
+        editMsg: "",
+        datePicker: ""
+    });
+}
+
+afterOpenModal = () => {
+    this.subtitle.style.color = '#f00';
+}
+
+handleEdits = event => {
+    const { name, value } = event.target;
+    console.log({ name, value })
+    this.setState({[name]: value})
+}
+
+handleEditCost = event => {
+    let value = event.target.value
+    console.log(`Edit Costs: ${value}`)
+    console.log(parseFloat(value))
+    this.setState({editCost: value})
+}
+
+handleDatePicker = date => {
+    console.log(date)
+    if (date === null ) {
+        console.log("null")
+        this.setState({datePicker: date})
+    } else {
+        let keyDate = date.toLocaleString()
+        keyDate = keyDate.slice(0, keyDate.indexOf(","))
+        console.log(keyDate)
+        const keyDateArr = keyDate.split("/")
+        this.getFullDate(keyDateArr, date);
+    }
+}
+
+getFullDate = (keyDateArr, date) => {
+    let fullDateArr = [];
+    let dayLength = keyDateArr[1].split("").length
+    let monthLength = keyDateArr[0].split("").length
+    console.log(dayLength, monthLength)
+    fullDateArr.push([keyDateArr[2], keyDateArr[0], keyDateArr[1]])
+    fullDateArr = fullDateArr.join("").replace(",", "").replace(",","").split("");
+    if (monthLength === 1) {
+        fullDateArr.splice(4,0,"0")
+    }
+    if (dayLength === 1) {
+        fullDateArr.splice(6,0,"0")
+    }
+    const fullDate = fullDateArr.join("")
+    console.log(keyDateArr, fullDate)
+    this.setState({
+        datePicker: date,
+        editDay: parseInt(keyDateArr[1]),
+        editMonth: parseInt(keyDateArr[0]),
+        editYear: parseInt(keyDateArr[2]),
+        editFullDate: parseInt(fullDate)
+    }, () => {
+        console.log(
+            `Day: ${this.state.editDay}\n, 
+            Month: ${this.state.editMonth}\n,
+            Year: ${this.state.editYear}\n,
+            fullDate: ${this.state.editFullDate}`)
+        })
+    }
+    
+    updatePurchase = (id, event) => {
+        event.preventDefault();
+        const format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]/;
+        const hasSpecialChar = format.test(this.state.editCost)
+        console.log(parseFloat(this.state.editCost))
+        console.log("day")
+        console.log(this.state.datePicker === "")
+        console.log(isNaN(this.state.datePicker))
+        if (
+            // validating to see if the cost has no alphabet characters and other special characters
+            this.state.editCost === "" ||
+            isNaN(parseFloat(this.state.editCost)) ||
+            /[a-z]/i.test(this.state.editCost) ||
+            hasSpecialChar === true ||
+            // validating that the date is not null 
+            this.state.datePicker === ""
+        )
+            {
+            this.setState({editMsg: "Update failed"})
+        } else {
+            console.log(`The id of the item I want to edit: ${this.state.editId}`);
+            let reqObj = {
+                store: this.state.editStore,
+                street: this.state.editStreet,
+                city: this.state.editCity,
+                province: this.state.editProvince,
+                postalCode: this.state.editPostalCode,
+                day: this.state.editDay,
+                month: this.state.editMonth,
+                year: this.state.editYear,
+                fullDate: this.state.editFullDate,
+                item: this.state.editItem,
+                cost: parseFloat(this.state.editCost),
+                category: this.state.editCategory
+            }
+            console.log(reqObj)
+            API.updatePurchase(id, reqObj)
+                .then(res => {
+                    this.setState({editMsg: "Update successful!"})
+                    console.log("Purchase updated")
+                    this.requestData(this.state.switchExp)
+                }).catch(err => {
+                    this.setState({editMsg: "Update failed!"})
+                    console.log(err)
+                })
+
+        }
+
+
+        
+        
+
+    }
+    
+    // Creating request bodies and doing API calls to get requested purchases
     requestData = switchExp => {
         let reqObj;
         switch (switchExp) {
@@ -175,7 +314,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "day&month":
+            case "daymonth":
                 console.log("day&month");
                 reqObj = {
                     day: this.state.day,
@@ -189,7 +328,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "day&year":
+            case "dayyear":
                 console.log("day&year");
                 reqObj = {
                     day: this.state.day,
@@ -203,7 +342,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "day&category":
+            case "daycategory":
                 console.log("day&category");
                 reqObj = {
                     day: this.state.day,
@@ -217,7 +356,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "month&year":
+            case "monthyear":
                 console.log("month&year");
                 reqObj = {
                     month: this.state.month,
@@ -231,7 +370,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "month&category":
+            case "monthcategory":
                 console.log("month&category");
                 reqObj = {
                     month: this.state.month,
@@ -245,7 +384,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "year&category":
+            case "yearcategory":
                 console.log("year&category");
                 reqObj = {
                     year: this.state.year,
@@ -259,7 +398,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "day&month&year":
+            case "daymonthyear":
                 console.log("day&month&year");
                 reqObj = {
                     day: this.state.day,
@@ -274,7 +413,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "month&year&category":
+            case "monthyearcategory":
                 console.log("month&year&category");
                 reqObj = {
                     month: this.state.month,
@@ -289,7 +428,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "day&year&category":
+            case "dayyearcategory":
                 console.log("day&year&category");
                 reqObj = {
                     day: this.state.day,
@@ -304,7 +443,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "day&month&category":
+            case "daymonthcategory":
                 console.log("day&month&category");
                 reqObj = {
                     day: this.state.day,
@@ -319,7 +458,7 @@ export default class Browse extends Component {
                     })
                     .catch(err => console.log(err))
                 break;
-            case "all 4":
+            case "daymonthyearcategory":
                 console.log("all 4");
                 reqObj = {
                     day: this.state.day,
@@ -329,6 +468,19 @@ export default class Browse extends Component {
                 }
                 console.log(reqObj)
                 API.browseDMYC(reqObj)
+                    .then(res => {
+                        this.setState({ response: res.data })
+                        console.log(this.state.response)
+                    })
+                    .catch(err => console.log(err))
+                break;
+            case "searchBar":
+                console.log("searchBar");
+                reqObj = {
+                    item: this.state.query
+                }
+                console.log(reqObj)
+                API.browseByItem(reqObj)
                     .then(res => {
                         this.setState({ response: res.data })
                         console.log(this.state.response)
@@ -347,10 +499,10 @@ export default class Browse extends Component {
 
             //   -----This is the dropdown jsx using the regular html dropdowns-----
             <div>
-            
+
                 <div className="category-dropdowns">
-                <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="00">Day</option>
+                    <select className="btn btn-danger dropdown-toggle" name="day" value={this.state.day} onChange={this.handleDateChange}>
+                        <option value="0">Day</option>
                         <option value="1">01</option>
                         <option value="2">02</option>
                         <option value="3">03</option>
@@ -381,26 +533,33 @@ export default class Browse extends Component {
                         <option value="28">28</option>
                         <option value="29">29</option>
                         <option value="30">30</option>
-                    </select>
-                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="placeholder">Month</option>
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June</option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="December">December</option>
-                     
+                        <option value="31">31</option>
                     </select>
 
-                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="placeholder">Year</option>
+                    <select className="btn btn-danger dropdown-toggle" name="month" value={this.state.month} onChange={this.handleDateChange}>
+                        <option value="0">Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+
+                    <select className="btn btn-danger dropdown-toggle" name="year" value={this.state.year} onChange={this.handleDateChange}>
+                        <option value="0">Year</option>
+                        <option value="2000">2000</option>
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
                         <option value="2006">2006</option>
                         <option value="2007">2007</option>
                         <option value="2008">2008</option>
@@ -416,8 +575,8 @@ export default class Browse extends Component {
                         <option value="2018">2018</option>
                     </select>
 
-                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleDropDown}>
-                        <option value="placeholder">Category</option>
+                    <select className="btn btn-danger dropdown-toggle" name="category" value={this.state.category} onChange={this.handleCategoryQueryChange}>
+                        <option value="0">Category</option>
                         <option value="Food">Food</option>
                         <option value="Electronics">Electronics</option>
                         <option value="Clothing">Clothing</option>
@@ -430,35 +589,118 @@ export default class Browse extends Component {
                         <option value="Miscellaneous">Miscellaneous</option>
                     </select>
 
-                        <button className="btn btn-danger" onClick={this.onSubmit}>Submit</button>
+                    <button className="btn btn-danger" onClick={this.onDropDownBtnSubmit}>Search</button>
 
-                         <form className="active-cyan-4 mb-4">
-                    <input  className="form-control"
-                        placeholder="Search Expenses..."
-                        ref={input => this.search = input}
-                        onChange={this.handleInputChange}
-                    />
-                     <button className="btn btn-danger" onClick={this.onSubmit}>Search</button>
-                </form>
+                    <form className="active-cyan-4 mb-4">
+                        <input className="form-control"
+                            placeholder="Search by Item Name..."
+                            value={this.state.query}
+                            name="query"
+                            onChange={this.handleCategoryQueryChange}
+                        />
+                        <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
+                    </form>
                 </div>
 
-            <div>
-                <Table />
-            </div>
-            
-           
+                <div>
+                    <Table 
+                    response = {this.state.response}
+                    onDeleteBtnSubmit = {this.onDeleteBtnSubmit}
+                    onEditBtnSubmit = {this.onEditBtnSubmit}
+                    />
+                </div>
+
+
                 <div class="sum-box">
-               
-               <div>
-               <h2>Total Expenses:</h2>
-               </div>
-               </div>
+
+                    <div>
+                        <h2>Total Expenses:</h2>
+                    </div>
+                </div>
+
+                <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onAfterOpen={this.afterOpenModal}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Edit Purchase Modal"
+                        >
+
+                            <span onClick={this.closeModal}>x</span>
+                            <h3>{this.state.editMsg}</h3>
+                            <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
+                            <form>
+                          
+                                    <h3>Store:</h3>
+                                    <input
+                                        value={this.state.editStore}
+                                        onChange={this.handleEdits}
+                                        name="editStore"
+                                    />
+                                    <br />
+                                    <h3>Street Address:</h3>
+                                    <input
+                                        value={this.state.editStreet}
+                                        onChange={this.handleEdits}
+                                        name="editStreet"
+                                    />
+                                    <br />
+                                    <h3>City:</h3>
+                                    <input
+                                        value={this.state.editCity}
+                                        onChange={this.handleEdits}
+                                        name="editCity"
+                                    />
+                                    <br />
+                                    <h3>Province:</h3>
+                                    <input
+                                        value={this.state.editProvince}
+                                        onChange={this.handleEdits}
+                                        name="editProvince"
+                                    />
+                                    <br />
+                                    <h3>Postal Code:</h3>
+                                    <input
+                                        value={this.state.editPostalCode}
+                                        onChange={this.handleEdits}
+                                        name="editPostalCode"
+                                    />
+                                    <br />
+                                    <h3>Date:</h3>
+                                    <DatePicker
+                                        onChange={this.handleDatePicker}
+                                        value={this.state.datePicker}
+                                    />
+                                    <br />
+                                    <h3>Item:</h3>
+                                    <input
+                                        value={this.state.editItem}
+                                        onChange={this.handleEdits}
+                                        name="editItem"
+                                        />
+                                    <h3>Cost (eg. 3.50):</h3>
+                                    <input
+                                        value={this.state.editCost}
+                                        onChange={this.handleEditCost}
+                                        name="editCost"
+                                        />
+                                    <h3>Category</h3>
+                                <select name="editCategory" value={this.state.editCategory} onChange={this.handleEdits}>
+                                    <option value="None">Category</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Clothing">Clothing</option>
+                                </select>
+                                    <button onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
+                            </form>
+                        </Modal>
 
 
-        
+
             </div>
 
         )
     }
 
 }
+export default Browse;
