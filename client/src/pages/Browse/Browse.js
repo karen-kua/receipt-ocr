@@ -499,8 +499,9 @@ getFullDate = (keyDateArr, date) => {
 
             //   -----This is the dropdown jsx using the regular html dropdowns-----
             <div>
-
+               
                 <div className="category-dropdowns">
+                <h2>Search By Date or Category</h2>
                     <select className="btn btn-danger dropdown-toggle" name="day" value={this.state.day} onChange={this.handleDateChange}>
                         <option value="0">Day</option>
                         <option value="1">01</option>
@@ -591,15 +592,16 @@ getFullDate = (keyDateArr, date) => {
 
                     <button className="btn btn-danger" onClick={this.onDropDownBtnSubmit}>Search</button>
 
+                    <h2>Search By Item Name </h2>
                     <form className="active-cyan-4 mb-4">
                         <input className="form-control"
                             placeholder="Search by Item Name..."
                             value={this.state.query}
                             name="query"
-                            onChange={this.handleCategoryQueryChange}
+                            onChange={this.handleCategoryQueryChange}                           
                         />
-                        <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
-                    </form>
+                    </form> <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button> 
+                   
                 </div>
 
                 <div>
