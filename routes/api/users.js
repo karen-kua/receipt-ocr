@@ -13,10 +13,12 @@ router.route("/sign-up")
 //   .post(usersController.authenticate)
 
 router.route("/login")
-  .post(passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  }))
+  .get(usersController.login)
+// router.route("/login")
+//   .post(passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login'
+//   }))
 
 
 
