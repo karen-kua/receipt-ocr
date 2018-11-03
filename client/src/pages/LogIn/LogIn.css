@@ -1,0 +1,38 @@
+.login-body {
+    background-color: #db6f68;
+    background-color: cover; 
+    height: 860px;
+    width: 100%;
+    text-align: center; 
+}
+
+h4 {
+    color: #ffffff;
+    text-align: center; 
+    position: relative;
+    top: 26%; 
+
+}
+form {
+    text-align: center; 
+}
+
+
+.form-label {
+    color: #ffffff; 
+    text-align: center; 
+}
+
+.form-input {
+    border-radius: 5%; 
+    width: 200%; 
+}
+.form-group {
+    width: 40%;
+    text-align: center;
+    position: relative; 
+    left: 41%;
+    top: 600%;
+  
+}
+
