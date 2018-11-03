@@ -38,7 +38,7 @@ const Table = props => (
                     <td>{expense.cost}</td>
                     <td>{expense.category}</td>
                     <td>
-                    <button className="btn btn-danger">Edit</button>
+                    <button className="btn btn-danger" onClick={(event) => props.onEditBtnSubmit(expense._id, event)}>Edit</button>
                     </td>
                     <td>
                     <button className="btn btn-danger" onClick={(event) => props.onDeleteBtnSubmit(expense._id, event)}>Delete</button>

@@ -7,6 +7,18 @@ import Modal from 'react-modal';
 //CSS File - Also governs BrowseTable
 import '../Browse/Browse.css'
 
+// Styling for the modal recommended by the docs of react-modal
+const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
+
 ///* Class and Super *////
 class Browse extends Component {
     state = {
@@ -21,17 +33,17 @@ class Browse extends Component {
 
         // states for editing a purchase
         editId: "",
-        editStore: "1",
-        editStreet: "2",
-        editCity: "3",
-        editProvince: "4",
-        editPostalCode: "5",
+        editStore: "",
+        editStreet: "",
+        editCity: "",
+        editProvince: "",
+        editPostalCode: "",
         editDate: "",
         editCategory: "",
-        editItem: "9",
-        editCost: "10",
+        editItem: "",
+        editCost: "",
         modalIsOpen: false,
-        datePicker: null,
+        datePicker: "",
         editDay: "",
         editMonth: "",
         editYear: "",
@@ -100,7 +112,152 @@ class Browse extends Component {
             }) .catch(err => console.log(err))
     }
 
+    onEditBtnSubmit = (id, event) => {
+        event.preventDefault();
+        console.log(`The id of the object I want to edit: ${id}`)
+        API.getOnePurchase(id)
+            .then(res => {
+                console.log(res.data)
+                console.log("Purchase found")
+                this.setState({
+                    editId: res.data._id,
+                    editStore: res.data.store,
+                    editStreet: res.data.street,
+                    editCity: res.data.city,
+                    editProvince: res.data.province,
+                    editPostalCode: res.data.postalCode,
+                    editCategory: res.data.category,
+                    editItem: res.data.item,
+                    editCost: res.data.cost,
+                    modalIsOpen: true})
+            }) .catch(err => console.log(err))
+    }
 
+// Functions associated with the modal for editing purchases 
+
+closeModal = () => {
+    this.setState({
+        modalIsOpen: false,
+        editMsg: "",
+        datePicker: ""
+    });
+}
+
+afterOpenModal = () => {
+    this.subtitle.style.color = '#f00';
+}
+
+handleEdits = event => {
+    const { name, value } = event.target;
+    console.log({ name, value })
+    this.setState({[name]: value})
+}
+
+handleEditCost = event => {
+    let value = event.target.value
+    console.log(`Edit Costs: ${value}`)
+    console.log(parseFloat(value))
+    this.setState({editCost: value})
+}
+
+handleDatePicker = date => {
+    console.log(date)
+    if (date === null ) {
+        console.log("null")
+        this.setState({datePicker: date})
+    } else {
+        let keyDate = date.toLocaleString()
+        keyDate = keyDate.slice(0, keyDate.indexOf(","))
+        console.log(keyDate)
+        const keyDateArr = keyDate.split("/")
+        this.getFullDate(keyDateArr, date);
+    }
+}
+
+getFullDate = (keyDateArr, date) => {
+    let fullDateArr = [];
+    let dayLength = keyDateArr[1].split("").length
+    let monthLength = keyDateArr[0].split("").length
+    console.log(dayLength, monthLength)
+    fullDateArr.push([keyDateArr[2], keyDateArr[0], keyDateArr[1]])
+    fullDateArr = fullDateArr.join("").replace(",", "").replace(",","").split("");
+    if (monthLength === 1) {
+        fullDateArr.splice(4,0,"0")
+    }
+    if (dayLength === 1) {
+        fullDateArr.splice(6,0,"0")
+    }
+    const fullDate = fullDateArr.join("")
+    console.log(keyDateArr, fullDate)
+    this.setState({
+        datePicker: date,
+        editDay: parseInt(keyDateArr[1]),
+        editMonth: parseInt(keyDateArr[0]),
+        editYear: parseInt(keyDateArr[2]),
+        editFullDate: parseInt(fullDate)
+    }, () => {
+        console.log(
+            `Day: ${this.state.editDay}\n, 
+            Month: ${this.state.editMonth}\n,
+            Year: ${this.state.editYear}\n,
+            fullDate: ${this.state.editFullDate}`)
+        })
+    }
+    
+    updatePurchase = (id, event) => {
+        event.preventDefault();
+        const format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]/;
+        const hasSpecialChar = format.test(this.state.editCost)
+        console.log(parseFloat(this.state.editCost))
+        console.log("day")
+        console.log(this.state.datePicker === "")
+        console.log(isNaN(this.state.datePicker))
+        if (
+            // validating to see if the cost has no alphabet characters and other special characters
+            this.state.editCost === "" ||
+            isNaN(parseFloat(this.state.editCost)) ||
+            /[a-z]/i.test(this.state.editCost) ||
+            hasSpecialChar === true ||
+            // validating that the date is not null 
+            this.state.datePicker === ""
+        )
+            {
+            this.setState({editMsg: "Update failed"})
+        } else {
+            console.log(`The id of the item I want to edit: ${this.state.editId}`);
+            let reqObj = {
+                store: this.state.editStore,
+                street: this.state.editStreet,
+                city: this.state.editCity,
+                province: this.state.editProvince,
+                postalCode: this.state.editPostalCode,
+                day: this.state.editDay,
+                month: this.state.editMonth,
+                year: this.state.editYear,
+                fullDate: this.state.editFullDate,
+                item: this.state.editItem,
+                cost: parseFloat(this.state.editCost),
+                category: this.state.editCategory
+            }
+            console.log(reqObj)
+            API.updatePurchase(id, reqObj)
+                .then(res => {
+                    this.setState({editMsg: "Update successful!"})
+                    console.log("Purchase updated")
+                    this.requestData(this.state.switchExp)
+                }).catch(err => {
+                    this.setState({editMsg: "Update failed!"})
+                    console.log(err)
+                })
+
+        }
+
+
+        
+        
+
+    }
+    
     // Creating request bodies and doing API calls to get requested purchases
     requestData = switchExp => {
         let reqObj;
@@ -449,6 +606,7 @@ class Browse extends Component {
                     <Table 
                     response = {this.state.response}
                     onDeleteBtnSubmit = {this.onDeleteBtnSubmit}
+                    onEditBtnSubmit = {this.onEditBtnSubmit}
                     />
                 </div>
 
@@ -459,6 +617,83 @@ class Browse extends Component {
                         <h2>Total Expenses:</h2>
                     </div>
                 </div>
+
+                <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onAfterOpen={this.afterOpenModal}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}
+                            contentLabel="Edit Purchase Modal"
+                        >
+
+                            <span onClick={this.closeModal}>x</span>
+                            <h3>{this.state.editMsg}</h3>
+                            <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
+                            <form>
+                          
+                                    <h3>Store:</h3>
+                                    <input
+                                        value={this.state.editStore}
+                                        onChange={this.handleEdits}
+                                        name="editStore"
+                                    />
+                                    <br />
+                                    <h3>Street Address:</h3>
+                                    <input
+                                        value={this.state.editStreet}
+                                        onChange={this.handleEdits}
+                                        name="editStreet"
+                                    />
+                                    <br />
+                                    <h3>City:</h3>
+                                    <input
+                                        value={this.state.editCity}
+                                        onChange={this.handleEdits}
+                                        name="editCity"
+                                    />
+                                    <br />
+                                    <h3>Province:</h3>
+                                    <input
+                                        value={this.state.editProvince}
+                                        onChange={this.handleEdits}
+                                        name="editProvince"
+                                    />
+                                    <br />
+                                    <h3>Postal Code:</h3>
+                                    <input
+                                        value={this.state.editPostalCode}
+                                        onChange={this.handleEdits}
+                                        name="editPostalCode"
+                                    />
+                                    <br />
+                                    <h3>Date:</h3>
+                                    <DatePicker
+                                        onChange={this.handleDatePicker}
+                                        value={this.state.datePicker}
+                                    />
+                                    <br />
+                                    <h3>Item:</h3>
+                                    <input
+                                        value={this.state.editItem}
+                                        onChange={this.handleEdits}
+                                        name="editItem"
+                                        />
+                                    <h3>Cost (eg. 3.50):</h3>
+                                    <input
+                                        value={this.state.editCost}
+                                        onChange={this.handleEditCost}
+                                        name="editCost"
+                                        />
+                                    <h3>Category</h3>
+                                <select name="editCategory" value={this.state.editCategory} onChange={this.handleEdits}>
+                                    <option value="None">Category</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Clothing">Clothing</option>
+                                </select>
+                                    <button onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
+                            </form>
+                        </Modal>
 
 
 
