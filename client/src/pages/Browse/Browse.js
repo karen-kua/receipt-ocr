@@ -4,6 +4,7 @@ import Table from '../../components/BrowseTable'
 import DatePicker from 'react-date-picker'
 import axios from "axios";
 import Modal from 'react-modal';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 //CSS File - Also governs BrowseTable
 import '../Browse/Browse.css'
 
@@ -19,6 +20,7 @@ const customStyles = {
     }
   };
 
+
 ///* Class and Super *////
 class Browse extends Component {
     state = {
@@ -30,6 +32,9 @@ class Browse extends Component {
         category: "",
         query: "",
         switchExp: "",
+
+// states for testing export
+  
 
         // states for editing a purchase
         editId: "",
@@ -251,12 +256,9 @@ getFullDate = (keyDateArr, date) => {
                 })
 
         }
-
-
-        
-        
-
     }
+
+
     
     // Creating request bodies and doing API calls to get requested purchases
     requestData = switchExp => {
@@ -492,9 +494,15 @@ getFullDate = (keyDateArr, date) => {
         }
     }
 
+// TESTING EXPORT TO CSV
+
+
+
+
 
     ////// RENDER /////////
     render() {
+        
         return (
 
             //   -----This is the dropdown jsx using the regular html dropdowns-----
@@ -695,7 +703,13 @@ getFullDate = (keyDateArr, date) => {
                             </form>
                         </Modal>
 
-
+                <ReactHTMLTableToExcel
+                    id="test-xls-button"
+                    className="btn btn-danger download-table-xls-button"
+                    table="table-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Export" />
 
             </div>
 

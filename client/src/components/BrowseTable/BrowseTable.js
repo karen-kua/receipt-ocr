@@ -4,7 +4,7 @@ import '../../pages/Browse/Browse.css'
 
 const Table = props => (
     <div className="data-table">
-        <table>
+        <table id="table-xls">
             <thead>
                 <tr>
                     <th>Item</th>
