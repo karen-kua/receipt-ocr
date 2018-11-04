@@ -272,6 +272,7 @@ class Browse extends Component {
             case "month":
                 console.log("month");
                 reqObj = {
+                    userId: user,
                     month: this.state.month
                 }
                 console.log(reqObj)
@@ -280,6 +281,7 @@ class Browse extends Component {
             case "year":
                 console.log("year");
                 reqObj = {
+                    userId: user,
                     year: this.state.year
                 }
                 console.log(reqObj)
@@ -288,6 +290,7 @@ class Browse extends Component {
             case "category":
                 console.log("category");
                 reqObj = {
+                    userId: user,
                     category: this.state.category
                 }
                 console.log(reqObj)
@@ -296,6 +299,7 @@ class Browse extends Component {
             case "daymonth":
                 console.log("day&month");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month
                 }
@@ -305,6 +309,7 @@ class Browse extends Component {
             case "dayyear":
                 console.log("day&year");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     year: this.state.year
                 }
@@ -314,6 +319,7 @@ class Browse extends Component {
             case "daycategory":
                 console.log("day&category");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     category: this.state.category
                 }
@@ -323,6 +329,7 @@ class Browse extends Component {
             case "monthyear":
                 console.log("month&year");
                 reqObj = {
+                    userId: user,
                     month: this.state.month,
                     year: this.state.year
                 }
@@ -332,6 +339,7 @@ class Browse extends Component {
             case "monthcategory":
                 console.log("month&category");
                 reqObj = {
+                    userId: user,
                     month: this.state.month,
                     category: this.state.category
                 }
@@ -341,6 +349,7 @@ class Browse extends Component {
             case "yearcategory":
                 console.log("year&category");
                 reqObj = {
+                    userId: user,
                     year: this.state.year,
                     category: this.state.category
                 }
@@ -350,6 +359,7 @@ class Browse extends Component {
             case "daymonthyear":
                 console.log("day&month&year");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     year: this.state.year
@@ -360,6 +370,7 @@ class Browse extends Component {
             case "monthyearcategory":
                 console.log("month&year&category");
                 reqObj = {
+                    userId: user,
                     month: this.state.month,
                     year: this.state.year,
                     category: this.state.category
@@ -370,6 +381,7 @@ class Browse extends Component {
             case "dayyearcategory":
                 console.log("day&year&category");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     year: this.state.year,
                     category: this.state.category
@@ -380,6 +392,7 @@ class Browse extends Component {
             case "daymonthcategory":
                 console.log("day&month&category");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     category: this.state.category
@@ -390,6 +403,7 @@ class Browse extends Component {
             case "daymonthyearcategory":
                 console.log("all 4");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     year: this.state.year,
@@ -436,9 +450,9 @@ class Browse extends Component {
     browseDropDowns = reqObj => {
         API.browseDropDowns(reqObj)
             .then(res => {
-                console.log(res)
-                // this.setState({ response: res.data })
-                // console.log(this.state.response)
+                console.log(res.data)
+                this.setState({ response: res.data })
+                console.log(this.state.response)
             })
             .catch(err => console.log(err))
     }

@@ -115,18 +115,16 @@ module.exports = {
     console.log(query)
     db.Users
     .findOne({_id: ObjectId(query.userId)})
-    .populate("expense")
+    .populate({
+      path: "expense",
+      match: query
+    })
+    .sort({fullDate: -1})
     .then(data => {
       console.log(data.expense)
       res.json(data.expense)
     })
     .catch(err => console.log(err))
-    // .sort({fullDate: -1})
-    // .then(expense => {
-    //   console.log(expense)
-    //   res.json(expense)
-    // })
-    // .catch(err => console.log(err));
   },
 
 
