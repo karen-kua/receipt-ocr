@@ -32,6 +32,8 @@ module.exports = {
   },
 
   create: function(req, res) {
+    console.log("This is")
+    console.log(req.body)
     db.Expense
       .create(req.body)
       .then(dbModel => res.json(dbModel))
