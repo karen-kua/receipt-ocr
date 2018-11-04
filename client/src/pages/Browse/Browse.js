@@ -476,16 +476,28 @@ getFullDate = (keyDateArr, date) => {
                 break;
             case "searchBar":
                 console.log("searchBar");
-                reqObj = {
-                    item: this.state.query
-                }
-                console.log(reqObj)
-                API.browseByItem(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                let token = localStorage.getItem('session_token');
+                console.log(token)
+                API.auth(token)
+                .then(res => {
+                    console.log(res.data.status)
+                    if (res.data.status !== "404") {
+                        reqObj = {
+                            item: this.state.query
+                        }
+                        console.log(reqObj)
+                        API.browseByItem(reqObj)
+                            .then(res => {
+                                this.setState({ response: res.data })
+                                console.log(this.state.response)
+                            })
+                            .catch(err => console.log(err))
+                        
+                    } else {
+                        console.log("Auth failed!")
+                    }
+                })
+                .catch(err => console.log(err))
                 break;
             default:
                 console.log("Nothing matched")

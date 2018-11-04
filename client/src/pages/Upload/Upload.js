@@ -41,7 +41,7 @@ class Upload extends Component {
   verifyToken = () => {
       let token = localStorage.getItem('session_token');
       console.log(token)
-      axios.get('/api/users/auth', { headers: {"Authorization" : `Bearer ${token}`} })
+      axios.get('/auth', { headers: {"Authorization" : `Bearer ${token}`} })
         .then(res => {
             console.log(res);
         });

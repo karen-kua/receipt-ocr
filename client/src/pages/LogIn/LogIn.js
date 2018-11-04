@@ -94,6 +94,7 @@ class LoginForm extends Component {
                             <div className="col-3 col-mr-auto">
                                 <input className="form-input"
                                     placeholder="password"
+                                    type="password"
                                     name="password"
                                     value={this.state.password}
                                     onChange={this.handleChange}

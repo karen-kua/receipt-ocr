@@ -99,4 +99,8 @@ export default {
     return axios.get("/api/expense/browse-search-item", {params: searchQuery})
   },
 
+  auth: function(token) {
+    return axios.get('/auth', { headers: {"Authorization" : `Bearer ${token}`} })
+  },
+
 };
