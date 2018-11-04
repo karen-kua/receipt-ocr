@@ -458,7 +458,9 @@ class Browse extends Component {
     }
 
     browseByItem = () => {
+        const user = localStorage.getItem('user_id');
         let reqObj = {
+            userId: user,
             item: this.state.query
         }
         console.log(reqObj)

@@ -77,30 +77,23 @@ module.exports = {
   browseByItem: function(req, res) {
     console.log("This is")
     console.log(req.query)
-    db.Expense
-    .find({item: {$regex: req.query.item, $options: "i"}})
+    db.Users
+    .findOne({_id: ObjectId(req.query.userId)})
+    .populate({
+      path: "expense",
+      match:{
+        userId: req.query.userId,
+        item: {$regex: req.query.item, $options: "i"}
+      }
+    })
     .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
+    .then(data => {
+      console.log(data.expense)
+      res.json(data.expense)
+    })
     .catch(err => res.status(422).json(err));
   },
 
-  // browseDropDowns: function(req, res) {
-  //   console.log("This is")
-  //   let query = req.query;
-  //   console.log(query)
-  //   for (let key in query) {
-  //     console.log(key)
-  //     if (key === "day" || key === "month" || key === "year") {
-  //       query[key] = parseInt(query[key])
-  //     } 
-  //   }
-  //   console.log(query)
-  //   db.Expense
-  //   .find(query)
-  //   .sort({fullDate: -1})
-  //   .then(dbModel => res.json(dbModel))
-  //   .catch(err => res.status(422).json(err));
-  // },
 
   browseDropDowns: function(req, res) {
     console.log("This is")
@@ -124,7 +117,7 @@ module.exports = {
       console.log(data.expense)
       res.json(data.expense)
     })
-    .catch(err => console.log(err))
+    .catch(err => res.status(422).json(err));
   },
 
 
