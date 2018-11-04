@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { withRouter } from 'react-router-dom'
 import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
 import axios from "axios"
@@ -72,6 +73,7 @@ class Upload extends Component {
           this.uploadReceipt(file)
         } else {
           console.log("Auth failed!")
+          this.props.history.push('/login')
         }
       })
       .catch(err => console.log(err))
@@ -262,6 +264,7 @@ submitData = () => {
           this.validateForm()
         } else {
           console.log("Auth failed!")
+          this.props.history.push('/login')
         }
       })
       .catch(err => console.log(err))   
@@ -375,7 +378,6 @@ render() {
     };
     return (
       <div className="container">
-  
       {!this.state.showInput ? 
       <div className="uploadArea">
 

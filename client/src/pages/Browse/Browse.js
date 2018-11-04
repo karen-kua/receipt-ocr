@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import API from '../../utils/API';
 import Table from '../../components/BrowseTable'
 import DatePicker from 'react-date-picker'
@@ -405,6 +406,7 @@ class Browse extends Component {
                             this.browseByItem()
                         } else {
                             console.log("Auth failed!")
+                            this.props.history.push('/login')
                         }
                     })
                     .catch(err => console.log(err))
@@ -423,6 +425,7 @@ class Browse extends Component {
                     this.browseDropDowns(reqObj)
                 } else {
                     console.log("Auth failed!")
+                    this.props.history.push('/login')
                 }
             })
             .catch(err => console.log(err))
@@ -449,7 +452,6 @@ class Browse extends Component {
             })
             .catch(err => console.log(err))
     }
-
 
     ////// RENDER /////////
     render() {
