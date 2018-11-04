@@ -250,17 +250,18 @@ getFullDate = (keyDateArr, date) => {
                     console.log(err)
                 })
 
+            }
+            
+            
+            
+            
+            
         }
-
-
         
-        
-
-    }
-    
-    // Creating request bodies and doing API calls to get requested purchases
-    requestData = switchExp => {
-        let reqObj;
+        // Creating request bodies and doing API calls to get requested purchases
+        requestData = switchExp => {
+            const token = localStorage.getItem('session_token');
+            let reqObj;
         switch (switchExp) {
             case "day":
                 console.log("day");
@@ -476,23 +477,11 @@ getFullDate = (keyDateArr, date) => {
                 break;
             case "searchBar":
                 console.log("searchBar");
-                let token = localStorage.getItem('session_token');
-                console.log(token)
                 API.auth(token)
                 .then(res => {
                     console.log(res.data.status)
                     if (res.data.status !== "404") {
-                        reqObj = {
-                            item: this.state.query
-                        }
-                        console.log(reqObj)
-                        API.browseByItem(reqObj)
-                            .then(res => {
-                                this.setState({ response: res.data })
-                                console.log(this.state.response)
-                            })
-                            .catch(err => console.log(err))
-                        
+                       this.browseByItem()
                     } else {
                         console.log("Auth failed!")
                     }
@@ -502,6 +491,19 @@ getFullDate = (keyDateArr, date) => {
             default:
                 console.log("Nothing matched")
         }
+    }
+
+    browseByItem = () => {
+        let reqObj = {
+            item: this.state.query
+        }
+        console.log(reqObj)
+        API.browseByItem(reqObj)
+            .then(res => {
+                this.setState({ response: res.data })
+                console.log(this.state.response)
+            })
+            .catch(err => console.log(err))
     }
 
 
