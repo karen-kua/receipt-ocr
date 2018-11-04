@@ -34,17 +34,17 @@ class Upload extends Component {
     submitStatus: ""
   };
 
-  componentDidMount() {
-    this.verifyToken();
-  }
+  // componentDidMount() {
+  //   this.verifyToken();
+  // }
 
-  verifyToken = () => {
-      let token = localStorage.getItem('session_token');
-      console.log(token)
-      axios.get('/auth', { headers: {"Authorization" : `Bearer ${token}`} })
-        .then(res => {
-            console.log(res);
-        });
+  // verifyToken = () => {
+  //     let token = localStorage.getItem('session_token');
+  //     console.log(token)
+  //     axios.get('/auth', { headers: {"Authorization" : `Bearer ${token}`} })
+  //       .then(res => {
+  //           console.log(res);
+  //       });
       // axios.get('/auth', {
       //   headers: {
       //     'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ class Upload extends Component {
   //       //   }).catch(err => console.log(err));
   //       // }
   //     }).catch(err => console.log(err));
-  };
+  // };
 
 
   onDrop = (file) => {

@@ -252,10 +252,6 @@ getFullDate = (keyDateArr, date) => {
 
             }
             
-            
-            
-            
-            
         }
         
         // Creating request bodies and doing API calls to get requested purchases
@@ -269,12 +265,7 @@ getFullDate = (keyDateArr, date) => {
                     day: this.state.day
                 }
                 console.log(reqObj)
-                API.browseD(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "month":
                 console.log("month");
@@ -282,12 +273,7 @@ getFullDate = (keyDateArr, date) => {
                     month: this.state.month
                 }
                 console.log(reqObj)
-                API.browseM(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "year":
                 console.log("year");
@@ -295,12 +281,7 @@ getFullDate = (keyDateArr, date) => {
                     year: this.state.year
                 }
                 console.log(reqObj)
-                API.browseY(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "category":
                 console.log("category");
@@ -308,12 +289,7 @@ getFullDate = (keyDateArr, date) => {
                     category: this.state.category
                 }
                 console.log(reqObj)
-                API.browseC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "daymonth":
                 console.log("day&month");
@@ -322,12 +298,7 @@ getFullDate = (keyDateArr, date) => {
                     month: this.state.month
                 }
                 console.log(reqObj)
-                API.browseDM(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "dayyear":
                 console.log("day&year");
@@ -336,12 +307,7 @@ getFullDate = (keyDateArr, date) => {
                     year: this.state.year
                 }
                 console.log(reqObj)
-                API.browseDY(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "daycategory":
                 console.log("day&category");
@@ -350,12 +316,7 @@ getFullDate = (keyDateArr, date) => {
                     category: this.state.category
                 }
                 console.log(reqObj)
-                API.browseDC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "monthyear":
                 console.log("month&year");
@@ -364,12 +325,7 @@ getFullDate = (keyDateArr, date) => {
                     year: this.state.year
                 }
                 console.log(reqObj)
-                API.browseMY(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "monthcategory":
                 console.log("month&category");
@@ -378,12 +334,7 @@ getFullDate = (keyDateArr, date) => {
                     category: this.state.category
                 }
                 console.log(reqObj)
-                API.browseMC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "yearcategory":
                 console.log("year&category");
@@ -392,12 +343,7 @@ getFullDate = (keyDateArr, date) => {
                     category: this.state.category
                 }
                 console.log(reqObj)
-                API.browseYC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "daymonthyear":
                 console.log("day&month&year");
@@ -407,12 +353,7 @@ getFullDate = (keyDateArr, date) => {
                     year: this.state.year
                 }
                 console.log(reqObj)
-                API.browseDMY(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "monthyearcategory":
                 console.log("month&year&category");
@@ -422,12 +363,7 @@ getFullDate = (keyDateArr, date) => {
                     category: this.state.category
                 }
                 console.log(reqObj)
-                API.browseMYC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "dayyearcategory":
                 console.log("day&year&category");
@@ -437,12 +373,7 @@ getFullDate = (keyDateArr, date) => {
                     category: this.state.category
                 }
                 console.log(reqObj)
-                API.browseDYC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "daymonthcategory":
                 console.log("day&month&category");
@@ -452,29 +383,19 @@ getFullDate = (keyDateArr, date) => {
                     category: this.state.category
                 }
                 console.log(reqObj)
-                API.browseDMC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
+                this.browseDropDowns(reqObj)
                 break;
             case "daymonthyearcategory":
-                console.log("all 4");
-                reqObj = {
-                    day: this.state.day,
-                    month: this.state.month,
-                    year: this.state.year,
-                    category: this.state.category
-                }
-                console.log(reqObj)
-                API.browseDMYC(reqObj)
-                    .then(res => {
-                        this.setState({ response: res.data })
-                        console.log(this.state.response)
-                    })
-                    .catch(err => console.log(err))
-                break;
+            console.log("all 4");
+            reqObj = {
+                day: this.state.day,
+                month: this.state.month,
+                year: this.state.year,
+                category: this.state.category
+            }
+            console.log(reqObj)
+            this.browseDropDowns(reqObj)
+            break;
             case "searchBar":
                 console.log("searchBar");
                 API.auth(token)
@@ -491,6 +412,15 @@ getFullDate = (keyDateArr, date) => {
             default:
                 console.log("Nothing matched")
         }
+    }
+
+    browseDropDowns = reqObj => {
+        API.browseDropDowns(reqObj)
+                .then(res => {
+                    this.setState({ response: res.data })
+                    console.log(this.state.response)
+                })
+                .catch(err => console.log(err))
     }
 
     browseByItem = () => {
