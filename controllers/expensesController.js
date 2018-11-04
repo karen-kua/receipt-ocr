@@ -1,5 +1,6 @@
 const db = require("../models");
 const Tesseract = require('tesseract.js')
+const ObjectId = require('mongodb').ObjectId; 
 // Defining methods for the expensesController
 module.exports = {
 
@@ -36,6 +37,14 @@ module.exports = {
     console.log(req.body)
     db.Expense
       .create(req.body)
+      .then(dbExpense => {
+        return db.Users
+        .findOneAndUpdate(
+        { _id: ObjectId(req.body.userId) }, 
+        { $push: {expense: dbExpense._id }}, { new: true }
+      );
+    })
+      .catch(err => console.log(err))
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -75,6 +84,24 @@ module.exports = {
     .catch(err => res.status(422).json(err));
   },
 
+  // browseDropDowns: function(req, res) {
+  //   console.log("This is")
+  //   let query = req.query;
+  //   console.log(query)
+  //   for (let key in query) {
+  //     console.log(key)
+  //     if (key === "day" || key === "month" || key === "year") {
+  //       query[key] = parseInt(query[key])
+  //     } 
+  //   }
+  //   console.log(query)
+  //   db.Expense
+  //   .find(query)
+  //   .sort({fullDate: -1})
+  //   .then(dbModel => res.json(dbModel))
+  //   .catch(err => res.status(422).json(err));
+  // },
+
   browseDropDowns: function(req, res) {
     console.log("This is")
     let query = req.query;
@@ -86,13 +113,21 @@ module.exports = {
       } 
     }
     console.log(query)
-    db.Expense
-    .find(query)
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
+    db.Users
+    .findOne({_id: ObjectId(query.userId)})
+    .populate("expense")
+    .then(data => {
+      console.log(data.expense)
+      res.json(data.expense)
+    })
+    .catch(err => console.log(err))
+    // .sort({fullDate: -1})
+    // .then(expense => {
+    //   console.log(expense)
+    //   res.json(expense)
+    // })
+    // .catch(err => console.log(err));
   },
-
 
 
   

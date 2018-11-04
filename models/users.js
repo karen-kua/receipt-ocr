@@ -6,6 +6,11 @@ const bcrypt = require('bcryptjs');
 const usersSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
+
+  expense: [{
+    type: Schema.Types.ObjectId,
+    ref: "Expense"
+  }]
 });
 
 // Define schema methods

@@ -87,7 +87,7 @@ class Browse extends Component {
                 expression += key
             }
         }
-        console.log(`The switch statement is: ${expression}`)
+        console.log(`The switch expression is: ${expression}`)
         this.setState({ switchExp: expression },
             () => {
                 console.log(this.state.switchExp)
@@ -257,12 +257,13 @@ class Browse extends Component {
 
     // Creating request bodies and doing API calls to get requested purchases
     requestData = switchExp => {
-        const token = localStorage.getItem('session_token');
+        const user = localStorage.getItem('user_id');
         let reqObj;
         switch (switchExp) {
             case "day":
                 console.log("day");
                 reqObj = {
+                    userId: user,
                     day: this.state.day
                 }
                 console.log(reqObj)
@@ -399,6 +400,7 @@ class Browse extends Component {
                 break;
             case "searchBar":
                 console.log("searchBar");
+                const token = localStorage.getItem('session_token');
                 API.auth(token)
                     .then(res => {
                         console.log(res.data.status)
@@ -434,8 +436,9 @@ class Browse extends Component {
     browseDropDowns = reqObj => {
         API.browseDropDowns(reqObj)
             .then(res => {
-                this.setState({ response: res.data })
-                console.log(this.state.response)
+                console.log(res)
+                // this.setState({ response: res.data })
+                // console.log(this.state.response)
             })
             .catch(err => console.log(err))
     }
