@@ -16,7 +16,6 @@ import './Upload.css'
 class Upload extends Component {
   state = {
     progress: "0%",
-    validationErr: 0, 
     showInput: false,
     file: [],
     response: [],
@@ -35,34 +34,6 @@ class Upload extends Component {
     allCategories: [],
     submitStatus: ""
   };
-
-  // componentDidMount() {
-  //   this.verifyToken();
-  // }
-
-  // verifyToken = () => {
-  //     let token = localStorage.getItem('session_token');
-  //     console.log(token)
-  //     axios.get('/auth', { headers: {"Authorization" : `Bearer ${token}`} })
-  //       .then(res => {
-  //           console.log(res);
-  //       });
-      // axios.get('/auth', {
-      //   headers: {
-      //     'Authorization': `Bearer ${token}`
-      //   }
-  //     }).then(response => {
-  //       console.log(response)
-  //       console.log("yay!")
-  //       // if(response.ok) {
-  //       //   response.json().then(data => {
-  //       //     if(data.status != 200) {
-  //       //       this.props.verifyTokenFailed();
-  //       //     }
-  //       //   }).catch(err => console.log(err));
-  //       // }
-  //     }).catch(err => console.log(err));
-  // };
 
   goToUserInput = event => {
     event.preventDefault();
@@ -177,13 +148,13 @@ class Upload extends Component {
     }, () => console.log(this.state.allCosts));
   };
 
-  handleDropDown = (event) => {
-    this.setState({
-      category: event.target.value
-    }, () => console.log(this.state.category)
-  );
-    console.log("This is the event value: " + event.target.value)
-  }
+  // handleDropDown = (event) => {
+  //   this.setState({
+  //     category: event.target.value
+  //   }, () => console.log(this.state.category)
+  // );
+  //   console.log("This is the event value: " + event.target.value)
+  // }
 
   deleteItem = (index, event) => {
     event.preventDefault();
@@ -242,6 +213,7 @@ validateData = () => {
       this.state.datePicker === "" ||
       this.state.allCategories[i] === "None" ||
       this.state.allCategories[i] === "Category" ||
+      this.state.allCategories[i] === "" ||
       this.state.allItems[i] === ""
   ) {
     errNum++
@@ -358,7 +330,6 @@ reUpload = event => {
   console.log("I want to restart")
   this.setState({
     progress: "0%",
-    validationErr: 0, 
     showInput: false,
     file: [],
     response: [],
@@ -530,13 +501,20 @@ render() {
                 onChange={(event) => this.handleCostChange(index, event)}
                 name="allCosts"
                 />
-                <select name="category" value={this.state.allCategories[index]} onChange={(event) => this.handleCategories(index, event)}>
-                  <option value="None">Category</option>
-                  <option value="Food">Food</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Clothing">Clothing</option>
-                </select>
-                
+                    <select name="category" value={this.state.allCategories[index]} onChange={(event) => this.handleCategories(index, event)}>
+                      <option value="None">Category</option>
+                      <option value="Food">Food</option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Clothing">Clothing</option>
+                      <option value="Kitchen">Kitchen</option>
+                      <option value="Office">Office</option>
+                      <option value="Home">Home</option>
+                      <option value="Transportation">Transportation</option>
+                      <option value="Travel and Events">Travel and Events</option>
+                      <option value="Bills">Bills</option>
+                      <option value="Miscellaneous">Miscellaneous</option>
+                    </select>
+
 
 
                   <button type="submit" onClick={(event) => this.deleteItem(index, event)}>
@@ -551,7 +529,7 @@ render() {
                 Submit
               </button>
               <button className="btn btn-secondary" onClick={this.addRows}>
-          Add More Purchases
+          Add More Items
           </button>
               <button className="btn btn-secondary" onClick={this.reUpload}>
           Start Over
