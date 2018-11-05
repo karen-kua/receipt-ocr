@@ -1,10 +1,11 @@
 import React from "react";
 import { Component } from 'react';
-import '../../pages/Browse/Browse.css'
+// import '../../pages/Browse/Browse.css'
+import './BrowseTable.css'
 
 const Table = props => (
-    <div className="data-table">
-        <table>
+    <div className="table-container">
+        <table id="data-table">
             <thead>
                 <tr>
                     <th>Item</th>
@@ -35,7 +36,7 @@ const Table = props => (
                     <td>{expense.day}</td>
                     <td>{expense.month}</td>
                     <td>{expense.year}</td>
-                    <td>{expense.cost}</td>
+                    <td>{expense.cost.toFixed(2)}</td>
                     <td>{expense.category}</td>
                     <td>
                     <button className="btn btn-danger" onClick={(event) => props.onEditBtnSubmit(expense._id, event)}>Edit</button>

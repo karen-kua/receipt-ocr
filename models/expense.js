@@ -14,7 +14,7 @@ const expenseSchema = new Schema({
   item: { type: String, required: true },
   cost: { type: Number, required: true },
   category: { type: String, required: true },
-  userId: { type: Number, required: false},
+  userId: { type: String, required: true},
 });
 
 const Expense = mongoose.model("Expense", expenseSchema);

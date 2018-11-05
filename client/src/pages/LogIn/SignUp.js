@@ -1,43 +1,42 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
 class Signup extends Component {
-	constructor() {
-		super()
-		this.state = {
-			username: '',
-			password: '',
-			confirmPassword: '',
+	
+	state = {
+			username: "",
+			password: "",
+			statusMsg: ""
+			// confirmPassword: '',
 
 		}
-		this.handleSubmit = this.handleSubmit.bind(this)
-		this.handleChange = this.handleChange.bind(this)
-	}
-	handleChange(event) {
+	
+	handleChange = (event) => {
 		this.setState({
 			[event.target.name]: event.target.value
 		})
 	}
-	handleSubmit(event) {
+	handleSubmit = (event) => {
 		console.log('sign-up handleSubmit, username: ')
 		console.log(this.state.username)
 		event.preventDefault()
 
 		//request to server to add a new username/password
-		axios.post('/api/users/sign-up', {
+		axios.post('/sign-up', {
 			username: this.state.username,
 			password: this.state.password
 		})
 			.then(response => {
 				console.log(response)
-				if (!response.data.errmsg) {
-					console.log('successful signup')
-					this.setState({ //redirect to login page
-						redirectTo: '/login'
-					})
+				if (response.data.validate === false) {
+					console.log("The username is already taken")
+					this.setState({statusMsg: "The registration failed. That username has already been taken!"})
 				} else {
-					console.log('username already taken')
+					console.log("Successful sign-up!")
+					this.props.history.push("/login")
 				}
+				
 			}).catch(error => {
 				console.log('signup error: ')
 				console.log(error)
@@ -48,15 +47,15 @@ class Signup extends Component {
 
 render() {
 	return (
-		<div className="SignupForm">
+		<div classNameX="SignupForm">
 			<h4>Sign up</h4>
-			<form className="form-horizontal">
-				<div className="form-group">
-					<div className="col-1 col-ml-auto">
-						<label className="form-label" htmlFor="username">Username</label>
+			<form classNameX="form-horizontal">
+				<div classNameX="form-group">
+					<div classNameX="col-1 col-ml-auto">
+						<label classNameX="form-label" htmlFor="username">Username</label>
 					</div>
-					<div className="col-3 col-mr-auto">
-						<input className="form-input"
+					<div classNameX="col-3 col-mr-auto">
+						<input classNameX="form-input"
 							type="text"
 							id="username"
 							name="username"
@@ -66,12 +65,12 @@ render() {
 						/>
 					</div>
 				</div>
-				<div className="form-group">
-					<div className="col-1 col-ml-auto">
-						<label className="form-label" htmlFor="password">Password: </label>
+				<div classNameX="form-group">
+					<div classNameX="col-1 col-ml-auto">
+						<label classNameX="form-label" htmlFor="password">Password: </label>
 					</div>
-					<div className="col-3 col-mr-auto">
-						<input className="form-input"
+					<div classNameX="col-3 col-mr-auto">
+						<input classNameX="form-input"
 							placeholder="password"
 							type="password"
 							name="password"
@@ -80,14 +79,19 @@ render() {
 						/>
 					</div>
 				</div>
-				<div className="form-group ">
-					<div className="col-7"></div>
+				<div classNameX="form-group ">
+					<div classNameX="col-7">
 					<button
-						className="btn btn-primary col-1 col-mr-auto"
+						classNameX="btn btn-primary col-1 col-mr-auto"
 						onClick={this.handleSubmit}
 						type="submit"
 					>Sign up</button>
+					</div>
+				<div>
+					{this.state.statusMsg}
+					</div>
 				</div>
+
 			</form>
 		</div>
 
