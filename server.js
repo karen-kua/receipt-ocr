@@ -6,7 +6,6 @@ const morgan = require("morgan");
 const multer = require("multer");
 const session = require('express-session')
 const passport = require('./passport');
-const LocalStorage = require('node-localstorage').LocalStorage;
 
 const app = express();
 const PORT = process.env.PORT || 3001;
