@@ -16,6 +16,7 @@ import './Upload.css'
 class Upload extends Component {
   state = {
     progress: "0%",
+    validationErr: 0, 
     showInput: false,
     file: [],
     response: [],
@@ -221,10 +222,40 @@ class Upload extends Component {
   }
 
 
-submitData = () => {
-
+validateData = () => {
+  let errNum = 0;
   for (let i=0; i<this.state.allItems.length; i++) {
-    const user = localStorage.getItem('user_id');
+    // validation of special characters = true or false 
+    const format = /[ !@#%^&*()_+\-=\[\]{};':"\\|,<>\/?]/;
+    const hasSpecialChar = format.test(this.state.allCosts[i])
+    if (
+      // validating to see if the cost has no alphabet characters and other special characters
+      this.state.allCosts[i] === "" ||
+      // isNaN(parseFloat(this.state.allCosts[i])) ||
+      /[a-z]/i.test(this.state.allCosts[i]) ||
+      hasSpecialChar === true ||
+      // validating that the date and item aren't null and that the category isn't unselected 
+      this.state.datePicker === "" ||
+      this.state.allCategories[i] === "None" ||
+      this.state.allCategories[i] === "Category" ||
+      this.state.allItems[i] === ""
+  ) {
+    errNum++
+    console.log("Data isn't clean at index" + i)
+  } 
+}
+// If there are 0 errors in the submission, we can submit data into the DB. 
+if (errNum === 0) {
+this.submitData();
+} else {
+  this.setState({submitStatus: "Unsuccessful submission! Please ensure all fields are properly filled out."})
+}
+console.log(`The num of err in this submission: ${errNum}`)
+}
+
+submitData = () => {
+  const user = localStorage.getItem('user_id');
+  for (let i=0; i<this.state.allItems.length; i++) {
     let costNum = this.state.allCosts[i];
     costNum = parseFloat(costNum.replace("$", ""));
     costNum = parseFloat(costNum.toFixed(2))
@@ -252,6 +283,7 @@ submitData = () => {
         })
       })
     .catch(err => console.log(err));
+
   }
 }
 
@@ -284,6 +316,7 @@ submitData = () => {
         this.state.city !== "" &&
         this.state.province !== "" &&
         this.state.postalCode !== "" &&
+        this.state.datePicker !== "" &&
         this.state.day !== "" &&
         this.state.month !== "" &&
         this.state.year !== "" &&
@@ -291,7 +324,7 @@ submitData = () => {
         this.state.allItems !== [] &&
         this.state.allCategories !== [] &&
         this.state.allCosts !== []) {
-        this.submitData();
+        this.validateData();
   } else {
     this.setState({
       submitStatus: "Unsuccessful submission! Please ensure all fields are filed out."
@@ -300,11 +333,27 @@ submitData = () => {
   }
   }
 
-reUpload = (event) => {
+addRows = event => {
+  event.preventDefault();
+  const copyOfItems = [...this.state.allItems]
+  const copyOfCosts = [...this.state.allCosts]
+  const copyOfCategories = [...this.state.allCategories]
+  copyOfItems.push("")
+  copyOfCosts.push("")
+  copyOfCategories.push("")
+  this.setState({
+    allItems: copyOfItems,
+    allCosts: copyOfCosts,
+    allCategories: copyOfCategories
+  })
+}
+
+reUpload = event => {
   event.preventDefault();
   console.log("I want to restart")
   this.setState({
     progress: "0%",
+    validationErr: 0, 
     showInput: false,
     file: [],
     response: [],
@@ -493,6 +542,9 @@ render() {
               <button type="submit" onClick={this.onFormSubmit} className="btn btn-secondary">
                 Submit
               </button>
+              <button className="btn btn-secondary" onClick={this.addRows}>
+          Add More Purchases
+          </button>
               <button className="btn btn-secondary" onClick={this.reUpload}>
           Start Over
           </button>
