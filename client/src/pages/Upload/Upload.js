@@ -64,6 +64,10 @@ class Upload extends Component {
   //     }).catch(err => console.log(err));
   // };
 
+  goToUserInput = event => {
+    event.preventDefault();
+    this.props.history.push('/upload-user-input')
+}
 
   onDrop = (file) => {
     const token = localStorage.getItem('session_token');
@@ -281,6 +285,7 @@ submitData = () => {
         this.setState({
           submitStatus: "Submission successful!"
         })
+        this.props.history.push('/upload-success')
       })
     .catch(err => console.log(err));
 
@@ -455,6 +460,9 @@ render() {
         <div>
           File upload progress: {this.state.progress}
           </div>
+          <button className="btn btn-primary" onClick={this.goToUserInput}>
+          I do not have a receipt
+          </button>
         </div>
         : null}
  
