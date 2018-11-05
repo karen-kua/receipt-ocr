@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Upload from "./pages/Upload";
+import Upload from "./pages/Upload/Upload";
+import UploadSuccess from "./pages/Upload/UploadSuccess";
+import NoReceipt from "./pages/Upload/NoReceipt.js";
 import Browse from "./pages/Browse";
 import BrowseBackEnd from "./pages/BrowseBackEnd";
 // import SignIn from "./pages/SignIn";
@@ -15,6 +17,8 @@ const App = () => (
       <Nav />
       <Switch>
         <Route exact path="/upload" component={Upload} />
+        <Route exact path="/upload-success" component={UploadSuccess} />
+        <Route exact path="/upload-user-input" component={NoReceipt} />
         <Route exact path="/browse" component={Browse} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/sign-up" component={SignUp} />

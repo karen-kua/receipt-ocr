@@ -30,6 +30,7 @@ module.exports = {
           res.json(newArray)
         }
       })
+      .catch(err => res.status(422).json(err));
   },
 
   create: function(req, res) {
