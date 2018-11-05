@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 
 class LoginForm extends Component {
         state = {
-            username: '',
-            password: '',
-            redirectTo: null
+            username: "",
+            password: "",
+            loginMsg: "",
         }
       
     handleChange = event => {
@@ -27,28 +27,33 @@ class LoginForm extends Component {
                 password: this.state.password
             }})
             .then(res => {
-                console.log('login response: Logged In ')
-                console.log(res)
-
-                localStorage.setItem('session_token', res.data.token);
-                localStorage.setItem('user_welcome', res.data.message);
-                localStorage.setItem('user_id', res.data.id);
-                localStorage.setItem('username', res.data.username);
-               
-                this.props.history.push('/')
-                
-            }).catch(error => {
+                if (res.data.validate === false) {
+                    console.log("Login failed")
+                    this.setState({loginMsg: "Login failed. The username/password did not match."})
+                } else {
+                    console.log('login response: Logged In ')
+                    console.log(res)
+    
+                    localStorage.setItem('session_token', res.data.token);
+                    localStorage.setItem('user_welcome', res.data.message);
+                    localStorage.setItem('user_id', res.data.id);
+                    localStorage.setItem('username', res.data.username);
+                    this.props.history.push('/')     
+                }
+               })
+            .catch(error => {
                 console.log('login error: ')
                 console.log(error);
             })
+        
     }
 
     
 
     render() {
-        if (this.state.redirectTo) {
-            return <Redirect to={{ pathname: this.state.redirectTo }} />
-        } else {
+        // if (this.state.redirectTo) {
+        //     return <Redirect to={{ pathname: this.state.redirectTo }} />
+        // } else {
             return (
                 <div>
                     <h4>Login</h4>
@@ -81,18 +86,23 @@ class LoginForm extends Component {
                             </div>
                         </div>
                         <div classNameX="form-group ">
-                            <div classNameX="col-7"></div>
+                            <div classNameX="col-7">
                             <button
                                 classNameX="btn btn-primary col-1 col-mr-auto"
                                
                                 onClick={this.handleSubmit}
-                                type="submit">Login</button>
+                                type="submit">Login
+                                </button>
+                                </div>
+                                <div>
+                                    {this.state.loginMsg}
+                                    </div>
                         </div>
                     </form>
                 </div>
             )
         }
     }
-}
+
 
 export default LoginForm
