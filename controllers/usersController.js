@@ -42,10 +42,9 @@ module.exports = {
   login: function(req, res) {
     console.log('req.query');
     console.log(req.query);
-    db.Users.findOne({
-      username: req.query.username
+    db.Users.findOne(req.query
       // password: req.query.password
-    })
+    )
       .then(dbUser => {
         // ============================================================================
         bcrypt.compare(req.query.password, dbUser.password, function(err, res) {

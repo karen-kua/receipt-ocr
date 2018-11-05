@@ -68,7 +68,6 @@ class Browse extends Component {
             })
             this.setState({sumOfBrowsed: sum.toFixed(2)}
             , () => console.log(`The total sum: ${this.state.sumOfBrowsed}`))
-         
         }
     }
 
