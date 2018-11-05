@@ -1,5 +1,6 @@
 const db = require("../models");
 const Tesseract = require('tesseract.js')
+const ObjectId = require('mongodb').ObjectId; 
 // Defining methods for the expensesController
 module.exports = {
 
@@ -32,8 +33,18 @@ module.exports = {
   },
 
   create: function(req, res) {
+    console.log("This is")
+    console.log(req.body)
     db.Expense
       .create(req.body)
+      .then(dbExpense => {
+        return db.Users
+        .findOneAndUpdate(
+        { _id: ObjectId(req.body.userId) }, 
+        { $push: {expense: dbExpense._id }}, { new: true }
+      );
+    })
+      .catch(err => console.log(err))
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -66,12 +77,23 @@ module.exports = {
   browseByItem: function(req, res) {
     console.log("This is")
     console.log(req.query)
-    db.Expense
-    .find({item: {$regex: req.query.item, $options: "i"}})
+    db.Users
+    .findOne({_id: ObjectId(req.query.userId)})
+    .populate({
+      path: "expense",
+      match:{
+        userId: req.query.userId,
+        item: {$regex: req.query.item, $options: "i"}
+      }
+    })
     .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
+    .then(data => {
+      console.log(data.expense)
+      res.json(data.expense)
+    })
     .catch(err => res.status(422).json(err));
   },
+
 
   browseDropDowns: function(req, res) {
     console.log("This is")
@@ -84,13 +106,19 @@ module.exports = {
       } 
     }
     console.log(query)
-    db.Expense
-    .find(query)
+    db.Users
+    .findOne({_id: ObjectId(query.userId)})
+    .populate({
+      path: "expense",
+      match: query
+    })
     .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
+    .then(data => {
+      console.log(data.expense)
+      res.json(data.expense)
+    })
     .catch(err => res.status(422).json(err));
   },
-
 
 
   

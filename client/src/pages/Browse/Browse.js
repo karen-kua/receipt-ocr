@@ -87,7 +87,7 @@ class Browse extends Component {
                 expression += key
             }
         }
-        console.log(`The switch statement is: ${expression}`)
+        console.log(`The switch expression is: ${expression}`)
         this.setState({ switchExp: expression },
             () => {
                 console.log(this.state.switchExp)
@@ -257,12 +257,13 @@ class Browse extends Component {
 
     // Creating request bodies and doing API calls to get requested purchases
     requestData = switchExp => {
-        const token = localStorage.getItem('session_token');
+        const user = localStorage.getItem('user_id');
         let reqObj;
         switch (switchExp) {
             case "day":
                 console.log("day");
                 reqObj = {
+                    userId: user,
                     day: this.state.day
                 }
                 console.log(reqObj)
@@ -271,6 +272,7 @@ class Browse extends Component {
             case "month":
                 console.log("month");
                 reqObj = {
+                    userId: user,
                     month: this.state.month
                 }
                 console.log(reqObj)
@@ -279,6 +281,7 @@ class Browse extends Component {
             case "year":
                 console.log("year");
                 reqObj = {
+                    userId: user,
                     year: this.state.year
                 }
                 console.log(reqObj)
@@ -287,6 +290,7 @@ class Browse extends Component {
             case "category":
                 console.log("category");
                 reqObj = {
+                    userId: user,
                     category: this.state.category
                 }
                 console.log(reqObj)
@@ -295,6 +299,7 @@ class Browse extends Component {
             case "daymonth":
                 console.log("day&month");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month
                 }
@@ -304,6 +309,7 @@ class Browse extends Component {
             case "dayyear":
                 console.log("day&year");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     year: this.state.year
                 }
@@ -313,6 +319,7 @@ class Browse extends Component {
             case "daycategory":
                 console.log("day&category");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     category: this.state.category
                 }
@@ -322,6 +329,7 @@ class Browse extends Component {
             case "monthyear":
                 console.log("month&year");
                 reqObj = {
+                    userId: user,
                     month: this.state.month,
                     year: this.state.year
                 }
@@ -331,6 +339,7 @@ class Browse extends Component {
             case "monthcategory":
                 console.log("month&category");
                 reqObj = {
+                    userId: user,
                     month: this.state.month,
                     category: this.state.category
                 }
@@ -340,6 +349,7 @@ class Browse extends Component {
             case "yearcategory":
                 console.log("year&category");
                 reqObj = {
+                    userId: user,
                     year: this.state.year,
                     category: this.state.category
                 }
@@ -349,6 +359,7 @@ class Browse extends Component {
             case "daymonthyear":
                 console.log("day&month&year");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     year: this.state.year
@@ -359,6 +370,7 @@ class Browse extends Component {
             case "monthyearcategory":
                 console.log("month&year&category");
                 reqObj = {
+                    userId: user,
                     month: this.state.month,
                     year: this.state.year,
                     category: this.state.category
@@ -369,6 +381,7 @@ class Browse extends Component {
             case "dayyearcategory":
                 console.log("day&year&category");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     year: this.state.year,
                     category: this.state.category
@@ -379,6 +392,7 @@ class Browse extends Component {
             case "daymonthcategory":
                 console.log("day&month&category");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     category: this.state.category
@@ -389,6 +403,7 @@ class Browse extends Component {
             case "daymonthyearcategory":
                 console.log("all 4");
                 reqObj = {
+                    userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     year: this.state.year,
@@ -399,6 +414,7 @@ class Browse extends Component {
                 break;
             case "searchBar":
                 console.log("searchBar");
+                const token = localStorage.getItem('session_token');
                 API.auth(token)
                     .then(res => {
                         console.log(res.data.status)
@@ -434,6 +450,7 @@ class Browse extends Component {
     browseDropDowns = reqObj => {
         API.browseDropDowns(reqObj)
             .then(res => {
+                console.log(res.data)
                 this.setState({ response: res.data })
                 console.log(this.state.response)
             })
@@ -441,7 +458,9 @@ class Browse extends Component {
     }
 
     browseByItem = () => {
+        const user = localStorage.getItem('user_id');
         let reqObj = {
+            userId: user,
             item: this.state.query
         }
         console.log(reqObj)

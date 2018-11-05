@@ -224,6 +224,7 @@ class Upload extends Component {
 submitData = () => {
 
   for (let i=0; i<this.state.allItems.length; i++) {
+    const user = localStorage.getItem('user_id');
     let costNum = this.state.allCosts[i];
     costNum = parseFloat(costNum.replace("$", ""));
     costNum = parseFloat(costNum.toFixed(2))
@@ -239,7 +240,8 @@ submitData = () => {
       fullDate: this.state.fullDate,
       item: this.state.allItems[i],
       cost: costNum,
-      category: this.state.allCategories[i]
+      category: this.state.allCategories[i],
+      userId: user
     }
     console.log(requestObj)
     API.saveExpense(requestObj)
