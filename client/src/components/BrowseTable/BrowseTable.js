@@ -36,7 +36,7 @@ const Table = props => (
                     <td>{expense.day}</td>
                     <td>{expense.month}</td>
                     <td>{expense.year}</td>
-                    <td>{expense.cost}</td>
+                    <td>{expense.cost.toFixed(2)}</td>
                     <td>{expense.category}</td>
                     <td>
                     <button className="btn btn-danger" onClick={(event) => props.onEditBtnSubmit(expense._id, event)}>Edit</button>

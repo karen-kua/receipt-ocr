@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
 class Signup extends Component {
 	
 	state = {
-			username: '',
-			password: '',
-			confirmPassword: '',
+			username: "",
+			password: "",
+			statusMsg: ""
+			// confirmPassword: '',
 
 		}
 	
@@ -27,14 +29,14 @@ class Signup extends Component {
 		})
 			.then(response => {
 				console.log(response)
-				// if (!response.data.errmsg) {
-				// 	console.log('successful signup')
-				// 	this.setState({ //redirect to login page
-				// 		redirectTo: '/login'
-				// 	})
-				// } else {
-				// 	console.log('username already taken')
-				// }
+				if (response.data.validate === false) {
+					console.log("The username is already taken")
+					this.setState({statusMsg: "The registration failed. That username has already been taken!"})
+				} else {
+					console.log("Successful sign-up!")
+					this.props.history.push("/login")
+				}
+				
 			}).catch(error => {
 				console.log('signup error: ')
 				console.log(error)
@@ -78,13 +80,18 @@ render() {
 					</div>
 				</div>
 				<div classNameX="form-group ">
-					<div classNameX="col-7"></div>
+					<div classNameX="col-7">
 					<button
 						classNameX="btn btn-primary col-1 col-mr-auto"
 						onClick={this.handleSubmit}
 						type="submit"
 					>Sign up</button>
+					</div>
+				<div>
+					{this.state.statusMsg}
+					</div>
 				</div>
+
 			</form>
 		</div>
 

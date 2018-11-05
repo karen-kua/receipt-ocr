@@ -33,6 +33,9 @@ class Browse extends Component {
         query: "",
         switchExp: "",
 
+        // state for the totalSum of the browse data
+        sumOfBrowsed: 0,
+
         // states for editing a purchase
         editId: "",
         editStore: "",
@@ -52,6 +55,21 @@ class Browse extends Component {
         editFullDate: "",
         editMsg: "",
 
+    }
+
+
+    getSum = () => {
+        console.log("Getting sum")
+        if (this.state.response !== []) {
+            let sum = 0;
+            let copyOfResponse= [...this.state.response]
+            copyOfResponse.forEach(element => {
+                sum+=element.cost
+            })
+            this.setState({sumOfBrowsed: sum.toFixed(2)}
+            , () => console.log(`The total sum: ${this.state.sumOfBrowsed}`))
+         
+        }
     }
 
     // Functions for setting the state based on search bar or dropdown inputs
@@ -454,7 +472,8 @@ class Browse extends Component {
         API.browseDropDowns(reqObj)
             .then(res => {
                 console.log(res.data)
-                this.setState({ response: res.data })
+                this.setState({ response: res.data },
+                () => this.getSum())
                 console.log(this.state.response)
             })
             .catch(err => console.log(err))
@@ -469,7 +488,8 @@ class Browse extends Component {
         console.log(reqObj)
         API.browseByItem(reqObj)
             .then(res => {
-                this.setState({ response: res.data })
+                this.setState({ response: res.data },
+                () => this.getSum())
                 console.log(this.state.response)
             })
             .catch(err => console.log(err))
@@ -598,7 +618,7 @@ class Browse extends Component {
                 <div class="sum-box">
 
                     <div>
-                        <h2>Total Expenses:</h2>
+                        <h2>Total Expenses: {this.state.sumOfBrowsed}</h2>
                     </div>
                 </div>
 
