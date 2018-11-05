@@ -5,6 +5,7 @@ import Table from '../../components/BrowseTable'
 import DatePicker from 'react-date-picker'
 import axios from "axios";
 import Modal from 'react-modal';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 //CSS File - Also governs BrowseTable
 import '../Browse/Browse.css'
 
@@ -677,8 +678,15 @@ class Browse extends Component {
                         <button onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
                     </form>
                 </Modal>
-
-
+                <div className="export-container">
+                <ReactHTMLTableToExcel
+                    id="test-xls-button"
+                    className="btn btn-danger download-table-xls-button"
+                    table="data-table"
+                    filename="ocrExpenseTracker"
+                    sheet="tablexls"
+                    buttonText="Export" />
+                </div>
 
             </div>
 

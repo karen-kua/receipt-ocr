@@ -1,5 +1,9 @@
 /* GLOBAL STYLING */
 
+.export-container {
+    /* margin-top: 2000px; */
+    z-index: 3;
+}
 .category-dropdowns {
     background-color: 
     #db6f68; 
@@ -38,7 +42,7 @@ input.form-control {
     left: 25%; 
 }
 
-th {
+/* th {
    padding-left: 80px;
    padding-top: 15px; 
    color: #db6f68;
@@ -52,7 +56,7 @@ td {
 
 .data-table {
     margin-left: -2%;
-}
+} */
 
 i {
     margin-right: 10px;
