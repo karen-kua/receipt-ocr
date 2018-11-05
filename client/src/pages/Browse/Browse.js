@@ -220,8 +220,10 @@ class Browse extends Component {
             isNaN(parseFloat(this.state.editCost)) ||
             /[a-z]/i.test(this.state.editCost) ||
             hasSpecialChar === true ||
-            // validating that the date is not null 
-            this.state.datePicker === ""
+            // validating that the date and item aren't null and that the category isn't unselected 
+            this.state.datePicker === "" ||
+            this.state.editCategory === "None" ||
+            this.state.editItem === ""
         ) {
             this.setState({ editMsg: "Update failed" })
         } else {
