@@ -42,6 +42,9 @@ class Signup extends Component {
 					}
 					myFunction()
 				}
+				else {
+					window.location = "/"
+				}
 				// if (!response.data.errmsg) {
 				// 	console.log('successful signup')
 				// 	this.setState({ //redirect to login page

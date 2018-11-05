@@ -11,6 +11,7 @@ class Home extends Component {
         return (
                 <div style = {{height:"100vh"}} className="body">
                <div>
+               <div className="header2">Hi {localStorage.getItem("username")}!!!</div>
                <div className="header1">Track Your Expenses Online</div>
                <div className="header2">No paper. No fuss.</div>
                </div>

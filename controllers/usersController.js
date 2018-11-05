@@ -39,31 +39,35 @@ module.exports = {
         });
       });
   },
-
+  
   login: function(req, res) {
+    var passwordSuccess
     console.log('req.query');
     console.log(req.query);
     db.Users.findOne({
       username: req.query.username
       // password: req.query.password
     })
-      .then(dbUser => {
+    .then(dbUser => {
+      console.log(dbUser);
+      console.log("user found");
+      if (dbUser !== null) {
         // ============================================================================
         bcrypt.compare(req.query.password, dbUser.password, function(err, res) {
           if (res == true) {
             console.log("password is correct")
-       
+            console.log(passwordSuccess)
+            passwordSuccess = true
           }
           else {
             console.log("password is not correct")
+            console.log(passwordSuccess)
+            passwordSuccess = false
           }
           console.log('dbUser')
           console.log(dbUser)
         });
         // ============================================================================
-        console.log(dbUser);
-        console.log("user found");
-        if (dbUser !== null) {
           let user = dbUser.username;
           jwt.sign(
             { user },
@@ -75,7 +79,8 @@ module.exports = {
                 message: "Welcome " + dbUser.username,
                 token: token,
                 id: dbUser._id,
-                username: dbUser.username
+                username: dbUser.username,
+                passwordSuccess: passwordSuccess
               });
             }
           );

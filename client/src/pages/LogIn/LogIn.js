@@ -49,6 +49,25 @@ class LoginForm extends Component {
                 password: this.state.password
             }})
             .then(res => {
+                // ==============================================================
+                if (res.passwordSuccess == false) {
+					console.log('res.data')
+					console.log(res.data)
+					console.log('res.data = false')
+					// this.username.value = ""
+					// this.password.value = ""
+					// function myFunction() {
+					// 	var txt;
+					// 	if (window.confirm("User already exists. Press OK to login or press cancel to sign up as another user.")) {
+					// 		window.location = "/login"
+					// 	} else {
+					// 		window.location = "/sign-up"
+					// 	}
+					// }
+					// myFunction()
+				}
+                // ==============================================================
+                
                 console.log('login response: ')
                 console.log(res)
 
