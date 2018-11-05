@@ -11,20 +11,18 @@ module.exports = {
         console.log("user found");
         console.log(dbUser);
         if (dbUser == null) {
-          
           // ============================================================================
-          console.log('req.body')
-          console.log(req.body)
+          console.log("req.body");
+          console.log(req.body);
           bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
             // Store hash in your password DB.
-            console.log(hash)
-            req.body.password = hash
+            console.log(hash);
+            req.body.password = hash;
             db.Users.create(req.body)
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
+              .then(dbModel => res.json(dbModel))
+              .catch(err => res.status(422).json(err));
           });
           // ============================================================================
-
         } else {
           console.log("user exists already");
           res.json({
@@ -42,12 +40,25 @@ module.exports = {
   },
 
   login: function(req, res) {
+    console.log('req.query');
     console.log(req.query);
     db.Users.findOne({
-      username: req.query.username,
-      password: req.query.password
+      username: req.query.username
+      // password: req.query.password
     })
       .then(dbUser => {
+        // ============================================================================
+        bcrypt.compare(req.query.password, dbUser.password, function(err, res) {
+          if (res == true) {
+            console.log("password is correct")
+          }
+          else {
+            console.log("password is not correct")
+          }
+          console.log('dbUser')
+          console.log(dbUser)
+        });
+        // ============================================================================
         console.log(dbUser);
         console.log("user found");
         if (dbUser !== null) {
