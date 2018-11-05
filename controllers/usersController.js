@@ -65,7 +65,7 @@ module.exports = {
           jwt.sign(
             { user },
             "secretkey",
-            { expiresIn: "300s" },
+            { expiresIn: "3000s" },
             (err, token) => {
               res.json({
                 validate: true,
