@@ -16,9 +16,11 @@ class Nav extends Component {
         height: 100,
       };
       return (
-  <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+  // <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+  
     <a className="navbar-brand" href="/">
-      React Base for Project 3 Expense App
+      OCR Expense Tracker
     </a>
     <a className="nav-bar-links" href="/">Home</a>
     <a className="nav-bar-links" href="/Upload">Upload</a>
