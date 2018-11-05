@@ -1,5 +1,9 @@
 /* GLOBAL STYLING */
 
+.export-container {
+    /* margin-top: 2000px; */
+    z-index: 3;
+}
 .category-dropdowns {
     background-color: 
     #db6f68; 

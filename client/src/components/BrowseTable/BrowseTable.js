@@ -5,7 +5,7 @@ import './BrowseTable.css'
 
 const Table = props => (
     <div className="table-container">
-        <table className="data-table">
+        <table id="data-table">
             <thead>
                 <tr>
                     <th>Item</th>
