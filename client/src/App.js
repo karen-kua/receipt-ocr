@@ -9,11 +9,13 @@ import SignUp from './pages/LogIn/SignUp';
 import LogIn from './pages/LogIn/LogIn';
 import Home from './pages/Home/Home';
 import Nav from "./components/Nav";
+import Sidebar from "./components/Sidebar";
 
 const App = () => (
   <Router>
     <div>
-      <Nav />
+      {/* <Nav /> */}
+      <Sidebar />
       <Switch>
       <Route exact path="/" component={Home} />
         <Route exact path="/upload" component={Upload} />
