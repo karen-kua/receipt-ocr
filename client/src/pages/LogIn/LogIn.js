@@ -31,7 +31,11 @@ class LoginForm extends Component {
             .then(res => {
                 if (res.data.validate === false) {
                     console.log("Login failed")
-                    this.setState({ loginMsg: "Login failed. The username/password did not match." })
+                    this.setState({ 
+                        loginMsg: "Login failed. The username/password did not match.",
+                        username: "",
+                        password: ""
+                 })
                 } else {
                     console.log('login response: Logged In ')
                     console.log(res)
@@ -57,7 +61,7 @@ class LoginForm extends Component {
         //     return <Redirect to={{ pathname: this.state.redirectTo }} />
         // } else {
         return (
-            <div>
+            <div className="login-body">
                 <h4>Login</h4>
                 <form classNameX="form-horizontal">
                     <div classNameX="form-group">
@@ -67,7 +71,7 @@ class LoginForm extends Component {
                         <div classNameX="col-3 col-mr-auto">
                             <input classNameX="form-input"
                                 name="username"
-                                placeholder="username"
+                                placeholder="Username"
                                 value={this.state.username}
                                 onChange={this.handleChange}
                             />
@@ -79,7 +83,7 @@ class LoginForm extends Component {
                         </div>
                         <div classNameX="col-3 col-mr-auto">
                             <input classNameX="form-input"
-                                placeholder="password"
+                                placeholder="Password"
                                 type="password"
                                 name="password"
                                 value={this.state.password}
