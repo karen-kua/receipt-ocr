@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { withRouter } from 'react-router-dom'
 import API from "../../utils/API";
 import ReactDropzone from "react-dropzone";
 import axios from "axios"
@@ -22,7 +23,7 @@ class Upload extends Component {
     month: "",
     year: "",
     fullDate: "",
-    datePicker: new Date(),
+    datePicker: "",
     store: "",
     street: "",
     city: "",
@@ -34,17 +35,17 @@ class Upload extends Component {
     submitStatus: ""
   };
 
-  componentDidMount() {
-    this.verifyToken();
-  }
+  // componentDidMount() {
+  //   this.verifyToken();
+  // }
 
-  verifyToken = () => {
-      let token = localStorage.getItem('session_token');
-      console.log(token)
-      axios.get('/api/users/auth', { headers: {"Authorization" : `Bearer ${token}`} })
-        .then(res => {
-            console.log(res);
-        });
+  // verifyToken = () => {
+  //     let token = localStorage.getItem('session_token');
+  //     console.log(token)
+  //     axios.get('/auth', { headers: {"Authorization" : `Bearer ${token}`} })
+  //       .then(res => {
+  //           console.log(res);
+  //       });
       // axios.get('/auth', {
       //   headers: {
       //     'Authorization': `Bearer ${token}`
@@ -60,13 +61,27 @@ class Upload extends Component {
   //       //   }).catch(err => console.log(err));
   //       // }
   //     }).catch(err => console.log(err));
-  };
+  // };
 
 
   onDrop = (file) => {
+    const token = localStorage.getItem('session_token');
+    API.auth(token)
+      .then(res => {
+        console.log(res.data.status)
+        if (res.data.status !== "404") {
+          this.uploadReceipt(file)
+        } else {
+          console.log("Auth failed!")
+          this.props.history.push('/login')
+        }
+      })
+      .catch(err => console.log(err))
+  }
+  
+  uploadReceipt = file => {
     let photo = new FormData();
     photo.append('photo', file[0]);
-    // API.uploadReceipt(photo)
     axios.post('/api/expense/upload', photo, {
       onUploadProgress: (progressEvent) => {
         let percentageCompleted = Math.round((progressEvent.loaded * 100)/
@@ -92,7 +107,9 @@ class Upload extends Component {
     this.setState({
       file: this.state.file.concat(file)
     });
+    
   }
+
 
   getStoreAndItems = data => {
     let purchaseArr = [];
@@ -205,6 +222,7 @@ class Upload extends Component {
 
 
 submitData = () => {
+
   for (let i=0; i<this.state.allItems.length; i++) {
     let costNum = this.state.allCosts[i];
     costNum = parseFloat(costNum.replace("$", ""));
@@ -233,21 +251,32 @@ submitData = () => {
       })
     .catch(err => console.log(err));
   }
-
 }
 
   onFormSubmit = event => {
     event.preventDefault();
-    this.setState({
-      submitStatus: ""
-    })
-   
+    this.setState({submitStatus: ""})
+    const token = localStorage.getItem('session_token');
+    API.auth(token)
+      .then(res => {
+        console.log(res.data.status)
+        if (res.data.status !== "404") {
+          this.validateForm()
+        } else {
+          console.log("Auth failed!")
+          this.props.history.push('/login')
+        }
+      })
+      .catch(err => console.log(err))   
+  }
+  
+  validateForm = () => {
     console.log(
       `Store: ${this.state.store}\n Street: ${this.state.street}\n City: ${this.state.city}\n 
       Province: ${this.state.province}\nPostalCode: ${this.state.postalCode}\n Day: ${this.state.day}\n 
       Month: ${this.state.month}\n Year: ${this.state.year}\n fullDate: ${this.state.fullDate}`
     )
-
+  
     if (this.state.store !== "" &&
         this.state.street !== "" && 
         this.state.city !== "" &&
@@ -260,7 +289,7 @@ submitData = () => {
         this.state.allItems !== [] &&
         this.state.allCategories !== [] &&
         this.state.allCosts !== []) {
-          this.submitData();
+        this.submitData();
   } else {
     this.setState({
       submitStatus: "Unsuccessful submission! Please ensure all fields are filed out."
@@ -281,7 +310,7 @@ reUpload = (event) => {
     month: "",
     year: "",
     fullDate: "",
-    datePicker: new Date(),
+    datePicker: "",
     store: "",
     street: "",
     city: "",
@@ -349,7 +378,6 @@ render() {
     };
     return (
       <div className="container">
-  
       {!this.state.showInput ? 
       <div className="uploadArea">
 
@@ -458,7 +486,8 @@ render() {
                   </span>
               </div>
             ))}
-            <span className="input-group">
+            {/* <span className="input-group"> */}
+            <span>
               <button type="submit" onClick={this.onFormSubmit} className="btn btn-secondary">
                 Submit
               </button>

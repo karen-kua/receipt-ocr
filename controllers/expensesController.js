@@ -63,177 +63,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
 
-  browseD: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({day: parseInt(req.query.day)})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseM: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({month: parseInt(req.query.month)})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseY: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({year: parseInt(req.query.year)})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({category: req.query.category})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseDM: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({day: parseInt(req.query.day), month: parseInt(req.query.month)})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseDY: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({day: parseInt(req.query.day), year: parseInt(req.query.year)})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseDC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({day: parseInt(req.query.day), category: req.query.category})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseMY: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({month: parseInt(req.query.month), year: parseInt(req.query.year)})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseMC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({month: parseInt(req.query.month), category: req.query.category})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseYC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({year: parseInt(req.query.year), category: req.query.category})
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseDMY: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({
-      day: parseInt(req.query.day), 
-      month: parseInt(req.query.month), 
-      year: parseInt(req.query.year)
-    })
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseMYC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({
-      month: parseInt(req.query.month), 
-      year: parseInt(req.query.year),
-      category: req.query.category, 
-    })
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseDYC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({
-      day: parseInt(req.query.day), 
-      year: parseInt(req.query.year),
-      category: req.query.category, 
-    })
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseDMC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({
-      day: parseInt(req.query.day), 
-      month: parseInt(req.query.month),
-      category: req.query.category, 
-    })
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
-  browseDMYC: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
-    db.Expense
-    .find({
-      day: parseInt(req.query.day), 
-      month: parseInt(req.query.month),
-      year: parseInt(req.query.year),
-      category: req.query.category, 
-    })
-    .sort({fullDate: -1})
-    .then(dbModel => res.json(dbModel))
-    .catch(err => res.status(422).json(err));
-  },
-
   browseByItem: function(req, res) {
     console.log("This is")
     console.log(req.query)
@@ -244,41 +73,25 @@ module.exports = {
     .catch(err => res.status(422).json(err));
   },
 
+  browseDropDowns: function(req, res) {
+    console.log("This is")
+    let query = req.query;
+    console.log(query)
+    for (let key in query) {
+      console.log(key)
+      if (key === "day" || key === "month" || key === "year") {
+        query[key] = parseInt(query[key])
+      } 
+    }
+    console.log(query)
+    db.Expense
+    .find(query)
+    .sort({fullDate: -1})
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  },
 
 
-    // All the other back-end callbacks need to go here. 
-    // I left the book examples here in case you need them. 
 
-//   findAll: function(req, res) {
-//     db.Book
-//       .find(req.query)
-//       .sort({ date: -1 })
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-//   findById: function(req, res) {
-//     db.Book
-//       .findById(req.params.id)
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-  // create: function(req, res) {
-  //   db.Book
-  //     .create(req.body)
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => res.status(422).json(err));
-//   },
-//   update: function(req, res) {
-//     db.Book
-//       .findOneAndUpdate({ _id: req.params.id }, req.body)
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-//   remove: function(req, res) {
-//     db.Book
-//       .findById({ _id: req.params.id })
-//       .then(dbModel => dbModel.remove())
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   }
+  
 };
