@@ -1,10 +1,11 @@
 import React from "react";
 import { Component } from 'react';
-import '../../pages/Browse/Browse.css'
+// import '../../pages/Browse/Browse.css'
+import './BrowseTable.css'
 
 const Table = props => (
-    <div className="data-table">
-        <table>
+    <div className="table-container">
+        <table className="data-table">
             <thead>
                 <tr>
                     <th>Item</th>
