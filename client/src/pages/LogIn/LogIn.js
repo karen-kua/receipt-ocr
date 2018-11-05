@@ -1,31 +1,9 @@
-// import React from "react";
-// // import { Col, Row, Container } from "../../components/Grid";
-// // import Jumbotron from "../../components/Jumbotron";
-
-// class noMatch extends Component {
-// render() {
-// return (
-
- 
-//           <h1>404 Page Not Found</h1>
-        
-       
-//       );
-//     }
-// }
-// export default NoMatch;
-
-// =====================================================================
-
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
 class LoginForm extends Component {
-    // updateUser (userObject) {
-    //     this.setState(userObject)
-    //   }
-
         state = {
             username: '',
             password: '',
@@ -49,7 +27,7 @@ class LoginForm extends Component {
                 password: this.state.password
             }})
             .then(res => {
-                console.log('login response: ')
+                console.log('login response: Logged In ')
                 console.log(res)
 
                 localStorage.setItem('session_token', res.data.token);
@@ -57,14 +35,15 @@ class LoginForm extends Component {
                 localStorage.setItem('user_id', res.data.id);
                 localStorage.setItem('username', res.data.username);
                
-                    // update the state to redirect to home
-                // this.setState({redirectTo: '/'})
+                this.props.history.push('/')
                 
             }).catch(error => {
                 console.log('login error: ')
                 console.log(error);
             })
     }
+
+    
 
     render() {
         if (this.state.redirectTo) {
