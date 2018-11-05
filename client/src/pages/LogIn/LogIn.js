@@ -57,8 +57,8 @@ class LoginForm extends Component {
                 localStorage.setItem('user_id', res.data.id);
                 localStorage.setItem('username', res.data.username);
                
-                    // update the state to redirect to home
-                // this.setState({redirectTo: '/'})
+                // update the state to redirect to home
+                this.setState({redirectTo: '/'})
                 
             }).catch(error => {
                 console.log('login error: ')

@@ -25,6 +25,7 @@ module.exports = {
           // ============================================================================
         } else {
           console.log("user exists already");
+          alert("user exists already");
           res.json({
             validate: false,
             status: "422"
@@ -51,6 +52,7 @@ module.exports = {
         bcrypt.compare(req.query.password, dbUser.password, function(err, res) {
           if (res == true) {
             console.log("password is correct")
+       
           }
           else {
             console.log("password is not correct")
