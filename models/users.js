@@ -13,6 +13,8 @@ const usersSchema = new Schema({
   }]
 });
 
+// =======================================================================
+
 // Define schema methods
 // usersSchema.methods = {
 // 	checkPassword: function (inputPassword) {

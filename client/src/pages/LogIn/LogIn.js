@@ -73,13 +73,13 @@ class LoginForm extends Component {
             return (
                 <div>
                     <h4>Login</h4>
-                    <form className="form-horizontal">
-                        <div className="form-group">
-                            <div className="col-1 col-ml-auto">
-                                <label className="form-label" htmlFor="username">Username</label>
+                    <form classNameX="form-horizontal">
+                        <div classNameX="form-group">
+                            <div classNameX="col-1 col-ml-auto">
+                                <label classNameX="form-label" htmlFor="username">Username</label>
                             </div>
-                            <div className="col-3 col-mr-auto">
-                                <input className="form-input"
+                            <div classNameX="col-3 col-mr-auto">
+                                <input classNameX="form-input"
                                     name="username"
                                     placeholder="username"
                                     value={this.state.username}
@@ -87,12 +87,12 @@ class LoginForm extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="form-group">
-                            <div className="col-1 col-ml-auto">
-                                <label className="form-label" htmlFor="password">Password: </label>
+                        <div classNameX="form-group">
+                            <div classNameX="col-1 col-ml-auto">
+                                <label classNameX="form-label" htmlFor="password">Password: </label>
                             </div>
-                            <div className="col-3 col-mr-auto">
-                                <input className="form-input"
+                            <div classNameX="col-3 col-mr-auto">
+                                <input classNameX="form-input"
                                     placeholder="password"
                                     type="password"
                                     name="password"
@@ -101,10 +101,10 @@ class LoginForm extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="form-group ">
-                            <div className="col-7"></div>
+                        <div classNameX="form-group ">
+                            <div classNameX="col-7"></div>
                             <button
-                                className="btn btn-primary col-1 col-mr-auto"
+                                classNameX="btn btn-primary col-1 col-mr-auto"
                                
                                 onClick={this.handleSubmit}
                                 type="submit">Login</button>
