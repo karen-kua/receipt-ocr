@@ -13,6 +13,11 @@ body {
   overflow: auto;
 }
 
+.button {
+  background-color: white; 
+  color: white; 
+}
+
 .bm-item {
   display: inline-block;
   text-decoration: none;

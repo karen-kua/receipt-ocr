@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import './LogIn.css'
 
 class LoginForm extends Component {
     state = {
@@ -57,15 +58,17 @@ class LoginForm extends Component {
         //     return <Redirect to={{ pathname: this.state.redirectTo }} />
         // } else {
         return (
-            <div>
+            <div className="login-body">
+
+            
                 <h4>Login</h4>
-                <form classNameX="form-horizontal">
-                    <div classNameX="form-group">
-                        <div classNameX="col-1 col-ml-auto">
-                            <label classNameX="form-label" htmlFor="username">Username</label>
+                <form className="form-horizontal">
+                    <div className="form-group">
+                        <div className="col-1 col-ml-auto">
+                            <label className="form-label" htmlFor="username"></label>
                         </div>
-                        <div classNameX="col-3 col-mr-auto">
-                            <input classNameX="form-input"
+                        <div className="col-3 col-mr-auto">
+                            <input className="form-input"
                                 name="username"
                                 placeholder="username"
                                 value={this.state.username}
@@ -73,12 +76,12 @@ class LoginForm extends Component {
                             />
                         </div>
                     </div>
-                    <div classNameX="form-group">
-                        <div classNameX="col-1 col-ml-auto">
-                            <label classNameX="form-label" htmlFor="password">Password: </label>
+                    <div className="form-group">
+                        <div className="col-3 col-ml-auto">
+                            <label className="form-label" htmlFor="password"></label>
                         </div>
-                        <div classNameX="col-3 col-mr-auto">
-                            <input classNameX="form-input"
+                        <div className="col-3 col-mr-auto">
+                            <input className="form-input"
                                 placeholder="password"
                                 type="password"
                                 name="password"
@@ -87,27 +90,27 @@ class LoginForm extends Component {
                             />
                         </div>
                     </div>
-                    <div classNameX="form-group ">
-                        <div classNameX="col-7">
+                    <div className="form-group ">
+                        <div className="col-7">
                             <button
-                                classNameX="btn btn-primary col-1 col-mr-auto"
+                                className="btn btn-primary col-1 col-mr-auto"
                                 onClick={this.handleSubmit}
                                 type="submit">
                                 Login
                                 </button>
                         </div>
-                    <div>
-                        Don't have an account? Sign up for one <a href="/sign-up">here</a>
-                    </div>
+                        <div className="register-div">
+                            Don't have an account? Sign up for one <a href="/sign-up">here</a>
+                        </div>
 
-                    <div>
-                        {this.state.loginMsg}
+                        <div>
+                            {this.state.loginMsg}
+                        </div>
                     </div>
-                     </div>      
-            </form>
+                </form>
             </div>
-        
-            )
+
+        )
     }
 }
 

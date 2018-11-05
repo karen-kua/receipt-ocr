@@ -1,38 +1,50 @@
 .login-body {
-    background-color: #db6f68;
-    background-color: cover; 
+    background-image: url("./images/blackboard.jpg");
+    background-size: cover; 
     height: 860px;
     width: 100%;
     text-align: center; 
 }
 
+
+
 h4 {
     color: #ffffff;
     text-align: center; 
     position: relative;
-    top: 26%; 
+    top: 24%; 
 
 }
-form {
+
+.col-1 {
     text-align: center; 
 }
+.col-7 {
+    
+    color: white; 
+    font-size: 40px; 
+}
 
+.register-div {
+    color: #ffffff;
+}
 
 .form-label {
     color: #ffffff; 
-    text-align: center; 
+    /* text-align: center;  */
+    
 }
 
 .form-input {
     border-radius: 5%; 
-    width: 200%; 
+    
 }
 .form-group {
-    width: 40%;
-    text-align: center;
+
+    /* text-align: center; */
     position: relative; 
-    left: 41%;
+    left: 33%;
     top: 600%;
-  
+
 }
 
