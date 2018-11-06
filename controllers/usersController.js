@@ -42,48 +42,70 @@ module.exports = {
   login: function(req, res) {
     console.log('req.query');
     console.log(req.query);
-    db.Users.findOne(req.query
+    db.Users.findOne({username: req.query.username})
       // password: req.query.password
-    )
       .then(dbUser => {
-        // ============================================================================
-        bcrypt.compare(req.query.password, dbUser.password, function(err, res) {
-          if (res == true) {
+        bcrypt.compare(req.query.password, dbUser.password, function(err, response) {
+          if (dbUser !== null && response == true) {
             console.log("password is correct")
+            let user = dbUser.username;
+            jwt.sign(
+              { user },
+              "secretkey",
+              { expiresIn: "3000s" },
+              (err, token) => {
+                res.json({
+                  validate: true,
+                  message: "Welcome " + dbUser.username,
+                  token: token,
+                  id: dbUser._id,
+                  username: dbUser.username
+                });
+              }
+            );
+            console.log("jwt sent");
           }
           else {
             console.log("password is not correct")
+            res.json({
+              validate: false,
+              status: "422"
+            });
           }
           console.log('dbUser')
           console.log(dbUser)
-        });
-        // ============================================================================
-        console.log(dbUser);
-        console.log("user found");
-        if (dbUser !== null) {
-          let user = dbUser.username;
-          jwt.sign(
-            { user },
-            "secretkey",
-            { expiresIn: "3000s" },
-            (err, token) => {
-              res.json({
-                validate: true,
-                message: "Welcome " + dbUser.username,
-                token: token,
-                id: dbUser._id,
-                username: dbUser.username
-              });
-            }
-          );
-          console.log("jwt sent");
-        } else {
-          console.log("Email Not found");
-          res.json({
-            validate: false,
-            status: "422"
-          });
         }
+      //   if (dbUser !== null && passIsCorrect === true ) {
+      //     console.log("Hi")
+      //     let user = dbUser.username;
+      //     jwt.sign(
+      //       { user },
+      //       "secretkey",
+      //       { expiresIn: "3000s" },
+      //       (err, token) => {
+      //         res.json({
+      //           validate: true,
+      //           message: "Welcome " + dbUser.username,
+      //           token: token,
+      //           id: dbUser._id,
+      //           username: dbUser.username
+      //         });
+      //       }
+      //     );
+      //     console.log("jwt sent");
+      //   } else {
+      //     console.log("Email Not found");
+      //     res.json({
+      //       validate: false,
+      //       status: "422"
+      //     });
+      //   }
+      // }
+
+      );
+        // ============================================================================
+        // console.log(dbUser);
+        // console.log("user found");
       })
       .catch(err => {
         res.json({
@@ -92,6 +114,7 @@ module.exports = {
         });
       });
   },
+
 
   verifyToken: function(req, res) {
     console.log(req.headers.authorization);

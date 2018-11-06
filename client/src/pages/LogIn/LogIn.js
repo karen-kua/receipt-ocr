@@ -22,7 +22,7 @@ class LoginForm extends Component {
         console.log('handleSubmit')
         console.log(this.state.username)
         console.log(this.state.password)
-        axios.get('/login',
+        axios.get('/log-in',
             {
                 params: {
                     username: this.state.username,
@@ -30,6 +30,7 @@ class LoginForm extends Component {
                 }
             })
             .then(res => {
+                console.log(res)
                 if (res.data.validate === false) {
                     console.log("Login failed")
                     this.setState({ 

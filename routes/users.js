@@ -7,12 +7,12 @@ const router = require("express").Router();
 const usersController = require("../controllers/usersController");
 
 
-router.post("/sign-up", usersController.create)
+router.post("/signup", usersController.create)
 
 // router.route("/login")
 //   .post(usersController.authenticate)
 
-router.get("/login", usersController.login)
+router.get("/log-in", usersController.login)
 
 router.get("/auth", verifytoken, function (req, res) {
   console.log(req.token)
