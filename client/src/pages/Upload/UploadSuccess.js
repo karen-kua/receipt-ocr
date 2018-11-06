@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 import Modal from 'react-modal';
+import './Upload.css'
 
 const customStyles = {
     content : {
@@ -55,10 +56,11 @@ class UploadSuccess extends Component {
     
     render() {
         return (
-                <div>
+                <div >
 
 
-        <button onClick={this.openModal}>Open Modal</button>
+        <button onClick={this.openModal}></button>
+        
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -66,13 +68,15 @@ class UploadSuccess extends Component {
           style={customStyles}
           contentLabel="Upload-Success-Modal"
         >
-
+      
+            
           <h2 ref={subtitle => this.subtitle = subtitle}>Your expenses have been saved!</h2>
           {/* <button onClick={this.closeModal}>close</button> */}
           <div>What would you like to do now?</div>
           <button className="btn btn-info" onClick={this.goToReceiptUpload}>Upload another expense (I have a receipt)</button>
                         <button className="btn btn-primary" onClick={this.goToUserInput}>Upload another expense (I do not have a receipt)</button>
                         <button className="btn btn-warning" onClick={this.goToBrowse}>Browse my expenses</button>
+       
         </Modal>
 
 
