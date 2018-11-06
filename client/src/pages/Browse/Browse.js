@@ -604,8 +604,8 @@ class Browse extends Component {
                             name="query"
                             onChange={this.handleCategoryQueryChange}
                         />
-                    </form> <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
-
+                    <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
+                    </form>
                 </div>
                 <div className="row">
                     <div className="col-lg-12">
