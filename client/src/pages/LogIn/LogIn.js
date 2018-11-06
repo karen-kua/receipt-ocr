@@ -30,6 +30,7 @@ class LoginForm extends Component {
                 }
             })
             .then(res => {
+                console.log(res)
                 if (res.data.validate === false) {
                     console.log("Login failed")
                     this.setState({ 
