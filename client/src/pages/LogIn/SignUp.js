@@ -93,7 +93,7 @@ render() {
 						type="submit"
 					>Sign up</button>
 					</div>
-				<div>
+				<div  style={{color:'white',marginTop:'10px',position:'relative',right:'37%'}}>
 					{this.state.statusMsg}
 					</div>
 				</div>
