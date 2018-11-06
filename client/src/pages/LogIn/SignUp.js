@@ -74,11 +74,12 @@ render() {
 					<div className="col-1 col-ml-auto">
 						<label className="form-label" htmlFor="password"></label>
 					</div>
+
 					<div className="col-3 col-mr-auto">
 						<input className="form-input"
 							placeholder="Enter a Password"
 							type="password"
-							name="Password"
+							name="password"
 							value={this.state.password}
 							onChange={this.handleChange}
 						/>
