@@ -1,0 +1,50 @@
+.login-body {
+    background-image: url("./images/blackboard.jpg");
+    background-size: cover; 
+    height: 860px;
+    width: 100%;
+    text-align: center; 
+}
+
+
+
+h4 {
+    color: #ffffff;
+    text-align: center; 
+    position: relative;
+    top: 24%; 
+
+}
+
+.col-1 {
+    text-align: center; 
+}
+.col-7 {
+    
+    color: white; 
+    font-size: 40px; 
+}
+
+.register-div {
+    color: #ffffff;
+}
+
+.form-label {
+    color: #ffffff; 
+    /* text-align: center;  */
+    
+}
+
+.form-input {
+    border-radius: 5%; 
+    
+}
+.form-group {
+
+    /* text-align: center; */
+    position: relative; 
+    left: 33%;
+    top: 600%;
+
+}
+
