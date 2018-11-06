@@ -419,7 +419,7 @@ render() {
         </ReactDropzone>
         {this.state.file.length > 0 &&
           <Fragment>
-            <h2>Previews</h2>
+            <h2 className="preview-h2">Previews</h2>
             {this.state.file.map((file) => (
               <img
                 alt="Preview"
@@ -539,7 +539,7 @@ render() {
           </button>
             </span>
           </form>
-          <div>
+          <div className="submit-status">
             {this.state.submitStatus}
             </div>
         </div>
