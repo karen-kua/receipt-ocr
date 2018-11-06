@@ -599,7 +599,7 @@ class Browse extends Component {
                     <h2>Search By Item Name </h2>
                     <form className="active-cyan-4 mb-4">
                         <input className="form-control"
-                            placeholder="Search by Item Name..."
+                            placeholder="Enter an Item Name..."
                             value={this.state.query}
                             name="query"
                             onChange={this.handleCategoryQueryChange}
@@ -607,7 +607,8 @@ class Browse extends Component {
                     </form> <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
 
                 </div>
-
+                <div className="row">
+                    <div className="col-lg-12">
                 <div>
                     <Table
                         response={this.state.response}
@@ -615,13 +616,18 @@ class Browse extends Component {
                         onEditBtnSubmit={this.onEditBtnSubmit}
                     />
                 </div>
-
-
-                <div class="sum-box">
-
-                    <div>
-                        <h2>Total Expenses: {this.state.sumOfBrowsed}</h2>
                     </div>
+                </div>
+
+                <div className="row">
+                <div class="col-lg-11">
+                
+                <div class="sum-box">
+                    <div>
+                        <h2 style={{color:'#db6f68'}}>Total Expenses: {this.state.sumOfBrowsed}</h2>
+                    </div>
+                </div>
+                </div>
                 </div>
 
                 <Modal
@@ -700,6 +706,8 @@ class Browse extends Component {
                         <button onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
                     </form>
                 </Modal>
+                <div className="row">
+                    <div className="col-lg-1">
                 <div className="export-container">
                 <ReactHTMLTableToExcel
                     id="test-xls-button"
@@ -709,7 +717,8 @@ class Browse extends Component {
                     sheet="tablexls"
                     buttonText="Export" />
                 </div>
-
+                    </div>
+                </div>
             </div>
 
         )

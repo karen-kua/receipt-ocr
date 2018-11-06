@@ -108,7 +108,7 @@ class LoginForm extends Component {
                             Don't have an account? Sign up for one <a href="/sign-up">here</a>
                         </div>
 
-                        <div>
+                        <div style={{color:'white',marginTop:'10px',position:'relative',right:'37%'}}>
                             {this.state.loginMsg}
                         </div>
                     </div>
