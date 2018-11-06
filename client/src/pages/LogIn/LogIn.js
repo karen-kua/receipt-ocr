@@ -86,7 +86,7 @@ class LoginForm extends Component {
           
                         <div className="col-3 col-mr-auto">
                             <input className="form-input"
-                                placeholder="password"
+                                placeholder="Password"
 
                                 type="password"
                                 name="password"
@@ -98,10 +98,10 @@ class LoginForm extends Component {
                     <div className="form-group ">
                         <div className="col-7">
                             <button
-                                className="btn btn-primary col-1 col-mr-auto"
+                                className="btn btn-primary"
                                 onClick={this.handleSubmit}
                                 type="submit">
-                                Login
+                                Submit
                                 </button>
                         </div>
                         <div className="register-div">
