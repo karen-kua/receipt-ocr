@@ -22,6 +22,9 @@ const customStyles = {
 };
 
 ///* Class and Super *////
+
+
+
 class Browse extends Component {
     state = {
         // states for searching for purchases 
