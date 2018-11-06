@@ -14,6 +14,10 @@ render() {
       <a className="menu-item" href="/">
         Home
       </a>
+      
+      <a className="menu-item" href="/login">
+        Login
+      </a>
 
       <a className="menu-item" href="/upload">
         Upload Expenses
@@ -23,9 +27,6 @@ render() {
         Browse Expenses
       </a>
 
-      <a className="menu-item" href="/login">
-        Login
-      </a>
 
       <a className="menu-item" href="/sign-up">
         Register
