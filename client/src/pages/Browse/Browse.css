@@ -3,10 +3,11 @@
 .export-container {
     /* margin-top: 2000px; */
     z-index: 3;
+  
 }
 .category-dropdowns {
-    background-color: 
-    #db6f68; 
+    background-image: url("./images/blackboard.jpg");
+    background-size: cover; 
     height: 300px;
     text-align: center; 
     padding-top: 30px;  
@@ -18,9 +19,14 @@ h2 {
     color: #ffffff;
 }
 
+
+
+select {
+    background: none; 
+}
+
 .btn {
     margin: 5px; 
-   
     background-color: white;
     color: #db6f68;
     padding: 5px;
@@ -28,9 +34,7 @@ h2 {
 }
 
 form {
-    
 
-   
     position: relative; 
     height: 35px; 
 
@@ -39,10 +43,13 @@ form {
 input.form-control {
     width: 50%; 
     position: relative;
-    left: 25%; 
+    left: 26%; 
+    background: none;
+    color: white; 
+    border: 3px solid #db6f68;
 }
 
-/* th {
+th {
    padding-left: 80px;
    padding-top: 15px; 
    color: #db6f68;
@@ -56,7 +63,7 @@ td {
 
 .data-table {
     margin-left: -2%;
-} */
+}
 
 i {
     margin-right: 10px;
@@ -64,12 +71,13 @@ i {
 }
 
 .sum-box {
-    border-radius: 5%;
-    background-color: #db6f68;
-    color: white; 
+    border-radius: 2%;
+    border: 3px solid  #db6f68;
+    
+
     width: 20%;
     height: 50px; 
-    display: inline-block; 
+    display: grid; 
     position: relative;
     left: 75%; 
     padding-left: 10px;

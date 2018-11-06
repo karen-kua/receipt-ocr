@@ -29,7 +29,7 @@ h4 {
     
     color: white; 
     background: #db6f68;
-    margin: 5%;
+    /* margin: 5%; */
 
 }
 
@@ -47,7 +47,7 @@ h4 {
 .form-input {
     border-radius: 5%; 
     width: 60%;
-    border: 5px solid #db6f68;
+    border: 3px solid #db6f68;
     background: none; 
     color: white; 
     
@@ -66,4 +66,3 @@ h4 {
     position: relative;
     right: 37.25%; 
 }
-
