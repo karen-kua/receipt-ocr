@@ -31,7 +31,11 @@ class Signup extends Component {
 				console.log(response)
 				if (response.data.validate === false) {
 					console.log("The username is already taken")
-					this.setState({statusMsg: "The registration failed. That username has already been taken!"})
+					this.setState({
+						statusMsg: "The registration failed. That username has already been taken!",
+						username: "",
+						password: ""
+					})
 				} else {
 					console.log("Successful sign-up!")
 					this.props.history.push("/login")
@@ -73,7 +77,7 @@ render() {
 						<input classNameX="form-input"
 							placeholder="password"
 							type="password"
-							name="password"
+							name="Password"
 							value={this.state.password}
 							onChange={this.handleChange}
 						/>
