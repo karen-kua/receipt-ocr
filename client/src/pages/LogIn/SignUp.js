@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
+import './LogIn'
 
 class Signup extends Component {
 	
@@ -51,31 +52,32 @@ class Signup extends Component {
 
 render() {
 	return (
-		<div classNameX="SignupForm">
+		<div className="login-body">
 			<h4>Sign up</h4>
 			<form classNameX="form-horizontal">
-				<div classNameX="form-group">
-					<div classNameX="col-1 col-ml-auto">
-						<label classNameX="form-label" htmlFor="username">Username</label>
+				<div className="form-group">
+					<div className="col-1 col-ml-auto">
+						<label className="form-label" htmlFor="username"></label>
 					</div>
-					<div classNameX="col-3 col-mr-auto">
-						<input classNameX="form-input"
+					<div className="col-3 col-mr-auto">
+						<input className="form-input"
 							type="text"
 							id="username"
 							name="username"
-							placeholder="Username"
+							placeholder="Enter a Username"
 							value={this.state.username}
 							onChange={this.handleChange}
 						/>
 					</div>
 				</div>
-				<div classNameX="form-group">
-					<div classNameX="col-1 col-ml-auto">
-						<label classNameX="form-label" htmlFor="password">Password: </label>
+				<div className="form-group">
+					<div className="col-1 col-ml-auto">
+						<label className="form-label" htmlFor="password"></label>
 					</div>
-					<div classNameX="col-3 col-mr-auto">
-						<input classNameX="form-input"
-							placeholder="Password"
+
+					<div className="col-3 col-mr-auto">
+						<input className="form-input"
+							placeholder="Enter a Password"
 							type="password"
 							name="password"
 							value={this.state.password}
@@ -83,10 +85,10 @@ render() {
 						/>
 					</div>
 				</div>
-				<div classNameX="form-group ">
-					<div classNameX="col-7">
+				<div className="form-group ">
+					<div className="col-7">
 					<button
-						classNameX="btn btn-primary col-1 col-mr-auto"
+						className="btn btn-primary"
 						onClick={this.handleSubmit}
 						type="submit"
 					>Sign up</button>
