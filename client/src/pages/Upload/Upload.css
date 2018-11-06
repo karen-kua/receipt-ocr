@@ -1,3 +1,33 @@
+
+
+
+.upload-container {
+    background-image: url("./images/blackboard.jpg");
+    background: cover; 
+    width: 100%;
+    height: 880px;
+}
+
+.uploadArea {
+    color: white; 
+    padding-top: 25%;
+    text-align: center; 
+
+} 
+
+h1 {
+    padding-bottom: 20px; 
+}
+
+.file-progress {
+    padding-top: 20px; 
+}
+
+.receipt-drop {
+    position: relative;
+    left: 41%;
+}
+
 .inputForm {
     display: block;
     color: #db6f68;
@@ -9,4 +39,47 @@
     position: relative;
     margin-left: 42%; 
 
+}
+
+/* Manual Upload Container */
+
+.input-container {
+    background-image: url("./images/blackboard.jpg");
+    background: cover; 
+    width: 100%;
+    height: 920px;
+    margin-top: -5%;
+}
+
+.inputForm {
+    padding-top: 10%;
+}
+
+input {
+    border: 3px solid #db6f68;
+    background: none; 
+    margin-left: 5px;
+    margin-right: 5px; 
+}
+
+select {
+    border: 3px solid #db6f68;
+    background: none; 
+    margin-left: 5px;
+    margin-right: 5px; 
+    color: white; 
+    border-radius: 2%;
+    height: 31px; 
+
+}
+
+h3 {
+    color: white; 
+}
+
+.submit-error {
+    position: relative;
+    color: white;
+    top: 60%; 
+    left: 36%; 
 }

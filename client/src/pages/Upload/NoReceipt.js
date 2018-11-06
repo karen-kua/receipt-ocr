@@ -289,7 +289,7 @@ class NoReceipt extends Component {
 
     render() {
         return (
-            <div>
+            <div className="input-container">
 
                 <div className="inputForm">
 
@@ -300,6 +300,7 @@ class NoReceipt extends Component {
                             onChange={this.handleInputChange}
                             // placeholder="Store Name"
                             name="store"
+                            placeholder="Enter a Store Name"
                         />
                         <br />
                         <h3>Street Address</h3>
@@ -308,6 +309,7 @@ class NoReceipt extends Component {
                             onChange={this.handleInputChange}
                             // placeholder="Street Address of Your Purchase"
                             name="street"
+                            placeholder="Enter a Street Name"
                         />
                         <br />
                         <h3>City</h3>
@@ -316,6 +318,7 @@ class NoReceipt extends Component {
                             onChange={this.handleInputChange}
                             // placeholder="City of Your Purchase"
                             name="city"
+                            placeholder="Enter City"
                         />
                         <br />
                         <h3>Province</h3>
@@ -324,6 +327,7 @@ class NoReceipt extends Component {
                             onChange={this.handleInputChange}
                             // placeholder="Province of Your Purchase"
                             name="province"
+                            placeholder="Enter Province"
                         />
                         <br />
                         <h3>Postal Code</h3>
@@ -332,6 +336,7 @@ class NoReceipt extends Component {
                             onChange={this.handleInputChange}
                             // placeholder="Postal Code  of Your Purchase"
                             name="postalCode"
+                            placeholder="Enter Postal Code"
                         />
                         <br />
                         <h3>Date</h3>
@@ -370,7 +375,7 @@ class NoReceipt extends Component {
                                         <option value="Miscellaneous">Miscellaneous</option>
                                     </select>
 
-                                    <button type="submit" onClick={(event) => this.deleteItem(index, event)}>
+                                    <button type="submit" className="btn btn-primary" onClick={(event) => this.deleteItem(index, event)}>
                                         Delete
                                     </button>
                                 </span>
@@ -389,7 +394,7 @@ class NoReceipt extends Component {
                             </button>
                         </span>
                     </form>
-                    <div>
+                    <div className="submit-error">
                         {this.state.submitStatus}
                     </div>
                 </div>

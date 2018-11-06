@@ -404,11 +404,13 @@ render() {
       height: 100,
     };
     return (
+      <div className="upload-container">
       <div className="container">
       {!this.state.showInput ? 
       <div className="uploadArea">
 
         <h1>Receipt Upload</h1>
+        <div className="receipt-drop">
         <ReactDropzone
           accept="image/*"
           onDrop={this.onDrop}
@@ -428,7 +430,8 @@ render() {
             ))}
           </Fragment>
         }
-        <div>
+        </div>
+        <div className="file-progress">
           File upload progress: {this.state.progress}
           </div>
           <button className="btn btn-primary" onClick={this.goToUserInput}>
@@ -542,6 +545,8 @@ render() {
         </div>
         : null }
       </div>
+      </div>
+
     );
   }
 }
