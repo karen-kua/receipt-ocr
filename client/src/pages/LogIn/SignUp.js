@@ -75,9 +75,9 @@ render() {
 					</div>
 					<div classNameX="col-3 col-mr-auto">
 						<input classNameX="form-input"
-							placeholder="password"
+							placeholder="Password"
 							type="password"
-							name="Password"
+							name="password"
 							value={this.state.password}
 							onChange={this.handleChange}
 						/>
