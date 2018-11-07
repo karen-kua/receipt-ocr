@@ -53,6 +53,7 @@ const Table = props => (
            
         </table>
         <div className="sum-export-box">
+        <div>
                 <ReactHTMLTableToExcel
                     id="test-xls-button"
                     className="btn btn-danger download-table-xls-button"
@@ -60,9 +61,10 @@ const Table = props => (
                     filename="ocrExpenseTracker"
                     sheet="tablexls"
                     buttonText="Export" />
+</div>
 <h2 id="sum" style={{color:'#db6f68'}}>Total Expenses: {props.sum}</h2>
        </div>
-    </div>
+     </div>
 
 
 

@@ -28,7 +28,7 @@
 #data-table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color: black;
     color: white;
 }
@@ -44,4 +44,5 @@
 
 #sum {
     margin-top: 6px;
+    color: black;
 }

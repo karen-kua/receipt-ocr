@@ -32,7 +32,7 @@ class UploadSuccess extends Component {
     
       afterOpenModal = event => {
         // references are now sync'd and can be accessed.
-        this.subtitle.style.color = '#f00';
+        this.subtitle.style.color = '#db6f68';
       }
     
     //   closeModal = event => {
@@ -56,10 +56,7 @@ class UploadSuccess extends Component {
     
     render() {
         return (
-                <div >
-
-
-        <button onClick={this.openModal}></button>
+                <div className="upload-success-container">
         
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -69,14 +66,14 @@ class UploadSuccess extends Component {
           contentLabel="Upload-Success-Modal"
         >
       
-            
+            <div className="success-modal-content">
           <h2 ref={subtitle => this.subtitle = subtitle}>Your expenses have been saved!</h2>
           {/* <button onClick={this.closeModal}>close</button> */}
           <div>What would you like to do now?</div>
           <button className="btn btn-info" onClick={this.goToReceiptUpload}>Upload another expense (I have a receipt)</button>
                         <button className="btn btn-primary" onClick={this.goToUserInput}>Upload another expense (I do not have a receipt)</button>
                         <button className="btn btn-warning" onClick={this.goToBrowse}>Browse my expenses</button>
-       
+       </div>
         </Modal>
 
 
