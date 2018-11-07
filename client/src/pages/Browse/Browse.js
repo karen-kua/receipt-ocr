@@ -167,7 +167,7 @@ class Browse extends Component {
     }
 
     afterOpenModal = () => {
-        this.subtitle.style.color = '#f00';
+        this.subtitle.style.color = '#db6f68';
     }
 
     handleEdits = event => {
@@ -246,7 +246,7 @@ class Browse extends Component {
             this.state.editCategory === "None" ||
             this.state.editItem === ""
         ) {
-            this.setState({ editMsg: "Update failed" })
+            this.setState({ editMsg: "Update failed! All fields must be properly filled out." })
         } else {
             console.log(`The id of the item I want to edit: ${this.state.editId}`);
             let reqObj = {
@@ -503,7 +503,7 @@ class Browse extends Component {
 
             //   -----This is the dropdown jsx using the regular html dropdowns-----
             <div>
-
+{/* // START OF NEW ROW */}
                 <div className="category-dropdowns">
                     <h2>Search By Date or Category</h2>
                     <select className="btn btn-danger dropdown-toggle" name="day" value={this.state.day} onChange={this.handleDateChange}>
@@ -607,118 +607,109 @@ class Browse extends Component {
                     <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
                     </form>
                 </div>
-                <div className="row">
-                    <div className="col-lg-12">
-                <div>
+            
+            
+               
+                    <div>
                     <Table
                         response={this.state.response}
                         onDeleteBtnSubmit={this.onDeleteBtnSubmit}
                         onEditBtnSubmit={this.onEditBtnSubmit}
+                        sum={this.state.sumOfBrowsed}
                     />
                 </div>
-                    </div>
-                </div>
-
-                <div className="row">
-                <div class="col-lg-11">
                 
-                <div class="sum-box">
-                    <div>
-                        <h2 style={{color:'#db6f68'}}>Total Expenses: {this.state.sumOfBrowsed}</h2>
-                    </div>
-                </div>
-                </div>
-                </div>
+                
 
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal}
-                    className="edit-browse-modal"
-                    contentLabel="Edit Purchase Modal"
-                >
+          
+                 
+        <Modal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            className="Modal"
+            contentLabel="Edit Purchase Modal"
+        >
+            <span id="close-x" onClick={this.closeModal}>x</span>
+            <br/>
+            <div className="modalContent">
+            <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
+            <form>
 
-                    <span onClick={this.closeModal}>x</span>
-                    <h3>{this.state.editMsg}</h3>
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
-                    <form>
+                <h3>Store:</h3>
+                <input
+                    value={this.state.editStore}
+                    onChange={this.handleEdits}
+                    name="editStore"
+                />
+                <br />
+                <h3>Street Address:</h3>
+                <input
+                    value={this.state.editStreet}
+                    onChange={this.handleEdits}
+                    name="editStreet"
+                />
+                <br />
+                <h3>City:</h3>
+                <input
+                    value={this.state.editCity}
+                    onChange={this.handleEdits}
+                    name="editCity"
+                />
+                <br />
+                <h3>Province:</h3>
+                <input
+                    value={this.state.editProvince}
+                    onChange={this.handleEdits}
+                    name="editProvince"
+                />
+                <br />
+                <h3>Postal Code:</h3>
+                <input
+                    value={this.state.editPostalCode}
+                    onChange={this.handleEdits}
+                    name="editPostalCode"
+                />
+                <br />
+                <h3>Date:</h3>
+                <DatePicker
+                    onChange={this.handleDatePicker}
+                    value={this.state.datePicker}
+                />
+                <br />
+                <h3>Item:</h3>
+                <input
+                    value={this.state.editItem}
+                    onChange={this.handleEdits}
+                    name="editItem"
+                />
+                <h3>Cost (eg. 3.50):</h3>
+                <input
+                    value={this.state.editCost}
+                    onChange={this.handleEditCost}
+                    name="editCost"
+                />
+                <h3>Category</h3>
+                <select name="editCategory" className="btn btn-danger dropdown-toggle" value={this.state.editCategory} onChange={this.handleEdits}>
+                    <option value="None">Category</option>
+                    <option value="Food">Food</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                </select>
+                <br/>
+                <button id="modal-update-btn" className="btn btn-secondary" onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
+            <br/>
+            <p id="updateMsg">{this.state.editMsg}</p>
+            </form>
+            </div>
+        </Modal>
 
-                        <h3>Store:</h3>
-                        <input
-                            value={this.state.editStore}
-                            onChange={this.handleEdits}
-                            name="editStore"
-                        />
-                        <br />
-                        <h3>Street Address:</h3>
-                        <input
-                            value={this.state.editStreet}
-                            onChange={this.handleEdits}
-                            name="editStreet"
-                        />
-                        <br />
-                        <h3>City:</h3>
-                        <input
-                            value={this.state.editCity}
-                            onChange={this.handleEdits}
-                            name="editCity"
-                        />
-                        <br />
-                        <h3>Province:</h3>
-                        <input
-                            value={this.state.editProvince}
-                            onChange={this.handleEdits}
-                            name="editProvince"
-                        />
-                        <br />
-                        <h3>Postal Code:</h3>
-                        <input
-                            value={this.state.editPostalCode}
-                            onChange={this.handleEdits}
-                            name="editPostalCode"
-                        />
-                        <br />
-                        <h3>Date:</h3>
-                        <DatePicker
-                            onChange={this.handleDatePicker}
-                            value={this.state.datePicker}
-                        />
-                        <br />
-                        <h3>Item:</h3>
-                        <input
-                            value={this.state.editItem}
-                            onChange={this.handleEdits}
-                            name="editItem"
-                        />
-                        <h3>Cost (eg. 3.50):</h3>
-                        <input
-                            value={this.state.editCost}
-                            onChange={this.handleEditCost}
-                            name="editCost"
-                        />
-                        <h3>Category</h3>
-                        <select name="editCategory" value={this.state.editCategory} onChange={this.handleEdits}>
-                            <option value="None">Category</option>
-                            <option value="Food">Food</option>
-                            <option value="Electronics">Electronics</option>
-                            <option value="Clothing">Clothing</option>
-                        </select>
-                        <button onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
-                    </form>
-                </Modal>
-                <div className="row">
-                    <div className="col-lg-1">
-                <div className="export-container">
-                <ReactHTMLTableToExcel
-                    id="test-xls-button"
-                    className="btn btn-danger download-table-xls-button"
-                    table="data-table"
-                    filename="ocrExpenseTracker"
-                    sheet="tablexls"
-                    buttonText="Export" />
-                </div>
-                    </div>
-                </div>
+
+
+
+
+
+
             </div>
 
         )
