@@ -60,6 +60,15 @@ class Browse extends Component {
 
     }
 
+    componentDidMount = () => {
+        const user = localStorage.getItem('user_id');
+        console.log("component mounted");
+                const reqObj = {
+                    userId: user
+                }
+                console.log(reqObj)
+                this.authDropDowns(reqObj)
+    }
 
     getSum = () => {
         console.log("Getting sum")
@@ -690,11 +699,18 @@ class Browse extends Component {
                     name="editCost"
                 />
                 <h3>Category</h3>
-                <select name="editCategory" className="btn btn-danger dropdown-toggle" value={this.state.editCategory} onChange={this.handleEdits}>
-                    <option value="None">Category</option>
-                    <option value="Food">Food</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Clothing">Clothing</option>
+                            <select name="editCategory" className="btn btn-danger dropdown-toggle" value={this.state.editCategory} onChange={this.handleEdits}>
+                                <option value="None">Category</option>
+                                <option value="Food">Food</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Kitchen">Kitchen</option>
+                                <option value="Office">Office</option>
+                                <option value="Home">Home</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Travel and Events">Travel and Events</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Miscellaneous">Miscellaneous</option>
                 </select>
                 <br/>
                 <button id="modal-update-btn" className="btn btn-secondary" onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>

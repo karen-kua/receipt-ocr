@@ -37,7 +37,7 @@ body {
 
 .bm-burger-bars {
   /* background: #373a47; */
-  background: black;
+  background: #d6635d;
 }
 
 .bm-cross-button {
@@ -65,5 +65,5 @@ body {
 }
 
 .bm-overlay {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
 }
