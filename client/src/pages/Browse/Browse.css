@@ -1,10 +1,9 @@
 /* GLOBAL STYLING */
-
 .export-container {
-    /* margin-top: 2000px; */
-    z-index: 3;
+     margin-top: 2000px;
+     z-index: 3;
   
-}
+} 
 .category-dropdowns {
     background-image: url("./images/blackboard.jpg");
     background-size: cover; 
@@ -49,26 +48,26 @@ input.form-control {
     border: 3px solid #db6f68;
 }
 
-th {
+ th {
    padding-left: 80px;
    padding-top: 15px; 
    color: #db6f68;
-}
+} 
 
 td {
     padding: 5px; 
     position: relative;
     left: 5%;
-}
+} 
 
 .data-table {
     margin-left: -2%;
-}
+} 
 
 i {
     margin-right: 10px;
     color: #db6f68;
-}
+} 
 
 .sum-box {
     border-radius: 2%;
@@ -81,11 +80,57 @@ i {
     position: relative;
     left: 75%; 
     padding-left: 10px;
-}
+} 
 
 /* MODAL STYLING */
 
-.edit-browse-modal {
-    width: 80%;
-    height: 60%; 
-}
+/* .edit-browse-modal { */
+    /* width: 80%;
+    height: 60%;  */
+    /* background: red; */
+/* }  */
+
+.Modal {
+    background-image: url("./images/blackboard.jpg");
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    width: 30%;
+    display: inline-block;
+    height: 600px;
+    overflow: scroll;
+    margin: auto;
+    background-color: darkslategrey;
+    padding: 8px;
+    border: solid 2px none;
+    border-radius: 2%;
+  }
+
+  #close-x {
+      float: right;
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: white;
+  }
+
+  #modal-update-btn {
+      margin-top: 15px;
+  }
+
+  .modalContent {
+      text-align: center;
+  }
+
+  h3 {
+      color: white;
+  }
+
+  #updateMsg {
+      font-size: 25x;
+      color: white;
+      margin-top: 8px;
+  }
+
+  
