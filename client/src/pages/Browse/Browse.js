@@ -634,7 +634,7 @@ class Browse extends Component {
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal}
-                    style={customStyles}
+                    className="edit-browse-modal"
                     contentLabel="Edit Purchase Modal"
                 >
 

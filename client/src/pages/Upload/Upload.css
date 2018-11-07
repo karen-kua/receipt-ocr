@@ -101,7 +101,7 @@ h3 {
 .submit-error {
     position: relative;
     color: white;
-    top: 60%; 
-    left: 36%; 
+    margin-top: 36%;  
+    
 }
 

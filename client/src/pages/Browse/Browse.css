@@ -85,3 +85,7 @@ i {
 
 /* MODAL STYLING */
 
+.edit-browse-modal {
+    width: 80%;
+    height: 60%; 
+}
