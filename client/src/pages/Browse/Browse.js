@@ -503,7 +503,7 @@ class Browse extends Component {
 
             //   -----This is the dropdown jsx using the regular html dropdowns-----
             <div>
-
+{/* // START OF NEW ROW */}
                 <div className="category-dropdowns">
                     <h2>Search By Date or Category</h2>
                     <select className="btn btn-danger dropdown-toggle" name="day" value={this.state.day} onChange={this.handleDateChange}>
@@ -607,42 +607,22 @@ class Browse extends Component {
                     <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
                     </form>
                 </div>
-                <div className="row">
-                    <div className="col-lg-12">
-                <div>
+            
+            
+               
+                    <div>
                     <Table
                         response={this.state.response}
                         onDeleteBtnSubmit={this.onDeleteBtnSubmit}
                         onEditBtnSubmit={this.onEditBtnSubmit}
+                        sum={this.state.sumOfBrowsed}
                     />
                 </div>
-                    </div>
-                </div>
-
-                <div className="row">
-                <div class="col-lg-11">
                 
-                <div class="sum-box">
-                    <div>
-                        <h2 style={{color:'#db6f68'}}>Total Expenses: {this.state.sumOfBrowsed}</h2>
-                    </div>
-                </div>
-                </div>
-                </div>
+                
 
-                <div className="row">
-                    <div className="col-lg-1">
-                <div className="export-container">
-                <ReactHTMLTableToExcel
-                    id="test-xls-button"
-                    className="btn btn-danger download-table-xls-button"
-                    table="data-table"
-                    filename="ocrExpenseTracker"
-                    sheet="tablexls"
-                    buttonText="Export" />
-                </div>
-                    </div>
-                </div>
+          
+                 
         <Modal
             isOpen={this.state.modalIsOpen}
             onAfterOpen={this.afterOpenModal}

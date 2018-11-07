@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from 'react';
 // import '../../pages/Browse/Browse.css'
 import './BrowseTable.css'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 const Table = props => (
     <div className="table-container">
@@ -49,9 +50,18 @@ const Table = props => (
                 ))}
 
             </tbody>
+           
         </table>
-
-       
+        <div className="sum-export-box">
+                <ReactHTMLTableToExcel
+                    id="test-xls-button"
+                    className="btn btn-danger download-table-xls-button"
+                    table="data-table"
+                    filename="ocrExpenseTracker"
+                    sheet="tablexls"
+                    buttonText="Export" />
+<h2 id="sum" style={{color:'#db6f68'}}>Total Expenses: {props.sum}</h2>
+       </div>
     </div>
 
 
