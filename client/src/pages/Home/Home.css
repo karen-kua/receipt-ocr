@@ -1,44 +1,53 @@
 
 
 .body {
-    background-image: url("./images/chalkboard.png");
+    background-image: url("./images/blackboard.jpg");
     background-size: cover
 }
 
-.header1 {
-    position: relative;
-    top: 100px;
-    margin: auto;
-    margin-bottom: 20px;
-    background: rgb(255,255,255, 0.6);
-    width: 40%;
-    text-align: center;
-    font-size: 50px;
 
+text {
+    fill: #db6f68;
+    filter: url('#money');
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 100px;
+    font-weight: 900;
+ 
+    
+  }
 
+svg {
+    position: relative; 
+    left: 19.5%; 
+    margin-top: 18%;  
+    width: 60%; 
 }
+
 
 .header2 {
     position: relative;
-    top: 100px;
-    margin: auto;
-    background: rgb(255,255,255, 0.6);
+   left: 39%;
+   margin-top: -3%; 
+    color: #db6f68;
+    font-family: 'Playfair Display', 'Georgia', serif;
     width: 20%;
     text-align: center;
     font-size: 30px;
     font-weight: 500;
-    font-style: italic
+    font-style: italic;
+    border-radius: 3%;
 }
 
 #welcomeMsg {
     position: relative;
-    top: 100px;
-    margin: auto;
-    background: rgb(31,31,31, 0.6);
+    margin-left: 39%; 
+    border: solid 3px #db6f68;
     width: 20%;
     text-align: center;
     font-size: 30px;
     font-weight: 500;
     margin-top: 20px;
     color: white;
+    border-radius: 3%;
 }
+
