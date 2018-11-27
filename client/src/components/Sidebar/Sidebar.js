@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { slide as Menu } from 'react-burger-menu';
-import "./Sidebar.css"
+import "./Sidebar.css";
 
 class Sidebar extends Component {
 
@@ -9,15 +9,23 @@ logout = () => {
     }
 
 render() {
+  const isAuth = localStorage.getItem("isAuthenticated")
   return (
     <Menu>
+
       <a className="menu-item" href="/">
         Home
       </a>
       
-      <a className="menu-item" href="/login">
+      {isAuth !== "true" ? <a className="menu-item" href="/login">
         Login
       </a>
+      : null}
+
+      {isAuth !== "true" ? <a className="menu-item" href="/sign-up">
+        Register
+      </a>
+      : null}
 
       <a className="menu-item" href="/upload">
         Upload Expenses
@@ -27,16 +35,10 @@ render() {
         Browse Expenses
       </a>
 
-
-      <a className="menu-item" href="/sign-up">
-        Register
-      </a>
-
       <a className="menu-item" href="/" onClick={this.logout}>
         Logout
       </a>
 
-      
     </Menu>
   );
 }
