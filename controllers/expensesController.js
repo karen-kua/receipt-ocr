@@ -7,7 +7,7 @@ module.exports = {
   uploadExpense: function (req, res, next) {
     console.log(req.file)
     let file = `${req.file.path}`
-    Tesseract.create({ langPath: "eng.traineddata" }).recognize(file, 'eng')
+    Tesseract.recognize(file)
       .progress(function (p) { console.log('progress', p) })
       .catch(err => console.error(err))
       .then(function (result) {
@@ -26,7 +26,6 @@ module.exports = {
             }
           }
           console.log(newArray)
-          console.log("hello world")
           res.json(newArray)
         }
       })
@@ -81,7 +80,6 @@ module.exports = {
       })
       .sort({ fullDate: -1 })
       .then(data => {
-        console.log(data.expense)
         res.json(data.expense)
       })
       .catch(err => res.status(422).json(err));
