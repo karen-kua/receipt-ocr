@@ -51,7 +51,7 @@ class LoginForm extends Component {
         return (
             <div className="login-body">
                 <h4>Login</h4>
-                <form className="form-horizontal">
+                <form className="form-horizontal" onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <div className="col-1 col-ml-auto">
                             <label className="form-label" htmlFor="username"></label>
@@ -62,6 +62,7 @@ class LoginForm extends Component {
                                 placeholder="Username"
                                 value={this.state.username}
                                 onChange={this.handleChange}
+                                required
                             />
                         </div>
                     </div>
@@ -78,6 +79,7 @@ class LoginForm extends Component {
                                 name="password"
                                 value={this.state.password}
                                 onChange={this.handleChange}
+								required
                             />
                         </div>
                     </div>
@@ -85,7 +87,6 @@ class LoginForm extends Component {
                         <div className="col-7">
                             <button
                                 className="btn btn-primary"
-                                onClick={this.handleSubmit}
                                 type="submit">
                                 Submit
                                 </button>
