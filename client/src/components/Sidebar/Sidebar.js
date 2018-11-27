@@ -35,9 +35,10 @@ render() {
         Browse Expenses
       </a>
 
-      <a className="menu-item" href="/" onClick={this.logout}>
+      {isAuth === "true" ? <a className="menu-item" href="/" onClick={this.logout}>
         Logout
       </a>
+      : null}
 
     </Menu>
   );
