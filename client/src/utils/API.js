@@ -10,6 +10,10 @@ export default {
     return axios.post("/signup", userData)
   },
 
+ logIn: function(userData) {
+    return axios.get("/log-in", userData)
+  },
+
   saveExpense: function(expenseData) {
     return axios.post("/api/expense/save", expenseData);
   },

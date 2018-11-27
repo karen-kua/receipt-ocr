@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import API from "../../utils/API";
 import { withRouter } from 'react-router-dom';
 import './LogIn.css';
 
@@ -19,13 +19,13 @@ class LoginForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        axios.get('/log-in',
-            {
-                params: {
-                    username: this.state.username,
-                    password: this.state.password
-                }
-            })
+        API.logIn(
+        {
+            params: {
+                username: this.state.username,
+                password: this.state.password
+            }
+        })
             .then(res => {
                 if (res.data.validate === false) {
                     this.setState({
@@ -38,6 +38,7 @@ class LoginForm extends Component {
                     localStorage.setItem('user_welcome', res.data.message);
                     localStorage.setItem('user_id', res.data.id);
                     localStorage.setItem('username', res.data.username);
+                    localStorage.setItem('isAuthenticated', true);
                     this.props.history.push('/')
                 }
             })
