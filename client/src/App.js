@@ -4,17 +4,14 @@ import Upload from "./pages/Upload/Upload";
 import UploadSuccess from "./pages/Upload/UploadSuccess";
 import NoReceipt from "./pages/Upload/NoReceipt.js";
 import Browse from "./pages/Browse";
-// import SignIn from "./pages/SignIn";
 import SignUp from './pages/LogIn/SignUp';
 import LogIn from './pages/LogIn/LogIn';
 import Home from './pages/Home/Home';
-import Nav from "./components/Nav";
 import Sidebar from "./components/Sidebar";
 
 const App = () => (
   <Router>
     <div>
-      {/* <Nav /> */}
       <Sidebar />
       <Switch>
       <Route exact path="/" component={Home} />

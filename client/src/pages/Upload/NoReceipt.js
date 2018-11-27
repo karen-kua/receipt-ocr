@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from 'react-router-dom'
 import API from "../../utils/API";
-import axios from "axios"
 import DatePicker from 'react-date-picker'
 import './Upload.css'
 
@@ -26,40 +25,33 @@ class NoReceipt extends Component {
 
     handleInputChange = event => {
         const { name, value } = event.target;
-        console.log({ name, value })
         this.setState({
             [name]: value
         });
     };
 
     handleItemChange = (index, event) => {
-        console.log("The index: " + index)
         let copyOfItems = [...this.state.allItems]
         copyOfItems[index] = event.target.value
-        console.log(copyOfItems[index])
         this.setState({
             allItems: copyOfItems
-        }, () => console.log(this.state.allItems));
+        });
     };
 
     handleCostChange = (index, event) => {
-        console.log("The index: " + index)
         let copyOfCosts = [...this.state.allCosts]
         copyOfCosts[index] = event.target.value
-        console.log(copyOfCosts[index])
         this.setState({
             allCosts: copyOfCosts
-        }, () => console.log(this.state.allCosts));
+        });
     };
 
     handleCategories = (index, event) => {
-        console.log("The category index is: " + index)
-        console.log("This is the event value: " + event.target.value)
         let copyOfCategories = [...this.state.allCategories]
         copyOfCategories[index] = event.target.value
         this.setState({
             allCategories: copyOfCategories
-        }, () => console.log(this.state.allCategories))
+        });
     }
 
     makeAllCategoriesState = data => {
@@ -70,7 +62,7 @@ class NoReceipt extends Component {
         }
         this.setState({
             allCategories: copyOfCategories
-        }, () => console.log(this.state.allCategories))
+        });
     }
 
     deleteItem = (index, event) => {
@@ -85,13 +77,8 @@ class NoReceipt extends Component {
             allItems: copyOfItems,
             allCategories: copyOfCategories,
             allCosts: copyOfCosts
-        }, () => {
-            console.log(this.state.allItems)
-            console.log(this.state.allCategories)
-            console.log(this.state.allCosts)
-        })
+        });
     }
-
 
     addRows = event => {
         event.preventDefault();
@@ -105,12 +92,11 @@ class NoReceipt extends Component {
             allItems: copyOfItems,
             allCosts: copyOfCosts,
             allCategories: copyOfCategories
-        })
+        });
     }
 
     reUpload = event => {
         event.preventDefault();
-        console.log("I want to restart")
         this.setState({
             day: "",
             month: "",
@@ -131,23 +117,19 @@ class NoReceipt extends Component {
 
     handleDatePicker = date => {
         if (date === null) {
-            console.log("null")
             this.setState({ datePicker: date })
         } else {
             let keyDate = date.toLocaleString()
             keyDate = keyDate.slice(0, keyDate.indexOf(","))
-            console.log(keyDate)
             const keyDateArr = keyDate.split("/")
             this.getFullDate(keyDateArr, date);
         }
     }
 
-
     getFullDate = (keyDateArr, date) => {
         let fullDateArr = [];
         let dayLength = keyDateArr[1].split("").length
         let monthLength = keyDateArr[0].split("").length
-        console.log(dayLength, monthLength)
         fullDateArr.push([keyDateArr[2], keyDateArr[0], keyDateArr[1]])
         fullDateArr = fullDateArr.join("").replace(",", "").replace(",", "").split("");
         if (monthLength === 1) {
@@ -157,20 +139,13 @@ class NoReceipt extends Component {
             fullDateArr.splice(6, 0, "0")
         }
         const fullDate = fullDateArr.join("")
-        console.log(keyDateArr, fullDate)
         this.setState({
             datePicker: date,
             day: parseInt(keyDateArr[1]),
             month: parseInt(keyDateArr[0]),
             year: parseInt(keyDateArr[2]),
             fullDate: parseInt(fullDate)
-        }, () => {
-            console.log(
-                `Day: ${this.state.day}\n, 
-              Month: ${this.state.month}\n,
-              Year: ${this.state.year}\n,
-              fullDate: ${this.state.fullDate}`)
-        })
+        });
     }
 
     validateData = () => {
@@ -193,7 +168,6 @@ class NoReceipt extends Component {
                 this.state.allItems[i] === ""
             ) {
                 errNum++
-                console.log("Data isn't clean at index" + i)
             }
         }
         // If there are 0 errors in the submission, we can submit data into the DB. 
@@ -202,7 +176,6 @@ class NoReceipt extends Component {
         } else {
             this.setState({ submitStatus: "Unsuccessful submission! Please ensure all fields are properly filled out." })
         }
-        console.log(`The num of err in this submission: ${errNum}`)
     }
 
     submitData = () => {
@@ -226,10 +199,8 @@ class NoReceipt extends Component {
                 category: this.state.allCategories[i],
                 userId: user
             }
-            console.log(requestObj)
             API.saveExpense(requestObj)
                 .then(res => {
-                    console.log("Saved to database!")
                     this.setState({
                         submitStatus: "Submission successful!"
                     })
@@ -246,11 +217,9 @@ class NoReceipt extends Component {
         const token = localStorage.getItem('session_token');
         API.auth(token)
             .then(res => {
-                console.log(res.data.status)
                 if (res.data.status !== "404") {
                     this.validateForm()
                 } else {
-                    console.log("Auth failed!")
                     this.props.history.push('/login')
                 }
             })
@@ -258,12 +227,6 @@ class NoReceipt extends Component {
     }
 
     validateForm = () => {
-        console.log(
-            `Store: ${this.state.store}\n Street: ${this.state.street}\n City: ${this.state.city}\n 
-            Province: ${this.state.province}\nPostalCode: ${this.state.postalCode}\n Day: ${this.state.day}\n 
-            Month: ${this.state.month}\n Year: ${this.state.year}\n fullDate: ${this.state.fullDate}`
-        )
-
         if (this.state.store !== "" &&
             this.state.street !== "" &&
             this.state.city !== "" &&
@@ -282,7 +245,6 @@ class NoReceipt extends Component {
             this.setState({
                 submitStatus: "Unsuccessful submission! Please ensure all fields are filed out."
             })
-            console.log("Missing field")
         }
     }
 
@@ -298,7 +260,6 @@ class NoReceipt extends Component {
                         <input
                             value={this.state.store}
                             onChange={this.handleInputChange}
-                            // placeholder="Store Name"
                             name="store"
                             placeholder="Enter a Store Name"
                         />
@@ -307,7 +268,6 @@ class NoReceipt extends Component {
                         <input
                             value={this.state.street}
                             onChange={this.handleInputChange}
-                            // placeholder="Street Address of Your Purchase"
                             name="street"
                             placeholder="Enter a Street Name"
                         />
@@ -316,7 +276,6 @@ class NoReceipt extends Component {
                         <input
                             value={this.state.city}
                             onChange={this.handleInputChange}
-                            // placeholder="City of Your Purchase"
                             name="city"
                             placeholder="Enter City"
                         />
@@ -325,7 +284,6 @@ class NoReceipt extends Component {
                         <input
                             value={this.state.province}
                             onChange={this.handleInputChange}
-                            // placeholder="Province of Your Purchase"
                             name="province"
                             placeholder="Enter Province"
                         />
@@ -334,7 +292,6 @@ class NoReceipt extends Component {
                         <input
                             value={this.state.postalCode}
                             onChange={this.handleInputChange}
-                            // placeholder="Postal Code  of Your Purchase"
                             name="postalCode"
                             placeholder="Enter Postal Code"
                         />
@@ -381,7 +338,6 @@ class NoReceipt extends Component {
                                 </span>
                             </div>
                         ))}
-                        {/* <span className="input-group"> */}
                         <span>
                             <button type="submit" onClick={this.onFormSubmit} className="btn btn-secondary">
                                 Submit
@@ -398,12 +354,9 @@ class NoReceipt extends Component {
                         {this.state.submitStatus}
                     </div>
                 </div>
-
-
             </div>
         )
     }
 }
 
-
-export default NoReceipt
+export default NoReceipt;

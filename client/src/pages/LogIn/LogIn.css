@@ -6,33 +6,25 @@
     text-align: center; 
 }
 
-
-
 h4 {
     color: #ffffff;
     text-align: center; 
     position: relative;
     top: 24%; 
-
 }
 
 .col-1 {
     text-align: center; 
 }
 
-
 .col-7 {
     width: 25%;
-
 }
+
 .btn {
-    
     color: white; 
     background: #db6f68;
-    /* margin: 5%; */
-
 }
-
 
 .register-div {
     color: #ffffff;
@@ -40,8 +32,6 @@ h4 {
 
 .form-label {
     color: #ffffff; 
-    /* text-align: center;  */
-
 }
 
 .form-input {
@@ -50,12 +40,9 @@ h4 {
     border: 3px solid #db6f68;
     background: none; 
     color: white; 
-    
 }
 
 .form-group {
-
-    /* text-align: center; */
     position: relative; 
     left: 38%;
     top: 650%;

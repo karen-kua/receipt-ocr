@@ -2,7 +2,6 @@ import axios from "axios";
 
 export default {
   
-  // Saves an expense to the database
   uploadReceipt: function(photo) {
     return axios.post('/api/expense/upload', photo)
   },

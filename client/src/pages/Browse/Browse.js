@@ -6,10 +6,8 @@ import DatePicker from 'react-date-picker'
 import axios from "axios";
 import Modal from 'react-modal';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-//CSS File - Also governs BrowseTable
 import '../Browse/Browse.css'
 
-// Styling for the modal recommended by the docs of react-modal
 const customStyles = {
     content: {
         top: '50%',
@@ -20,10 +18,6 @@ const customStyles = {
         transform: 'translate(-50%, -50%)'
     }
 };
-
-///* Class and Super *////
-
-
 
 class Browse extends Component {
     state = {
@@ -62,42 +56,35 @@ class Browse extends Component {
 
     componentDidMount = () => {
         const user = localStorage.getItem('user_id');
-        console.log("component mounted");
-                const reqObj = {
-                    userId: user
-                }
-                console.log(reqObj)
-                this.authDropDowns(reqObj)
+        const reqObj = {
+            userId: user
+        }
+        this.authDropDowns(reqObj)
     }
 
     getSum = () => {
-        console.log("Getting sum")
         if (this.state.response !== []) {
             let sum = 0;
-            let copyOfResponse= [...this.state.response]
+            let copyOfResponse = [...this.state.response]
             copyOfResponse.forEach(element => {
-                sum+=element.cost
+                sum += element.cost
             })
-            this.setState({sumOfBrowsed: sum.toFixed(2)}
-            , () => console.log(`The total sum: ${this.state.sumOfBrowsed}`))
+            this.setState({ sumOfBrowsed: sum.toFixed(2) }
+                , () => console.log(`The total sum: ${this.state.sumOfBrowsed}`))
         }
     }
 
-    // Functions for setting the state based on search bar or dropdown inputs
     handleDateChange = event => {
         let { name, value } = event.target;
         value = parseInt(value)
-        console.log({ name, value })
         this.setState({ [name]: value })
     }
 
     handleCategoryQueryChange = event => {
         let { name, value } = event.target;
-        console.log({ name, value })
         this.setState({ [name]: value })
     }
 
-    // Functions triggered when clicking a button
     onDropDownBtnSubmit = event => {
         event.preventDefault();
         let copyOfState = {
@@ -106,7 +93,6 @@ class Browse extends Component {
             year: this.state.year,
             category: this.state.category
         }
-        console.log(copyOfState)
         let expression = ""
         for (let key in copyOfState) {
             if (
@@ -117,10 +103,8 @@ class Browse extends Component {
                 expression += key
             }
         }
-        console.log(`The switch expression is: ${expression}`)
         this.setState({ switchExp: expression },
             () => {
-                console.log(this.state.switchExp)
                 this.requestData(this.state.switchExp)
             })
     }
@@ -129,27 +113,21 @@ class Browse extends Component {
         event.preventDefault();
         let switchExp = "searchBar";
         this.setState({ switchExp: switchExp })
-        console.log(`The switch statement is: ${switchExp}`)
         this.requestData(switchExp);
     }
 
     onDeleteBtnSubmit = (id, event) => {
         event.preventDefault();
-        console.log(`This is the id: ${id}`)
         API.deleteExpense(id)
             .then(res => {
-                console.log("Deleted");
                 this.requestData(this.state.switchExp);
             }).catch(err => console.log(err))
     }
 
     onEditBtnSubmit = (id, event) => {
         event.preventDefault();
-        console.log(`The id of the object I want to edit: ${id}`)
         API.getOnePurchase(id)
             .then(res => {
-                console.log(res.data)
-                console.log("Purchase found")
                 this.setState({
                     editId: res.data._id,
                     editStore: res.data.store,
@@ -165,8 +143,6 @@ class Browse extends Component {
             }).catch(err => console.log(err))
     }
 
-    // Functions associated with the modal for editing purchases 
-
     closeModal = () => {
         this.setState({
             modalIsOpen: false,
@@ -181,26 +157,20 @@ class Browse extends Component {
 
     handleEdits = event => {
         const { name, value } = event.target;
-        console.log({ name, value })
         this.setState({ [name]: value })
     }
 
     handleEditCost = event => {
         let value = event.target.value
-        console.log(`Edit Costs: ${value}`)
-        console.log(parseFloat(value))
         this.setState({ editCost: value })
     }
 
     handleDatePicker = date => {
-        console.log(date)
         if (date === null) {
-            console.log("null")
             this.setState({ datePicker: date })
         } else {
             let keyDate = date.toLocaleString()
             keyDate = keyDate.slice(0, keyDate.indexOf(","))
-            console.log(keyDate)
             const keyDateArr = keyDate.split("/")
             this.getFullDate(keyDateArr, date);
         }
@@ -210,7 +180,6 @@ class Browse extends Component {
         let fullDateArr = [];
         let dayLength = keyDateArr[1].split("").length
         let monthLength = keyDateArr[0].split("").length
-        console.log(dayLength, monthLength)
         fullDateArr.push([keyDateArr[2], keyDateArr[0], keyDateArr[1]])
         fullDateArr = fullDateArr.join("").replace(",", "").replace(",", "").split("");
         if (monthLength === 1) {
@@ -220,19 +189,12 @@ class Browse extends Component {
             fullDateArr.splice(6, 0, "0")
         }
         const fullDate = fullDateArr.join("")
-        console.log(keyDateArr, fullDate)
         this.setState({
             datePicker: date,
             editDay: parseInt(keyDateArr[1]),
             editMonth: parseInt(keyDateArr[0]),
             editYear: parseInt(keyDateArr[2]),
             editFullDate: parseInt(fullDate)
-        }, () => {
-            console.log(
-                `Day: ${this.state.editDay}\n, 
-            Month: ${this.state.editMonth}\n,
-            Year: ${this.state.editYear}\n,
-            fullDate: ${this.state.editFullDate}`)
         })
     }
 
@@ -240,10 +202,6 @@ class Browse extends Component {
         event.preventDefault();
         const format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]/;
         const hasSpecialChar = format.test(this.state.editCost)
-        console.log(parseFloat(this.state.editCost))
-        console.log("day")
-        console.log(this.state.datePicker === "")
-        console.log(isNaN(this.state.datePicker))
         if (
             // validating to see if the cost has no alphabet characters and other special characters
             this.state.editCost === "" ||
@@ -257,7 +215,6 @@ class Browse extends Component {
         ) {
             this.setState({ editMsg: "Update failed! All fields must be properly filled out." })
         } else {
-            console.log(`The id of the item I want to edit: ${this.state.editId}`);
             let reqObj = {
                 store: this.state.editStore,
                 street: this.state.editStreet,
@@ -272,7 +229,6 @@ class Browse extends Component {
                 cost: parseFloat(this.state.editCost),
                 category: this.state.editCategory
             }
-            console.log(reqObj)
             API.updatePurchase(id, reqObj)
                 .then(res => {
                     this.setState({ editMsg: "Update successful!" })
@@ -293,147 +249,118 @@ class Browse extends Component {
         let reqObj;
         switch (switchExp) {
             case "day":
-                console.log("day");
                 reqObj = {
                     userId: user,
                     day: this.state.day
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "month":
-                console.log("month");
                 reqObj = {
                     userId: user,
                     month: this.state.month
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "year":
-                console.log("year");
                 reqObj = {
                     userId: user,
                     year: this.state.year
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "category":
-                console.log("category");
                 reqObj = {
                     userId: user,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "daymonth":
-                console.log("day&month");
                 reqObj = {
                     userId: user,
                     day: this.state.day,
                     month: this.state.month
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "dayyear":
-                console.log("day&year");
                 reqObj = {
                     userId: user,
                     day: this.state.day,
                     year: this.state.year
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "daycategory":
-                console.log("day&category");
                 reqObj = {
                     userId: user,
                     day: this.state.day,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "monthyear":
-                console.log("month&year");
                 reqObj = {
                     userId: user,
                     month: this.state.month,
                     year: this.state.year
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "monthcategory":
-                console.log("month&category");
                 reqObj = {
                     userId: user,
                     month: this.state.month,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "yearcategory":
-                console.log("year&category");
                 reqObj = {
                     userId: user,
                     year: this.state.year,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "daymonthyear":
-                console.log("day&month&year");
                 reqObj = {
                     userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     year: this.state.year
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "monthyearcategory":
-                console.log("month&year&category");
                 reqObj = {
                     userId: user,
                     month: this.state.month,
                     year: this.state.year,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "dayyearcategory":
-                console.log("day&year&category");
                 reqObj = {
                     userId: user,
                     day: this.state.day,
                     year: this.state.year,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "daymonthcategory":
-                console.log("day&month&category");
                 reqObj = {
                     userId: user,
                     day: this.state.day,
                     month: this.state.month,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "daymonthyearcategory":
-                console.log("all 4");
                 reqObj = {
                     userId: user,
                     day: this.state.day,
@@ -441,19 +368,15 @@ class Browse extends Component {
                     year: this.state.year,
                     category: this.state.category
                 }
-                console.log(reqObj)
                 this.authDropDowns(reqObj)
                 break;
             case "searchBar":
-                console.log("searchBar");
                 const token = localStorage.getItem('session_token');
                 API.auth(token)
                     .then(res => {
-                        console.log(res.data.status)
                         if (res.data.status !== "404") {
                             this.browseByItem()
                         } else {
-                            console.log("Auth failed!")
                             this.props.history.push('/login')
                         }
                     })
@@ -468,11 +391,9 @@ class Browse extends Component {
         const token = localStorage.getItem('session_token');
         API.auth(token)
             .then(res => {
-                console.log(res.data.status)
                 if (res.data.status !== "404") {
                     this.browseDropDowns(reqObj)
                 } else {
-                    console.log("Auth failed!")
                     this.props.history.push('/login')
                 }
             })
@@ -482,10 +403,8 @@ class Browse extends Component {
     browseDropDowns = reqObj => {
         API.browseDropDowns(reqObj)
             .then(res => {
-                console.log(res.data)
                 this.setState({ response: res.data },
-                () => this.getSum())
-                console.log(this.state.response)
+                    () => this.getSum())
             })
             .catch(err => console.log(err))
     }
@@ -496,23 +415,17 @@ class Browse extends Component {
             userId: user,
             item: this.state.query
         }
-        console.log(reqObj)
         API.browseByItem(reqObj)
             .then(res => {
                 this.setState({ response: res.data },
-                () => this.getSum())
-                console.log(this.state.response)
+                    () => this.getSum())
             })
             .catch(err => console.log(err))
     }
 
-    ////// RENDER /////////
     render() {
         return (
-
-            //   -----This is the dropdown jsx using the regular html dropdowns-----
             <div>
-{/* // START OF NEW ROW */}
                 <div className="category-dropdowns">
                     <h2>Search By Date or Category</h2>
                     <select className="btn btn-danger dropdown-toggle" name="day" value={this.state.day} onChange={this.handleDateChange}>
@@ -613,13 +526,11 @@ class Browse extends Component {
                             name="query"
                             onChange={this.handleCategoryQueryChange}
                         />
-                    <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
+                        <button className="btn btn-danger" onClick={this.onSearchBarBtnSubmit}>Search</button>
                     </form>
                 </div>
-            
-            
-               
-                    <div>
+
+                <div>
                     <Table
                         response={this.state.response}
                         onDeleteBtnSubmit={this.onDeleteBtnSubmit}
@@ -627,78 +538,74 @@ class Browse extends Component {
                         sum={this.state.sumOfBrowsed}
                     />
                 </div>
-                
-                
 
-          
-                 
-        <Modal
-            isOpen={this.state.modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={this.closeModal}
-            className="Modal"
-            contentLabel="Edit Purchase Modal"
-        >
-            <span id="close-x" onClick={this.closeModal}>x</span>
-            <br/>
-            <div className="modalContent">
-            <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
-            <form>
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onAfterOpen={this.afterOpenModal}
+                    onRequestClose={this.closeModal}
+                    className="Modal"
+                    contentLabel="Edit Purchase Modal"
+                >
+                    <span id="close-x" onClick={this.closeModal}>x</span>
+                    <br />
+                    <div className="modalContent">
+                        <h2 ref={subtitle => this.subtitle = subtitle}>Edit Your Purchase Details</h2>
+                        <form>
 
-                <h3>Store:</h3>
-                <input
-                    value={this.state.editStore}
-                    onChange={this.handleEdits}
-                    name="editStore"
-                />
-                <br />
-                <h3>Street Address:</h3>
-                <input
-                    value={this.state.editStreet}
-                    onChange={this.handleEdits}
-                    name="editStreet"
-                />
-                <br />
-                <h3>City:</h3>
-                <input
-                    value={this.state.editCity}
-                    onChange={this.handleEdits}
-                    name="editCity"
-                />
-                <br />
-                <h3>Province:</h3>
-                <input
-                    value={this.state.editProvince}
-                    onChange={this.handleEdits}
-                    name="editProvince"
-                />
-                <br />
-                <h3>Postal Code:</h3>
-                <input
-                    value={this.state.editPostalCode}
-                    onChange={this.handleEdits}
-                    name="editPostalCode"
-                />
-                <br />
-                <h3>Date:</h3>
-                <DatePicker
-                    onChange={this.handleDatePicker}
-                    value={this.state.datePicker}
-                />
-                <br />
-                <h3>Item:</h3>
-                <input
-                    value={this.state.editItem}
-                    onChange={this.handleEdits}
-                    name="editItem"
-                />
-                <h3>Cost (eg. 3.50):</h3>
-                <input
-                    value={this.state.editCost}
-                    onChange={this.handleEditCost}
-                    name="editCost"
-                />
-                <h3>Category</h3>
+                            <h3>Store:</h3>
+                            <input
+                                value={this.state.editStore}
+                                onChange={this.handleEdits}
+                                name="editStore"
+                            />
+                            <br />
+                            <h3>Street Address:</h3>
+                            <input
+                                value={this.state.editStreet}
+                                onChange={this.handleEdits}
+                                name="editStreet"
+                            />
+                            <br />
+                            <h3>City:</h3>
+                            <input
+                                value={this.state.editCity}
+                                onChange={this.handleEdits}
+                                name="editCity"
+                            />
+                            <br />
+                            <h3>Province:</h3>
+                            <input
+                                value={this.state.editProvince}
+                                onChange={this.handleEdits}
+                                name="editProvince"
+                            />
+                            <br />
+                            <h3>Postal Code:</h3>
+                            <input
+                                value={this.state.editPostalCode}
+                                onChange={this.handleEdits}
+                                name="editPostalCode"
+                            />
+                            <br />
+                            <h3>Date:</h3>
+                            <DatePicker
+                                onChange={this.handleDatePicker}
+                                value={this.state.datePicker}
+                            />
+                            <br />
+                            <h3>Item:</h3>
+                            <input
+                                value={this.state.editItem}
+                                onChange={this.handleEdits}
+                                name="editItem"
+                            />
+                            <h3>Cost (eg. 3.50):</h3>
+                            <input
+                                value={this.state.editCost}
+                                onChange={this.handleEditCost}
+                                name="editCost"
+                            />
+                            <h3>Category</h3>
                             <select name="editCategory" className="btn btn-danger dropdown-toggle" value={this.state.editCategory} onChange={this.handleEdits}>
                                 <option value="None">Category</option>
                                 <option value="Food">Food</option>
@@ -711,25 +618,16 @@ class Browse extends Component {
                                 <option value="Travel and Events">Travel and Events</option>
                                 <option value="Bills">Bills</option>
                                 <option value="Miscellaneous">Miscellaneous</option>
-                </select>
-                <br/>
-                <button id="modal-update-btn" className="btn btn-secondary" onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
-            <br/>
-            <p id="updateMsg">{this.state.editMsg}</p>
-            </form>
+                            </select>
+                            <br />
+                            <button id="modal-update-btn" className="btn btn-secondary" onClick={(event) => this.updatePurchase(this.state.editId, event)}>Update</button>
+                            <br />
+                            <p id="updateMsg">{this.state.editMsg}</p>
+                        </form>
+                    </div>
+                </Modal>
             </div>
-        </Modal>
-
-
-
-
-
-
-
-            </div>
-
         )
     }
-
 }
 export default Browse;

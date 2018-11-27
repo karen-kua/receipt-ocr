@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-// import { Redirect } from 'react-router-dom'
-import axios from 'axios'
-import { withRouter } from 'react-router-dom'
-import './LogIn.css'
+import React, { Component } from 'react';
+import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import './LogIn.css';
 
 class LoginForm extends Component {
+
     state = {
         username: "",
         password: "",
@@ -18,10 +18,7 @@ class LoginForm extends Component {
     }
 
     handleSubmit = event => {
-        event.preventDefault()
-        console.log('handleSubmit')
-        console.log(this.state.username)
-        console.log(this.state.password)
+        event.preventDefault();
         axios.get('/log-in',
             {
                 params: {
@@ -30,18 +27,13 @@ class LoginForm extends Component {
                 }
             })
             .then(res => {
-                console.log(res)
                 if (res.data.validate === false) {
-                    console.log("Login failed")
-                    this.setState({ 
+                    this.setState({
                         loginMsg: "Login failed. The username/password did not match.",
                         username: "",
                         password: ""
-                 })
+                    })
                 } else {
-                    console.log('login response: Logged In ')
-                    console.log(res)
-
                     localStorage.setItem('session_token', res.data.token);
                     localStorage.setItem('user_welcome', res.data.message);
                     localStorage.setItem('user_id', res.data.id);
@@ -50,21 +42,13 @@ class LoginForm extends Component {
                 }
             })
             .catch(error => {
-                console.log('login error: ')
                 console.log(error);
             })
-
     }
 
-
-
     render() {
-        // if (this.state.redirectTo) {
-        //     return <Redirect to={{ pathname: this.state.redirectTo }} />
-        // } else {
         return (
             <div className="login-body">
-
                 <h4>Login</h4>
                 <form className="form-horizontal">
                     <div className="form-group">
@@ -84,7 +68,7 @@ class LoginForm extends Component {
                         <div className="col-3 col-ml-auto">
                             <label className="form-label" htmlFor="password"></label>
                         </div>
-          
+
                         <div className="col-3 col-mr-auto">
                             <input className="form-input"
                                 placeholder="Password"
@@ -109,7 +93,7 @@ class LoginForm extends Component {
                             Don't have an account? Sign up for one <a href="/sign-up">here</a>
                         </div>
 
-                        <div style={{color:'white',marginTop:'10px',position:'relative',right:'37%'}}>
+                        <div style={{ color: 'white', marginTop: '10px', position: 'relative', right: '37%' }}>
                             {this.state.loginMsg}
                         </div>
                     </div>
