@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { withRouter } from 'react-router-dom'
-import './LogIn'
+import React, { Component } from 'react';
+import API from "../../utils/API";
+import { withRouter } from 'react-router-dom';
+import './LogIn.css';
 
 class Signup extends Component {
 
@@ -18,8 +18,7 @@ class Signup extends Component {
 	}
 	handleSubmit = event => {
 		event.preventDefault()
-
-		axios.post('/signup', {
+		API.signup({
 			username: this.state.username,
 			password: this.state.password
 		})
@@ -42,7 +41,7 @@ class Signup extends Component {
 		return (
 			<div className="login-body">
 				<h4>Sign up</h4>
-				<form classNameX="form-horizontal">
+				<form classNameX="form-horizontal" onSubmit={this.handleSubmit}>
 					<div className="form-group">
 						<div className="col-1 col-ml-auto">
 							<label className="form-label" htmlFor="username"></label>
@@ -55,6 +54,7 @@ class Signup extends Component {
 								placeholder="Enter a Username"
 								value={this.state.username}
 								onChange={this.handleChange}
+								required
 							/>
 						</div>
 					</div>
@@ -70,6 +70,9 @@ class Signup extends Component {
 								name="password"
 								value={this.state.password}
 								onChange={this.handleChange}
+								pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" 
+								title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters" 
+								required
 							/>
 						</div>
 					</div>
@@ -77,7 +80,6 @@ class Signup extends Component {
 						<div className="col-7">
 							<button
 								className="btn btn-primary"
-								onClick={this.handleSubmit}
 								type="submit"
 							>Sign up</button>
 						</div>

@@ -5,6 +5,7 @@ const saltRounds = 10;
 
 module.exports = {
   create: function (req, res) {
+    console.log("Hi", req.body)
     db.Users.findOne({ username: req.body.username })
       .then(dbUser => {
         console.log("user found");

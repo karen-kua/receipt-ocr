@@ -6,6 +6,10 @@ export default {
     return axios.post('/api/expense/upload', photo)
   },
   
+  signup: function(userData) {
+    return axios.post("/signup", userData)
+  },
+
   saveExpense: function(expenseData) {
     return axios.post("/api/expense/save", expenseData);
   },
