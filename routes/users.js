@@ -5,7 +5,7 @@ const usersController = require("../controllers/usersController");
 
 router.post("/signup", usersController.create)
 
-router.get("/log-in", usersController.login)
+router.post("/log-in", usersController.login)
 
 router.get("/auth", verifytoken, function (req, res) {
   jwt.verify(req.token, 'secretkey', (err, authData) => {

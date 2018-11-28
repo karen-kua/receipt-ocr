@@ -21,10 +21,8 @@ class LoginForm extends Component {
         event.preventDefault();
         API.logIn(
         {
-            params: {
                 username: this.state.username,
                 password: this.state.password
-            }
         })
             .then(res => {
                 if (res.data.validate === false) {

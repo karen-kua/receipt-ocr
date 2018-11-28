@@ -37,9 +37,9 @@ module.exports = {
   },
 
   login: (req, res) => {
-		console.log('req.query', req.query, req.body);
+		console.log('req.query', req.body);
 		db.Users
-		.findOne({username: req.query.username})
+		.findOne({username: req.body.username})
 		.then(dbUser => {
 			console.log('dbUser', dbUser)
 			if (dbUser === null) {
@@ -47,7 +47,7 @@ module.exports = {
 					validate: false
 				})
 			} else {
-				bcrypt.compare(req.query.password, dbUser.password, function(err, response) {
+				bcrypt.compare(req.body.password, dbUser.password, function(err, response) {
 					if (dbUser !== null && response == true) {
 						console.log("password is correct")
 						let user = dbUser.username;

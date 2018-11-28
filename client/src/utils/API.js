@@ -11,7 +11,7 @@ export default {
   },
 
  logIn: function(userData) {
-    return axios.get("/log-in", userData)
+    return axios.post("/log-in", userData)
   },
 
   saveExpense: function(expenseData) {
