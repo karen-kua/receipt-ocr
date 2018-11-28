@@ -5,16 +5,10 @@ const saltRounds = 10;
 
 module.exports = {
   create: function (req, res) {
-    console.log("Hi", req.body)
     db.Users.findOne({ username: req.body.username })
       .then(dbUser => {
-        console.log("user found");
-        console.log(dbUser);
         if (dbUser == null) {
-          console.log("req.body");
-          console.log(req.body);
           bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-            console.log(hash);
             req.body.password = hash;
             db.Users.create(req.body)
               .then(dbModel => res.json(dbModel))
@@ -37,11 +31,9 @@ module.exports = {
   },
 
   login: (req, res) => {
-		console.log('req.query', req.body);
 		db.Users
 		.findOne({username: req.body.username})
 		.then(dbUser => {
-			console.log('dbUser', dbUser)
 			if (dbUser === null) {
 				res.json({
 					validate: false
@@ -77,7 +69,6 @@ module.exports = {
 	},
 
   verifyToken: function (req, res) {
-    console.log(req.headers.authorization);
     jwt.verify(req.headers.authorization, "secretkey", (err, authData) => {
       if (err) {
         res.json({
