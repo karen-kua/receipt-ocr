@@ -377,6 +377,7 @@ class Browse extends Component {
                         if (res.data.status !== "404") {
                             this.browseByItem()
                         } else {
+                            localStorage.clear()
                             this.props.history.push('/login')
                         }
                     })
@@ -394,6 +395,7 @@ class Browse extends Component {
                 if (res.data.status !== "404") {
                     this.browseDropDowns(reqObj)
                 } else {
+                    localStorage.clear()
                     this.props.history.push('/login')
                 }
             })

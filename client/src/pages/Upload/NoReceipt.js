@@ -220,6 +220,7 @@ class NoReceipt extends Component {
                 if (res.data.status !== "404") {
                     this.validateForm()
                 } else {
+                    localStorage.clear()
                     this.props.history.push('/login')
                 }
             })

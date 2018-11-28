@@ -40,6 +40,7 @@ class Upload extends Component {
         if (res.data.status !== "404") {
           this.uploadReceipt(file)
         } else {
+          localStorage.clear()
           this.props.history.push('/login')
         }
       })
@@ -227,6 +228,7 @@ class Upload extends Component {
         if (res.data.status !== "404") {
           this.validateForm()
         } else {
+          localStorage.clear()
           this.props.history.push('/login')
         }
       })
