@@ -380,6 +380,7 @@ class Upload extends Component {
                   value={this.state.store}
                   onChange={this.handleInputChange}
                   name="store"
+                  placeholder="Enter a Store Name"
                 />
                 <br />
                 <h3>Street Address</h3>
@@ -387,6 +388,7 @@ class Upload extends Component {
                   value={this.state.street}
                   onChange={this.handleInputChange}
                   name="street"
+                  placeholder="Enter a Street Name"
                 />
                 <br />
                 <h3>City</h3>
@@ -394,6 +396,7 @@ class Upload extends Component {
                   value={this.state.city}
                   onChange={this.handleInputChange}
                   name="city"
+                  placeholder="Enter City"
                 />
                 <br />
                 <h3>Province</h3>
@@ -401,6 +404,7 @@ class Upload extends Component {
                   value={this.state.province}
                   onChange={this.handleInputChange}
                   name="province"
+                  placeholder="Enter Province"
                 />
                 <br />
                 <h3>Postal Code</h3>
@@ -408,6 +412,7 @@ class Upload extends Component {
                   value={this.state.postalCode}
                   onChange={this.handleInputChange}
                   name="postalCode"
+                  placeholder="Enter Postal Code"
                 />
                 <br />
                 <h3>Date</h3>
@@ -423,12 +428,14 @@ class Upload extends Component {
                       value={item}
                       onChange={(event) => this.handleItemChange(index, event)}
                       name="allItems"
+                      placeholder="Item Name"
                     />
                     <span>
                       <input
                         value={this.state.allCosts[index]}
                         onChange={(event) => this.handleCostChange(index, event)}
                         name="allCosts"
+                        placeholder="Cost (eg. $3.50)"
                       />
                       <select name="category" value={this.state.allCategories[index]} onChange={(event) => this.handleCategories(index, event)}>
                         <option value="None">Category</option>
