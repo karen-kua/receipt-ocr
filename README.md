@@ -2,7 +2,7 @@
 
 ## Problem to Solve/Purpose
 
-* This app aims to help users track and organize their expenses, encouraging them to go paperless. 
+This app aims to help users track and organize their expenses, encouraging them to go paperless. 
 
 ## Solution
 
