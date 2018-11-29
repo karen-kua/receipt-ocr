@@ -1,13 +1,13 @@
 const db = require("../models");
-const Tesseract = require('tesseract.js')
-const ObjectId = require('mongodb').ObjectId; 
-// Defining methods for the expensesController
+const Tesseract = require('tesseract.js');
+const ObjectId = require('mongodb').ObjectId;
+
 module.exports = {
 
   uploadExpense: function (req, res, next) {
     console.log(req.file)
     let file = `${req.file.path}`
-    Tesseract.create({ langPath: "eng.traineddata" }).recognize(file, 'eng')
+    Tesseract.recognize(file)
       .progress(function (p) { console.log('progress', p) })
       .catch(err => console.error(err))
       .then(function (result) {
@@ -26,33 +26,27 @@ module.exports = {
             }
           }
           console.log(newArray)
-          console.log("hello world")
           res.json(newArray)
         }
       })
       .catch(err => res.status(422).json(err));
   },
 
-  create: function(req, res) {
-    console.log("This is")
-    console.log(req.body)
+  create: function (req, res) {
     db.Expense
       .create(req.body)
       .then(dbExpense => {
         return db.Users
-        .findOneAndUpdate(
-        { _id: ObjectId(req.body.userId) }, 
-        { $push: {expense: dbExpense._id }}, { new: true }
-      );
-    })
-      .catch(err => console.log(err))
+          .findOneAndUpdate(
+            { _id: ObjectId(req.body.userId) },
+            { $push: { expense: dbExpense._id } }, { new: true }
+          );
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
 
-  remove: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
+  remove: function (req, res) {
     db.Expense
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
@@ -60,67 +54,55 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
 
-  findOne: function(req, res) {
+  findOne: function (req, res) {
     db.Expense
-      .findById({ _id: req.params.id})
+      .findById({ _id: req.params.id })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
 
-  update: function(req, res) {
-    console.log(req.body)
+  update: function (req, res) {
     db.Expense
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
 
-  browseByItem: function(req, res) {
-    console.log("This is")
-    console.log(req.query)
+  browseByItem: function (req, res) {
     db.Users
-    .findOne({_id: ObjectId(req.query.userId)})
-    .populate({
-      path: "expense",
-      match:{
-        userId: req.query.userId,
-        item: {$regex: req.query.item, $options: "i"}
-      }
-    })
-    .sort({fullDate: -1})
-    .then(data => {
-      console.log(data.expense)
-      res.json(data.expense)
-    })
-    .catch(err => res.status(422).json(err));
+      .findOne({ _id: ObjectId(req.query.userId) })
+      .populate({
+        path: "expense",
+        match: {
+          userId: req.query.userId,
+          item: { $regex: req.query.item, $options: "i" }
+        }
+      })
+      .sort({ fullDate: -1 })
+      .then(data => {
+        res.json(data.expense)
+      })
+      .catch(err => res.status(422).json(err));
   },
 
-
-  browseDropDowns: function(req, res) {
-    console.log("This is")
+  browseDropDowns: function (req, res) {
     let query = req.query;
-    console.log(query)
     for (let key in query) {
-      console.log(key)
       if (key === "day" || key === "month" || key === "year") {
         query[key] = parseInt(query[key])
-      } 
+      }
     }
-    console.log(query)
     db.Users
-    .findOne({_id: ObjectId(query.userId)})
-    .populate({
-      path: "expense",
-      match: query
-    })
-    .sort({fullDate: -1})
-    .then(data => {
-      console.log(data.expense)
-      res.json(data.expense)
-    })
-    .catch(err => res.status(422).json(err));
+      .findOne({ _id: ObjectId(query.userId) })
+      .populate({
+        path: "expense",
+        match: query
+      })
+      .sort({ fullDate: -1 })
+      .then(data => {
+        res.json(data.expense)
+      })
+      .catch(err => res.status(422).json(err));
   },
 
-
-  
 };

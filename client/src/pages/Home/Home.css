@@ -1,10 +1,7 @@
-
-
 .body {
     background-image: url("./images/blackboard.jpg");
     background-size: cover
 }
-
 
 text {
     fill: #db6f68;
@@ -12,9 +9,7 @@ text {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 100px;
     font-weight: 900;
- 
-    
-  }
+}
 
 svg {
     position: relative; 
@@ -22,7 +17,6 @@ svg {
     margin-top: 18%;  
     width: 60%; 
 }
-
 
 .header2 {
     position: relative;

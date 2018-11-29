@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-// import { Redirect } from 'react-router-dom'
-import axios from 'axios'
-import { withRouter } from 'react-router-dom'
-import './LogIn.css'
+import React, { Component } from 'react';
+import API from "../../utils/API";
+import { withRouter } from 'react-router-dom';
+import './LogIn.css';
 
 class LoginForm extends Component {
+
     state = {
         username: "",
         password: "",
@@ -18,55 +18,38 @@ class LoginForm extends Component {
     }
 
     handleSubmit = event => {
-        event.preventDefault()
-        console.log('handleSubmit')
-        console.log(this.state.username)
-        console.log(this.state.password)
-        axios.get('/log-in',
-            {
-                params: {
-                    username: this.state.username,
-                    password: this.state.password
-                }
-            })
+        event.preventDefault();
+        API.logIn(
+        {
+                username: this.state.username,
+                password: this.state.password
+        })
             .then(res => {
-                console.log(res)
                 if (res.data.validate === false) {
-                    console.log("Login failed")
-                    this.setState({ 
+                    this.setState({
                         loginMsg: "Login failed. The username/password did not match.",
                         username: "",
                         password: ""
-                 })
+                    })
                 } else {
-                    console.log('login response: Logged In ')
-                    console.log(res)
-
                     localStorage.setItem('session_token', res.data.token);
                     localStorage.setItem('user_welcome', res.data.message);
                     localStorage.setItem('user_id', res.data.id);
                     localStorage.setItem('username', res.data.username);
+                    localStorage.setItem('isAuthenticated', true);
                     this.props.history.push('/')
                 }
             })
             .catch(error => {
-                console.log('login error: ')
                 console.log(error);
             })
-
     }
 
-
-
     render() {
-        // if (this.state.redirectTo) {
-        //     return <Redirect to={{ pathname: this.state.redirectTo }} />
-        // } else {
         return (
             <div className="login-body">
-
                 <h4>Login</h4>
-                <form className="form-horizontal">
+                <form className="form-horizontal" onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <div className="col-1 col-ml-auto">
                             <label className="form-label" htmlFor="username"></label>
@@ -77,6 +60,7 @@ class LoginForm extends Component {
                                 placeholder="Username"
                                 value={this.state.username}
                                 onChange={this.handleChange}
+                                required
                             />
                         </div>
                     </div>
@@ -84,7 +68,7 @@ class LoginForm extends Component {
                         <div className="col-3 col-ml-auto">
                             <label className="form-label" htmlFor="password"></label>
                         </div>
-          
+
                         <div className="col-3 col-mr-auto">
                             <input className="form-input"
                                 placeholder="Password"
@@ -93,6 +77,7 @@ class LoginForm extends Component {
                                 name="password"
                                 value={this.state.password}
                                 onChange={this.handleChange}
+								required
                             />
                         </div>
                     </div>
@@ -100,7 +85,6 @@ class LoginForm extends Component {
                         <div className="col-7">
                             <button
                                 className="btn btn-primary"
-                                onClick={this.handleSubmit}
                                 type="submit">
                                 Submit
                                 </button>
@@ -109,7 +93,7 @@ class LoginForm extends Component {
                             Don't have an account? Sign up for one <a href="/sign-up">here</a>
                         </div>
 
-                        <div style={{color:'white',marginTop:'10px',position:'relative',right:'37%'}}>
+                        <div style={{ color: 'white', marginTop: '10px', position: 'relative', right: '37%' }}>
                             {this.state.loginMsg}
                         </div>
                     </div>
