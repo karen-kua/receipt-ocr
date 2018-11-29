@@ -424,6 +424,7 @@ class Upload extends Component {
                 />
                 <br />
                 <h3>Items</h3>
+                <div id="allItemsContainer">
                 {this.state.allItems.map((item, index) => (
                   <div key={index}>
                     <input
@@ -459,6 +460,7 @@ class Upload extends Component {
                     </span>
                   </div>
                 ))}
+                </div>
                 <span>
                   <button type="submit" onClick={this.onFormSubmit} className="btn btn-secondary">
                     Submit
@@ -470,10 +472,10 @@ class Upload extends Component {
                     Start Over
           </button>
                 </span>
-              </form>
               <div className="submit-status">
                 {this.state.submitStatus}
               </div>
+              </form>
             </div>
             : null}
         </div>

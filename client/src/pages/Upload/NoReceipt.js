@@ -304,6 +304,7 @@ class NoReceipt extends Component {
                         />
                         <br />
                         <h3>Items</h3>
+                        <div id="allItemsContainer">
                         {this.state.allItems.map((item, index) => (
                             <div key={index}>
                                 <input
@@ -339,6 +340,7 @@ class NoReceipt extends Component {
                                 </span>
                             </div>
                         ))}
+                        </div>
                         <span>
                             <button type="submit" onClick={this.onFormSubmit} className="btn btn-secondary">
                                 Submit
@@ -350,10 +352,10 @@ class NoReceipt extends Component {
                                 Start Over
                             </button>
                         </span>
-                    </form>
                     <div className="submit-error">
                         {this.state.submitStatus}
                     </div>
+                    </form>
                 </div>
             </div>
         )
