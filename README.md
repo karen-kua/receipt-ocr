@@ -40,8 +40,8 @@ React.js, MongoDB, Node.js, Express.js, CSS, Tesseract.js, JWT, Bcrypt, other no
 * Cd back to the root after installing all the node modules and run **yarn start**
 * When running this locally, you can use large image files for the receipts.  However, if you are using the deployed version on Heroku, please ensure to only use images that are 140 KB or under.  Samples of receipts can be found in the **README_Images** folder.  If you want to use a demo account on the deployed app, you can use:
 
-* Username: Karen12345
-* Password: Karen12345
+    * Username: Karen12345
+    * Password: Karen12345
 
 ## Creator
 
