@@ -6,7 +6,7 @@
 
 ## Solution
 
-* The core of this app is its OCR (optical character recognition) functionality.  Using this functionality, users can upload images of receipts to have the images transcribed into usable data (rendered as text).  Therefore, users will not have to manually type down each single expense when they want to track their expenditures online. A simple upload of their receipt will capture all of the purchases!  
+The core of this app is its OCR (optical character recognition) functionality.  Using this functionality, users can upload images of receipts to have the images transcribed into usable data (rendered as text).  Therefore, users will not have to manually type down each single expense when they want to track their expenditures online. A simple upload of their receipt will capture all of the purchases!  
 
 However, one should note that the OCR functionality has a limited confidence in translating bits of images into accurate characters.  As such, the input form allows for users to edit any collection of purchases before and after data is ingested and associated with their account. To simply put it, data will be made clean and accurate.
 
@@ -36,10 +36,13 @@ React.js, MongoDB, Node.js, Express.js, CSS, Tesseract.js, JWT, Bcrypt, other no
 ## Installation 
 
 * Git clone the repo
-* In the command line, run *yarn install* at the root and in the client folder
-* Cd back to the root after installing all the node modules and run *yarn start*
-* When running this locally, you can use large image files for the receipts.  However, if you are using the deployed version on Heroku, please ensure to only use images that are 140 KB or under.  Samples of receipts can be found in the *README_Images* folder. 
+* In the command line, run **yarn install** at the root and in the client folder
+* Cd back to the root after installing all the node modules and run **yarn start**
+* When running this locally, you can use large image files for the receipts.  However, if you are using the deployed version on Heroku, please ensure to only use images that are 140 KB or under.  Samples of receipts can be found in the **README_Images** folder.  If you want to use a demo account on the deployed app, you can use:
 
-![](https://github.com/azukimochi/receipt-ocr/README_Images/screenshot1.png)
+Username: Karen12345
+Password: Karen12345
+
+![Help](./README_Images/screenshot1.png)
 
 
