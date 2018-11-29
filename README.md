@@ -1,4 +1,4 @@
-# Receipt OCR Expense Tracker
+# FlexTrack OCR - A Receipt OCR Expense Tracker
 
 ## Problem to Solve/Purpose
 
