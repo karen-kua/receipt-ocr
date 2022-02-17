@@ -43,9 +43,6 @@ React.js, MongoDB, Node.js, Express.js, CSS, Tesseract.js, JWT, Bcrypt, other no
     * Username: Karen12345
     * Password: Karen12345
 
-## Creator
-
-This app was created by azukimochi.  She can be contacted via karen.kuak@gmail.com.
 
 ![Screenshot](./README_Images/screenshot1.png)
 
